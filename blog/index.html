@@ -31,6 +31,58 @@
 		});
     </script>
 
+    <script>
+// Map of legacy blog post IDs to the path (relative to the blog directory)
+let _blogPathMap = {
+  5:   '2009/05/20/lingraphica\'s-smalltalk-app-launches-with-pljukebox-library',
+  8:   '2009/07/02/blocks-for-iphone-3.0-and-mac-os-x-10.5',
+  11:  '2009/07/11/plblocks-1.0-beta2-released',
+  16:  '2009/09/06/new-releases-plblocks-1.0-and-plcrashreporter-1.0-and-more',
+  20:  '2010/01/12/welcome-chris-campbell',
+  22:  '2010/02/08/plausible-blocks-1.1-beta',
+  25:  '2010/06/09/a-software-cooperative',
+  72:  '2012/08/17/plausible-lab-part-1-workbenches',
+  128: '2012/09/18/plausible-lab-part-2-shelving',
+  173: '2013/04/06/swapping-pci-option-roms',
+  176: '2013/04/11/exploring-ios-crash-reports',
+  179: '2013/05/31/partnership-with-bitstadium-and-hockeyapp',
+  181: '2013/09/13/plcrashreporter-1.2-beta1-and-arm64-support',
+  183: '2013/11/06/voodoopad-acquisition',
+  184: '2013/11/06/further-thoughts-on-the-voodoopad-acquisition',
+  187: '2013/12/16/plcrashreporter-1.2-release-candidate',
+  189: '2013/12/23/plausible\'s-voodoopad-for-ios-is-out-or-how-to-migrate',
+  191: '2014/01/22/crittercism-joins-the-plcrashreporter-consortium',
+  193: '2014/01/23/calling-all-colorists-and-space-cadets',
+  204: '2014/04/01/introducing-plausible-crash-recovery',
+  263: '2014/04/02/implementing-plausible-crash-recovery',
+  297: '2014/12/15/plausible-2.0',
+  300: '2015/07/06/voodoopad-encryption-vulnerability',
+  302: '2017/08/10/reactive-relational-programming-with-plrelational',
+  303: '2017/08/24/intro-to-relational-algebra-using-plrelational',
+  304: '2017/08/29/plrelational-observing-change',
+  305: '2017/09/07/plrelational-storage-formats',
+  306: '2017/09/13/best-new-features-in-swift-4',
+  307: '2017/09/18/build-with-plrelational-part-1',
+  308: '2017/09/28/build-with-plrelational-part-2',
+  //308: '2017/10/03/plrelational-query-optimization',
+  309: '2017/12/14/a-new-home-for-voodoopad',
+  310: '2019/09/12/plcrashreporter-stewardship-moving-to-microsoft'
+}
+
+if (location.search) {
+  let m = location.search.match(/\?p=(\d+)/)
+  if (m) {
+    let postId = m[1]
+    let postPath = _blogPathMap[m[1]]
+    if (postPath) {
+      console.log(`Redirecting blog post id=${postId} to blog/${postPath}`)
+      window.location = `./${postPath}`
+    }
+  }
+}
+
+    </script>
+
     </head>
     <body>
         <header>
