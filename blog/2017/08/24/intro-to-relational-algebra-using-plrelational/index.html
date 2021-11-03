@@ -42,10 +42,10 @@
                 </a>
             </h3>
             <ul>
-                <li><a href="../../../../../software/index.html">Open Source</a></li>
-                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
-                <li><a href="../../../../index.html">Blog</a></li>
-                <li><a href="../../../../../about/index.html">About</a></li>
+                <li><a href="../../../../../software">Open Source</a></li>
+                <li><a href="../../../../../portfolio">Portfolio</a></li>
+                <li><a href="../../../..">Blog</a></li>
+                <li><a href="../../../../../about">About</a></li>
             </ul>
         </header>
             <div id="main">
@@ -59,7 +59,7 @@
                     <a href="#">An Introduction to Relational Algebra Using PLRelational</a>
                 </h1>
                 <p class="author">August 24, 2017, by Mike Ash</p>
-                <p>We recently <a href="../../10/reactive-relational-programming-with-plrelational/index.html">announced PLRelational</a>, our framework for storing and working with data that is based on relational algebra. This raises the question: what exactly is relational algebra? Most of the material out there is either highly academic, or focused on SQL databases. This article will give an overview of the basics of relational algebra in a way that programmers can easily understand, aimed at explaining the foundations that PLRelational is built on. Terminology will match what PLRelational uses.</p><p>Relational algebra looks a lot like set theory, with some extra constraints and specialized operations. If "set theory" scares you, not to worry: for our purposes, just think of Swift's <code>Set</code> type. We'll be dealing with the same things here: an unordered collection of unique items which you can iterate over, ask about membership, and combine in various ways. PLRelational even uses <code>Set</code> to represent certain relations.</p><h3>Terminology</h3><p>Let's build up terminology from the simplest elements. The most basic component is a value, which PLRelational represents using the <code>RelationValue</code> type. Values represent your data, such as a username, a timestamp, or a boolean flag. Conceptually a value can be anything that can be checked for equality, but practically we need some limits on what they can be. PLRelational mimics SQLite's value types, and allows values to be 64-bit integers, double-precision floating-point numbers, strings, blobs (raw data expressed as a byte array), and null.</p><p>Another basic component is an attribute, which PLRelational represents with the <code>Attribute</code> type. This acts like a dictionary key and is essentially a string. Each value is stored under an attribute.</p><p>Values and attributes are combined into rows. Rows are essentially dictionaries, with attributes as the keys and values as the values. In fact, PLRelational's <code>Row</code> type originally stored its contents as <code>[Attribute: RelationValue]</code>. The current implementation is more sophisticated, but the functionality is the same.</p><p>A relation, represented with the <code>Relation</code> type, is conceptually a set of rows. All rows within a given relation have the same set of attributes, which is called a scheme.</p><p>To summarize:</p>
+                <p>We recently <a href="../../10/reactive-relational-programming-with-plrelational">announced PLRelational</a>, our framework for storing and working with data that is based on relational algebra. This raises the question: what exactly is relational algebra? Most of the material out there is either highly academic, or focused on SQL databases. This article will give an overview of the basics of relational algebra in a way that programmers can easily understand, aimed at explaining the foundations that PLRelational is built on. Terminology will match what PLRelational uses.</p><p>Relational algebra looks a lot like set theory, with some extra constraints and specialized operations. If "set theory" scares you, not to worry: for our purposes, just think of Swift's <code>Set</code> type. We'll be dealing with the same things here: an unordered collection of unique items which you can iterate over, ask about membership, and combine in various ways. PLRelational even uses <code>Set</code> to represent certain relations.</p><h3>Terminology</h3><p>Let's build up terminology from the simplest elements. The most basic component is a value, which PLRelational represents using the <code>RelationValue</code> type. Values represent your data, such as a username, a timestamp, or a boolean flag. Conceptually a value can be anything that can be checked for equality, but practically we need some limits on what they can be. PLRelational mimics SQLite's value types, and allows values to be 64-bit integers, double-precision floating-point numbers, strings, blobs (raw data expressed as a byte array), and null.</p><p>Another basic component is an attribute, which PLRelational represents with the <code>Attribute</code> type. This acts like a dictionary key and is essentially a string. Each value is stored under an attribute.</p><p>Values and attributes are combined into rows. Rows are essentially dictionaries, with attributes as the keys and values as the values. In fact, PLRelational's <code>Row</code> type originally stored its contents as <code>[Attribute: RelationValue]</code>. The current implementation is more sophisticated, but the functionality is the same.</p><p>A relation, represented with the <code>Relation</code> type, is conceptually a set of rows. All rows within a given relation have the same set of attributes, which is called a scheme.</p><p>To summarize:</p>
 <ul>
   <li>Relation: a set of unique rows, all of which have the same scheme.</li>
   <li>Row: a bunch of values, each associated with a unique attribute.</li>
@@ -184,7 +184,7 @@ Mouse           1   Jane Doe    123
 </code></pre><p>Pretty-printing this on our test data produces:</p>
 <pre><code>name    
 Jane Doe
-</code></pre><h3>Wrapping Up</h3><p>A relation is a set of rows. A row is effectively a string-to-value dictionary, where the keys are attributes. All rows in a given relation have the same attributes. That set of attributes is called the relation's scheme.</p><p>Since relations are sets, they support basic set operations like union, intersection, and difference. They also support filtering in the form of the select operation.</p><p>Relation attributes can be manipulated by renaming them, and attributes can be removed by projecting the relation. This is useful to get different forms of a relation into different parts of your program.</p><p>Joins allow combining two relations with different schemes. They produce new rows by gluing together rows from the relations where those rows have matching values. The equijoin operation allows matching arbitrary pairs of attributes, while the join operation handles the common case of matching the attributes that exist in both relations.</p><p>PLRelational provides all of these operations, and more, as methods on the <code>Relation</code> type. These methods don't perform the work immediately, but rather produce a new <code>Relation</code> that represents the operation. The work is performed only when data is requested. To see it in action, check out PLRelational's tests, in particular the <code>RelationTests.swift</code> file, which has extensive examples of the various operations.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio/index.html">consulting</a> page.</em></p>
+</code></pre><h3>Wrapping Up</h3><p>A relation is a set of rows. A row is effectively a string-to-value dictionary, where the keys are attributes. All rows in a given relation have the same attributes. That set of attributes is called the relation's scheme.</p><p>Since relations are sets, they support basic set operations like union, intersection, and difference. They also support filtering in the form of the select operation.</p><p>Relation attributes can be manipulated by renaming them, and attributes can be removed by projecting the relation. This is useful to get different forms of a relation into different parts of your program.</p><p>Joins allow combining two relations with different schemes. They produce new rows by gluing together rows from the relations where those rows have matching values. The equijoin operation allows matching arbitrary pairs of attributes, while the join operation handles the common case of matching the attributes that exist in both relations.</p><p>PLRelational provides all of these operations, and more, as methods on the <code>Relation</code> type. These methods don't perform the work immediately, but rather produce a new <code>Relation</code> that represents the operation. The work is performed only when data is requested. To see it in action, check out PLRelational's tests, in particular the <code>RelationTests.swift</code> file, which has extensive examples of the various operations.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio">consulting</a> page.</em></p>
             </div>
 
             
@@ -202,33 +202,33 @@ Jane Doe
     <ul>
         
             <li>
-                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft">PLCrashReporter Stewardship Moving to Microsoft</a>
                 <span class="archive_date">September 12, 2019</span>
             </li>
         
             <li>
-                <a href="../../../12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <a href="../../../12/14/a-new-home-for-voodoopad">A New Home for VoodooPad</a>
                 <span class="archive_date">December 14, 2017</span>
             </li>
         
             <li>
-                <a href="../../../10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <a href="../../../10/03/plrelational-query-optimization">PLRelational: Query Optimization and Execution</a>
                 <span class="archive_date">October 3, 2017</span>
             </li>
         
             <li>
-                <a href="../../../09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <a href="../../../09/28/build-with-plrelational-part-2">Let&#x27;s Build with PLRelational, Part 2</a>
                 <span class="archive_date">September 28, 2017</span>
             </li>
         
             <li>
-                <a href="../../../09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <a href="../../../09/18/build-with-plrelational-part-1">Let&#x27;s Build with PLRelational, Part 1</a>
                 <span class="archive_date">September 18, 2017</span>
             </li>
         
     </ul>
     <p class="archives">
-        <a href="../../../../archive/index.html">Browse Archive</a>
+        <a href="../../../../archive">Browse Archive</a>
     </p>
 
     <h3>More from Lab Members</h3>

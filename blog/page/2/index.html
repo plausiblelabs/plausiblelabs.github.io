@@ -40,10 +40,10 @@
                 </a>
             </h3>
             <ul>
-                <li><a href="../../../software/index.html">Open Source</a></li>
-                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
-                <li><a href="../../index.html">Blog</a></li>
-                <li><a href="../../../about/index.html">About</a></li>
+                <li><a href="../../../software">Open Source</a></li>
+                <li><a href="../../../portfolio">Portfolio</a></li>
+                <li><a href="../..">Blog</a></li>
+                <li><a href="../../../about">About</a></li>
             </ul>
         </header>
             <div id="main">
@@ -55,7 +55,7 @@
             <div class="articles">
                 
                     <h1>
-                        <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                        <a href="../../2017/09/28/build-with-plrelational-part-2">Let&#x27;s Build with PLRelational, Part 2</a>
                     </h1>
                     <p class="author">September 28, 2017, by Chris Campbell</p>
                     <script>
@@ -162,13 +162,13 @@ a.pt2-req-target {
 .pt2-anim-gif-container .gifplayer-wrapper img {
   border: 0px;
 }
-</style><p><em>This article picks up where <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Part 1</a> left off, continuing our look at building a real application using PLRelational.</em></p><p><em>For more background on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>, check out these other articles in the series:</em></p>
+</style><p><em>This article picks up where <a href="../../2017/09/18/build-with-plrelational-part-1">Part 1</a> left off, continuing our look at building a real application using PLRelational.</em></p><p><em>For more background on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>, check out these other articles in the series:</em></p>
 <ul>
-  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
-  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
-  <li><em><a href="../../2017/08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
-  <li><em><a href="../../2017/09/07/plrelational-storage-formats/index.html">PLRelational: Storage Formats</a></em></li>
-</ul><p>In <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Part 1</a> of this article, we used PLRelational to build a portion of a to-do application for macOS. In this article, we will follow the same process and focus on building out the right-hand side of the application, specifically the detail view.</p><p>The detail view allows the user to change the status or text of the selected to-do item, apply tags, add notes, or delete the item. Click the "Play" button below to see the detail view in action:</p>
+  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/29/plrelational-observing-change">PLRelational: Observing Change</a></em></li>
+  <li><em><a href="../../2017/09/07/plrelational-storage-formats">PLRelational: Storage Formats</a></em></li>
+</ul><p>In <a href="../../2017/09/18/build-with-plrelational-part-1">Part 1</a> of this article, we used PLRelational to build a portion of a to-do application for macOS. In this article, we will follow the same process and focus on building out the right-hand side of the application, specifically the detail view.</p><p>The detail view allows the user to change the status or text of the selected to-do item, apply tags, add notes, or delete the item. Click the "Play" button below to see the detail view in action:</p>
 <p class="pt2-anim-gif-container" style="text-align: center; height: 520px;">
 <img class="gifplayer" src="../../../assets/images/blog/uploads/2017/09/28/build-with-plrelational-part-2/todo-2-static/index.png" data-gif="/assets/images/blog/uploads/2017/09/28/build-with-plrelational-part-2/todo-2.gif" width="662" height="510" data-label="Play"/>
 </p><p>As in Part 1, we've broken the right half of the application down into distinct functional requirements that describe how each piece of the UI should behave.</p><p>The following interactive screenshot shows the right half of the app in its completed state. Each red dot corresponds to a single functional requirement. Hover over a dot to read a summary of the requirement, then click to see how we implemented it using PLRelational.</p>
@@ -605,7 +605,7 @@ class DetailView { ...
 </ul><h3>Wrapping Up</h3><p>Over the course of this two-part article, we demonstrated how to use PLRelational to model source relations and then use a reactive-relational style of programming to build a working macOS application.</p><p>The vocabulary offered by PLRelational makes it easy to declare — and reason about — the relationships between data in your application and how it is presented in the user interface. Although we focused on building a macOS application in this article, the same techniques can be used to simplify development of iOS applications as well. (And perhaps we will demonstrate just that in a future article!)</p><p>The complete source code for this application is available in the <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a> repository under the <code>Examples/TodoApp</code> directory and can be run directly from the Xcode project.</p><p>Finally, if you've been experimenting with PLRelational and have thoughts to share, or have a topic related to these frameworks that you'd like us to cover, please <a href="https://twitter.com/plausiblelabs">tweet at us</a> or <a href="mailto:contact@plausible.coop">mail it in</a>!</p>
                 
                     <h1>
-                        <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                        <a href="../../2017/09/18/build-with-plrelational-part-1">Let&#x27;s Build with PLRelational, Part 1</a>
                     </h1>
                     <p class="author">September 18, 2017, by Chris Campbell</p>
                     <script>
@@ -711,10 +711,10 @@ a.pt1-req-target {
 }
 </style><p><em>This is our latest entry in a series of articles on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>. For more background, check out these other articles in the series:</em></p>
 <ul>
-  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
-  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
-  <li><em><a href="../../2017/08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
-  <li><em><a href="../../2017/09/07/plrelational-storage-formats/index.html">PLRelational: Storage Formats</a></em></li>
+  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/29/plrelational-observing-change">PLRelational: Observing Change</a></em></li>
+  <li><em><a href="../../2017/09/07/plrelational-storage-formats">PLRelational: Storage Formats</a></em></li>
 </ul><p>Since we started opening up about PLRelational, a number of developers have asked us how it compares to some particular existing technology, e.g. Core Data, Rx, Cocoa Bindings, or SQLite. It's a good question, but before we can clearly explain the differences, we should first dissect a working application that was built using PLRelational.</p><p>Our goal with this article is to give a big picture look at PLRelational and how it can be used to build an actual application. We will show how you can do things the <em>PLRelational Way</em>, and that will give us a baseline to help compare and contrast to existing technologies in a future article.</p><p>We believe PLRelational[+Binding] gives you a unique, expressive vocabulary for declaring how your UI is connected. Once you've declared those relationships, the frameworks can do a lot of heavy lifting, simplifying the way you build an application. As we will demonstrate here, there are a few patterns commonly used when working with PLRelational that can help bring a sense of order and sanity to application development. </p><h3>What Should We Build?</h3><p>To get started, we need to think of a relatively constrained type of application to build, and there's no better (or more clichéd) example than a to-do app, so let's run with that. In a nutshell, our application will allow the user to:</p>
 <ul>
   <li>enter new to-do items</li>
@@ -1083,7 +1083,7 @@ self.itemTags
 </ul><p>By declaring the relationships in this manner, any time the list of tags changes for that to-do item (by virtue of the user adding/removing tags, or as a result of undo/redo, etc), the list cell will automatically be updated to display the latest string value.</p><h3>Wrapping Up</h3><p>In this article, we demonstrated how to use PLRelational and its reactive-relational style of programming to build a real, working macOS application.</p><p>Building the <em>PLRelational Way</em> takes a slightly different mindset as compared to more imperative, object-oriented approaches. However, once you've learned the few core patterns that we presented here, the reactive-relational approach becomes second nature, and using the vocabulary offered by PLRelational can help simplify the way you build applications.</p><p>In Part 2, we will continue our deep dive and explore the right half of the to-do application. In that article we will cover topics such as modeling list selection, building with complex controls like combo boxes, using cascading deletion, and more.</p><p>The complete source code for this application is available in the <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a> repository under the <code>Examples/TodoApp</code> directory and can be run directly from the Xcode project.</p>
                 
                     <h1>
-                        <a href="../../2017/09/13/best-new-features-in-swift-4/index.html">The Best New Features in Swift 4</a>
+                        <a href="../../2017/09/13/best-new-features-in-swift-4">The Best New Features in Swift 4</a>
                     </h1>
                     <p class="author">September 13, 2017, by Mike Ash</p>
                     <p>Swift 4 is here, and it's bringing some nice changes. We're not getting a radical rework of the syntax like we did last year, nor are we getting a breathtaking pile of new features like we did for Swift 2, but there are some nice additions you can use to improve your code. Let's take a look!</p><h3>Multi-Line String Literals</h3><p>Sometimes you want long, multi-line strings in your code. It might be an HTML template, a blob of XML, or a long message for the user. Either way, they're painful to write in Swift 3.</p><p>You can write them out all on one line, which gets ugly fast:</p>
@@ -1199,33 +1199,33 @@ let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
     <ul>
         
             <li>
-                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft">PLCrashReporter Stewardship Moving to Microsoft</a>
                 <span class="archive_date">September 12, 2019</span>
             </li>
         
             <li>
-                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad">A New Home for VoodooPad</a>
                 <span class="archive_date">December 14, 2017</span>
             </li>
         
             <li>
-                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <a href="../../2017/10/03/plrelational-query-optimization">PLRelational: Query Optimization and Execution</a>
                 <span class="archive_date">October 3, 2017</span>
             </li>
         
             <li>
-                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <a href="../../2017/09/28/build-with-plrelational-part-2">Let&#x27;s Build with PLRelational, Part 2</a>
                 <span class="archive_date">September 28, 2017</span>
             </li>
         
             <li>
-                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <a href="../../2017/09/18/build-with-plrelational-part-1">Let&#x27;s Build with PLRelational, Part 1</a>
                 <span class="archive_date">September 18, 2017</span>
             </li>
         
     </ul>
     <p class="archives">
-        <a href="../../archive/index.html">Browse Archive</a>
+        <a href="../../archive">Browse Archive</a>
     </p>
 
     <h3>More from Lab Members</h3>
@@ -1246,12 +1246,12 @@ let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
     <div class="nav-links">
         
         
-            <a class="prev page-numbers" href="../1/index.html">Previous</a>
+            <a class="prev page-numbers" href="../1">Previous</a>
         
         
         
             
-                <a class="page-numbers" href="../1/index.html">1</a>
+                <a class="page-numbers" href="../1">1</a>
             
         
             
@@ -1259,44 +1259,44 @@ let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
             
         
             
-                <a class="page-numbers" href="../3/index.html">3</a>
+                <a class="page-numbers" href="../3">3</a>
             
         
             
-                <a class="page-numbers" href="../4/index.html">4</a>
+                <a class="page-numbers" href="../4">4</a>
             
         
             
-                <a class="page-numbers" href="../5/index.html">5</a>
+                <a class="page-numbers" href="../5">5</a>
             
         
             
-                <a class="page-numbers" href="../6/index.html">6</a>
+                <a class="page-numbers" href="../6">6</a>
             
         
             
-                <a class="page-numbers" href="../7/index.html">7</a>
+                <a class="page-numbers" href="../7">7</a>
             
         
             
-                <a class="page-numbers" href="../8/index.html">8</a>
+                <a class="page-numbers" href="../8">8</a>
             
         
             
-                <a class="page-numbers" href="../9/index.html">9</a>
+                <a class="page-numbers" href="../9">9</a>
             
         
             
-                <a class="page-numbers" href="../10/index.html">10</a>
+                <a class="page-numbers" href="../10">10</a>
             
         
             
-                <a class="page-numbers" href="../11/index.html">11</a>
+                <a class="page-numbers" href="../11">11</a>
             
         
 
         
-            <a class="next page-numbers" href="../3/index.html">Next</a>
+            <a class="next page-numbers" href="../3">Next</a>
         
         
     </div>

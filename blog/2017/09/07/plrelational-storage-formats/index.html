@@ -42,10 +42,10 @@
                 </a>
             </h3>
             <ul>
-                <li><a href="../../../../../software/index.html">Open Source</a></li>
-                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
-                <li><a href="../../../../index.html">Blog</a></li>
-                <li><a href="../../../../../about/index.html">About</a></li>
+                <li><a href="../../../../../software">Open Source</a></li>
+                <li><a href="../../../../../portfolio">Portfolio</a></li>
+                <li><a href="../../../..">Blog</a></li>
+                <li><a href="../../../../../about">About</a></li>
             </ul>
         </header>
             <div id="main">
@@ -61,9 +61,9 @@
                 <p class="author">September 7, 2017, by Mike Ash</p>
                 <p><em>This is our latest entry in a series of articles on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>. For more background, check out these other articles in the series:</em></p>
 <ul>
-  <li><em><a href="../../../08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
-  <li><em><a href="../../../08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
-  <li><em><a href="../../../08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
+  <li><em><a href="../../../08/10/reactive-relational-programming-with-plrelational">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../../08/24/intro-to-relational-algebra-using-plrelational">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../../08/29/plrelational-observing-change">PLRelational: Observing Change</a></em></li>
 </ul><p>We've been talking a lot lately about PLRelational and all the fancy stuff it does. However, we've been glossing over a fundamental part of it: how it actually stores data. After all, PLRelational is a data persistence framework at its core.</p><p>PLRelational's relations break down into two categories. There are relations which store rows, and there are relations which derive their contents by performing some operation on other relations. Many of the relations which store rows do so by persisting them to disk.</p><h3>Memory Relations</h3><p>Let's start with one that <em>doesn't</em> persist its contents, just for simplicity. The basic interface is the same, so it provides a good foundation.</p><p>The <code>MemoryTableRelation</code> class is a relation which, as the name indicates, stores its data in memory. You create one with a scheme:</p>
 <pre><code>let people = MemoryTableRelation(scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;])
 </code></pre><p>Once you have that, you can add, update, and delete rows:</p>
@@ -191,7 +191,7 @@ images.asyncAdd([&quot;id&quot;: 1, &quot;image-data&quot;: Data(imageData)])
 if let error = result.err {
     // handle error
 }
-</code></pre><p>This passes all of the changes to the SQLite layer, which writes them out all at once.</p><h3>Advanced: Raw SQL in SQLite</h3><p>For advanced uses, it's also possible to execute SQL queries directly against the database using the <code>executeQuery</code> method. This takes an SQL string and an optional array of <code>RelationValue</code> parameters and returns <code>Row</code>s for the results. PLRelational uses this to implement <code>RelationTextIndex</code>, which is a full text search API backed by SQLite's <code>fts4</code> module.</p><p>If you use this, it's important to note that there is not a perfect mapping between <code>RelationValue</code> types and SQLite data types. The standard SQL <code>NULL</code> <a href="https://sqlite.org/nulls.html">has a lot of weird behaviors</a>. For example, comparing <code>NULL</code> for equality or inequality always produces <code>NULL</code>, which is evaluated as false. That means that, for example, a <code>SELECT</code> statement checking for <code>== NULL</code> or <code>!= NULL</code> will always produce zero results regardless of the contents of the table.</p><p>SQLite matches this weird behavior in order to be compatible with other SQL databases. PLRelational doesn't have that constraint and so we decided to make <code>NULL</code> behave more consistently, and act like any other value. PLRelational's <code>RelationValue.null</code> is equal to itself, not equal to other values, gets sorted consistently, etc. However, this means that we can't use SQLite's <code>NULL</code> while still translating PLRelational <code>select</code> operations into SQLite <code>SELECT</code> statements. To work around this, we decided not to use SQLite's <code>NULL</code> at all, and instead translate <code>RelationValue.null</code> differently.</p><p>Instead, <code>RelationValue.null</code> is translated into an SQLITE blob containing the ASCII bytes <code>&quot;NULL&quot;</code>. In order to ensure that actual blobs are never mistakenly interpreted as <code>null</code>, all blobs are prefixed with the ASCII bytes <code>&quot;BLOB&quot;</code>. This works fine for normal PLRelational use and this translation step is invisible unless you go digging through the database by hand. However, if you're submitting raw SQL with <code>executeQuery</code>, it might get in the way. The optional <code>bindBlobsRaw</code> parameter allows you to control whether blobs are translated like this while going into and out of SQLite. It's <code>false</code> by default, meaning that translation is performed. By setting it to <code>true</code>, blobs will be passed in and out as-is. Note that this parameter does not influence how <code>NULL</code> is translated.</p><h3>Try It Out</h3><p>If you'd like to try out these code snippets or otherwise explore the available options, grab a copy of the official <a href="https://github.com/plausiblelabs/plrelational">PLRelational repository</a>. The project includes example apps which you can examine and modify, and adding PLRelational to your own project is as easy as dropping the framework in and writing <code>import PLRelational</code> in your code.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio/index.html">consulting</a> page.</em></p>
+</code></pre><p>This passes all of the changes to the SQLite layer, which writes them out all at once.</p><h3>Advanced: Raw SQL in SQLite</h3><p>For advanced uses, it's also possible to execute SQL queries directly against the database using the <code>executeQuery</code> method. This takes an SQL string and an optional array of <code>RelationValue</code> parameters and returns <code>Row</code>s for the results. PLRelational uses this to implement <code>RelationTextIndex</code>, which is a full text search API backed by SQLite's <code>fts4</code> module.</p><p>If you use this, it's important to note that there is not a perfect mapping between <code>RelationValue</code> types and SQLite data types. The standard SQL <code>NULL</code> <a href="https://sqlite.org/nulls.html">has a lot of weird behaviors</a>. For example, comparing <code>NULL</code> for equality or inequality always produces <code>NULL</code>, which is evaluated as false. That means that, for example, a <code>SELECT</code> statement checking for <code>== NULL</code> or <code>!= NULL</code> will always produce zero results regardless of the contents of the table.</p><p>SQLite matches this weird behavior in order to be compatible with other SQL databases. PLRelational doesn't have that constraint and so we decided to make <code>NULL</code> behave more consistently, and act like any other value. PLRelational's <code>RelationValue.null</code> is equal to itself, not equal to other values, gets sorted consistently, etc. However, this means that we can't use SQLite's <code>NULL</code> while still translating PLRelational <code>select</code> operations into SQLite <code>SELECT</code> statements. To work around this, we decided not to use SQLite's <code>NULL</code> at all, and instead translate <code>RelationValue.null</code> differently.</p><p>Instead, <code>RelationValue.null</code> is translated into an SQLITE blob containing the ASCII bytes <code>&quot;NULL&quot;</code>. In order to ensure that actual blobs are never mistakenly interpreted as <code>null</code>, all blobs are prefixed with the ASCII bytes <code>&quot;BLOB&quot;</code>. This works fine for normal PLRelational use and this translation step is invisible unless you go digging through the database by hand. However, if you're submitting raw SQL with <code>executeQuery</code>, it might get in the way. The optional <code>bindBlobsRaw</code> parameter allows you to control whether blobs are translated like this while going into and out of SQLite. It's <code>false</code> by default, meaning that translation is performed. By setting it to <code>true</code>, blobs will be passed in and out as-is. Note that this parameter does not influence how <code>NULL</code> is translated.</p><h3>Try It Out</h3><p>If you'd like to try out these code snippets or otherwise explore the available options, grab a copy of the official <a href="https://github.com/plausiblelabs/plrelational">PLRelational repository</a>. The project includes example apps which you can examine and modify, and adding PLRelational to your own project is as easy as dropping the framework in and writing <code>import PLRelational</code> in your code.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio">consulting</a> page.</em></p>
             </div>
 
             
@@ -209,33 +209,33 @@ if let error = result.err {
     <ul>
         
             <li>
-                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft">PLCrashReporter Stewardship Moving to Microsoft</a>
                 <span class="archive_date">September 12, 2019</span>
             </li>
         
             <li>
-                <a href="../../../12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <a href="../../../12/14/a-new-home-for-voodoopad">A New Home for VoodooPad</a>
                 <span class="archive_date">December 14, 2017</span>
             </li>
         
             <li>
-                <a href="../../../10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <a href="../../../10/03/plrelational-query-optimization">PLRelational: Query Optimization and Execution</a>
                 <span class="archive_date">October 3, 2017</span>
             </li>
         
             <li>
-                <a href="../../28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <a href="../../28/build-with-plrelational-part-2">Let&#x27;s Build with PLRelational, Part 2</a>
                 <span class="archive_date">September 28, 2017</span>
             </li>
         
             <li>
-                <a href="../../18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <a href="../../18/build-with-plrelational-part-1">Let&#x27;s Build with PLRelational, Part 1</a>
                 <span class="archive_date">September 18, 2017</span>
             </li>
         
     </ul>
     <p class="archives">
-        <a href="../../../../archive/index.html">Browse Archive</a>
+        <a href="../../../../archive">Browse Archive</a>
     </p>
 
     <h3>More from Lab Members</h3>

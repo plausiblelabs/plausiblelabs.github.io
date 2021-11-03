@@ -40,10 +40,10 @@
                 </a>
             </h3>
             <ul>
-                <li><a href="../../../software/index.html">Open Source</a></li>
-                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
-                <li><a href="../../index.html">Blog</a></li>
-                <li><a href="../../../about/index.html">About</a></li>
+                <li><a href="../../../software">Open Source</a></li>
+                <li><a href="../../../portfolio">Portfolio</a></li>
+                <li><a href="../..">Blog</a></li>
+                <li><a href="../../../about">About</a></li>
             </ul>
         </header>
             <div id="main">
@@ -55,13 +55,13 @@
             <div class="articles">
                 
                     <h1>
-                        <a href="../../2013/05/31/partnership-with-bitstadium-and-hockeyapp/index.html">Partnership with BitStadium + HockeyApp</a>
+                        <a href="../../2013/05/31/partnership-with-bitstadium-and-hockeyapp">Partnership with BitStadium + HockeyApp</a>
                     </h1>
                     <p class="author">May 31, 2013, by Landon Fuller</p>
                     <p>Since our first release of <a href="https://www.plcrashreporter.org/">PLCrashReporter</a> in 2008, it has come to be relied upon by analytics companies, developer tools providers, and internal corporate crash reporting services. We believe that PLCrashReporter is unrivaled as a reliable, stable, well-tested, and carefully constructed crash reporting tool.</p><p>Almost since the beginning, <a href="http://www.hockeyapp.net/">HockeyApp’s</a> developers have contributed to the development of PLCrashReporter — contributing patches, developing both open-source and commercial services around it, and ultimately, funding the development of additional open-source features.</p><p>We are very excited to announce a long-term joint partnership between our two companies. This partnership will allow us to focus development efforts on further improving and expanding the reach of PLCrashReporter, as well as developing new features, services, and improvements for HockeyApp’s server and client products. The first result of this partnership will be the release of the next generation open source PLCrashReporter. Exclusive early access for HockeyApp customers and details are coming soon!</p><p>HockeyApp and Plausible Labs share a combined vision regarding the future of PLCrashReporter. We genuinely believe that complex tools such as PLCrashReporter should be open-source, in the same way that Apple provides kernel, compiler, and library sources, as to allow for peer review and validation of the approaches we have taken in our technical implementation. Integrators — whether they be application developers or platform providers — should be certain of the robustness of the software, that there is no use of private API or poor implementation that could harm their business or their customer’s interests.</p><p>To support this vision, we are launching <a href="https://www.plcrashreporter.org/">plcrashreporter.org</a>, a dedicated open-source project, administered by Plausible Labs. It is our goal to ensure that PLCrashReporter remains a trustworthy, free, and open-source solution to crash reporting on iOS, Mac OS X, and — in coming months — future platforms. We will also be founding the PLCrashReporter Consortium (modeled on <a href="http://www.sqlite.org/consortium.html">SQLite’s</a>), with the goal of sharing resources to fund the ongoing open-source development of PLCrashReporter.</p><p>HockeyApp is joining the PLCrashReporter Consortium as its founding member, and we look forward to other companies that rely on PLCrashReporter joining in supporting the project’s ongoing open-source development.</p>
                 
                     <h1>
-                        <a href="../../2013/04/11/exploring-ios-crash-reports/index.html">Exploring iOS Crash Reports</a>
+                        <a href="../../2013/04/11/exploring-ios-crash-reports">Exploring iOS Crash Reports</a>
                     </h1>
                     <p class="author">April 11, 2013, by Plausible Labs</p>
                     <h3>Introduction</h3><p>As developers, when one of our applications crashes, we would like to gather enough information about the crash such that we can reason about its cause and (ideally) fix it. Crash reports generated and provided by tools and services such as iTunes Connect, <a href="http://code.google.com/p/plcrashreporter/">PLCrashReporter</a>, <a href="http://hockeyapp.net/">HockeyApp</a> or others can look a bit daunting at first. We will demystify the important aspects of such reports, so that after reading this article one should be able to use crash report data more effectively.</p><p>We are going to be talking mainly about crashes of iOS applications, but some of the concepts can be carried over to crashes on other platforms.</p><p>Also, there are some reasons for crashes that are of special interest for iOS developers, such as when a watchdog timeout happens, or when the application is killed due to memory constraints. We are not going to cover those here, because others have already <a href="https://developer.apple.com/videos/wwdc/2010/?id=317">done</a> <a href="http://developer.apple.com/library/ios/#technotes/tn2151/_index.html">that</a>.</p><h3>A First Look</h3><p>Let us dive right in and consider <a href="https://gist.github.com/dennda/56851a63d935b54d3147">a full, real-world crash report</a> from a production app. There is a lot of information shown there. We are going to break it up into more easily digestable fragments and discuss those individually.</p><h3>The Header</h3><p>At the start of every crash report, you’ll find the basic header:</p>
@@ -158,15 +158,15 @@ cpsr: 0x00000010
   <li>You can get notified via mail as soon as a crash happens.</li>
   <li>Crash reports have already been symbolicated for you (assuming proper setup).</li>
   <li>Users often opt-out of Apple’s data gathering, which means you wouldn’t get any crash reports. This is because Apple asks the user for permission to “improve its products and services by automatically sending daily diagnostics and usage data” once when a device is first used, which is a global setting that doesn’t easily convey the effect of declining the request.</li>
-</ul><p>It is therefore a good idea to find a crash reporting solution that works for you as soon as you deploy your application. (In the interest of full disclosure: HockeyApp has been a great sponsor of our open-source work on PLCrashReporter).</p><p>We hope that we have succeeded in shedding some light on the more advanced information provided by crash reports. In case you need some expert guidance regarding (our) crash reporting solutions, please note that <a href="../../../contact/index.html">we’re available for hire</a>.</p><h4>Further Reading</h4>
+</ul><p>It is therefore a good idea to find a crash reporting solution that works for you as soon as you deploy your application. (In the interest of full disclosure: HockeyApp has been a great sponsor of our open-source work on PLCrashReporter).</p><p>We hope that we have succeeded in shedding some light on the more advanced information provided by crash reports. In case you need some expert guidance regarding (our) crash reporting solutions, please note that <a href="../../../contact">we’re available for hire</a>.</p><h4>Further Reading</h4>
 <ul>
   <li>A <a href="https://developer.apple.com/videos/wwdc/2010/?id=317">WWDC 2010 video</a> on understanding crash reports (login required).</li>
   <li>Apple <a href="http://developer.apple.com/library/ios/#technotes/tn2151/_index.html">tech note 2151</a> on understanding crash reports.</li>
-  <li>On Mach Exceptions and Signals, we recommend Amit Singh’s <a href="http://osxbook.com/">Mac OS X Internals</a> book and <a href="../../../about/index.html">Landon’s</a> <a href="http://www.mikeash.com/pyblog/friday-qa-2013-01-11-mach-exception-handlers.html">guest article</a> on <a href="../../../about/index.html">Mike’s</a> <a href="http://mikeash.com/pyblog/">Friday Q&amp;A</a> blog. As Landon highlights, please note that Mach Exceptions Handlers are a partially private API on iOS.</li>
+  <li>On Mach Exceptions and Signals, we recommend Amit Singh’s <a href="http://osxbook.com/">Mac OS X Internals</a> book and <a href="../../../about">Landon’s</a> <a href="http://www.mikeash.com/pyblog/friday-qa-2013-01-11-mach-exception-handlers.html">guest article</a> on <a href="../../../about">Mike’s</a> <a href="http://mikeash.com/pyblog/">Friday Q&amp;A</a> blog. As Landon highlights, please note that Mach Exceptions Handlers are a partially private API on iOS.</li>
 </ul>
                 
                     <h1>
-                        <a href="../../2013/04/06/swapping-pci-option-roms/index.html">Swapping PCI Option ROMs</a>
+                        <a href="../../2013/04/06/swapping-pci-option-roms">Swapping PCI Option ROMs</a>
                     </h1>
                     <p class="author">April 6, 2013, by Landon Fuller</p>
                     <h3>Prologue: Old Hardware Hacking</h3><p>In my spare time in the Plausible Lab, I like to play with old Mac and video game hardware — it’s fun, appeals to my strong sense of nostalgia, and if I screw up, I won’t feel <em>quite</em> so terrible as I would if happened to destroy a piece of expensive modern hardware. Fortunately, I’ve yet to actually destroy anything, and actually have been able to fix a few things, like a <a href="https://mac68k.info/forums/message.jspa?messageID=152#152">failed Mac IIci power circuit</a>.</p><p>In many cases, you can also find schematics for the hardware in question, if not actual vendor documentation. Official development manuals are available out there if you look around a bit, and crazy folks such as <a href="http://www.bomarc.org/">BoMarc Services</a> sell reverse-engineered schematics for everything from the Super Nintendo to the Macintosh Quadra 840av.</p><p>This leads me to my small Friday evening project in getting a PC version of the Radeon 7000 64MB working on a PCI Power Macintosh, for which no 64MB cards were released. This requires desoldering, replacing, and reflashing the flash chip on the card, as recently documented by a friend of mine, <a href="http://www.synack.net/~bbraun/ati7k.html">Rob Braun</a>.</p><h3>PCI Option ROMs</h3><p>Have you ever wondered how PCI cards are able to perform basic operations — such as accessing a disk, displaying graphics, or booting off the network — before their drivers have been loaded? Or why cards are platform specific, despite the fact that everyone is using standardized PCI interfaces?</p><p>The answer actually lies on the card itself, inside a bit of addressable flash memory called the “Option ROM”, which contains executable code that’s located and run at boot time. This code is responsible for interfacing with the underlying BIOS implementation, and providing the services required for disk, network, graphics, or similar access. Given where and when the code is running, there’s no real constraint — it could also display custom UI, or vend services other than what you might expect, such as a ‘kernel’ that<a href="https://sites.google.com/site/pinczakko/building-a-kernel-in-pci-expansion-rom">runs entirely from a PCI option ROM</a>.</p><p>There are also security implications; malware that acquires sufficient privileges could re-image your PCI cards’ option ROMs to contain persistent code that re-infects the machine no matter how many times you re-image your system. One of the goals of the Secure Boot initiave is to require signing of firmware, preventing this sort of attack (… until another bug is found in the firmware responsible for validating the boot process).</p><p>The PCI option ROM is also why PCI cards are platform specific — the ROMs contain either native code, or an architecture neutral bytecode, and that code is targeted to the actual firmware API specification of the host architecture (e.g., BIOS, UEFI, or OpenFirmware).</p><p>On legacy Power Macintosh systems, a combination of <a href="http://en.wikipedia.org/wiki/Open_Firmware">Open Firmware</a> bytecode (called FCode) and native PPC code is included on the PCI Option ROM to provide <em>both</em> boot-time and run-time drivers for cards; this approach of including the OS drivers is what allowed Mac OS graphics cards to be run without additional drivers being installed. On older Macs, the FCode is used at boot time to provide basic services required at boot time, and then the OS loads and uses Mac OS drivers loaded from the PCI option ROM at runtime.</p><p>This approach ties the hardware fairly closely to a specific operating system, and while this sort of driver bundling was the norm on Mac OS for years, modern systems tend to rely on installable drivers after boot time.</p><h3>Converting a Radeon 7000 64MB</h3><p>This leads us to the original goal, which was to get the PC version of the Radeon 7000 64MB card working on a PCI Macintosh. There was never a 64MB version of the card released, but there <em>was</em> a 32MB version of the card provided for Mac OS. Assuming that the drivers written for the 32MB card are compatible with the 64MB card, it should simply be a matter of reflashing the PCI Option ROM with the Mac OS drivers — something we can do using the vendor’s own flashing software.</p><p>Unfortunately, there’s just one hitch. The Mac ROM is 128KB, and the PC version of the card only shipped with a 64KB flash ROM. This was presumably done to save money; pennies add up, and the PC ROM only needs to provide basic BIOS services, which can fit easily within 64KB of flash. The Mac ROM actually needs to provide two different drivers; one in FCode, one for Mac OS, and these won’t fit on the PC cards’ smaller flash chip.</p><p>Thus, to re-image the card with Mac-compatible firmware, we need to desolder or clip the 64KB Flash chip from the PC card, solder in a new compatible 128KB flash chip, and then reflash the ROM using the vendor’s tools. Here’s the flash chip I replaced:</p><p><img src="../../../assets/images/blog/uploads/2013/04/06/swapping-pci-option-roms/radeon7000flash/index.jpg" alt="The flash chip is circled in red" title="Radeon 7000 PCI Card" /> The flash chip is circled in red</p><p>Replacing the chip turns out to be pretty easy. The original flash chip conforms to an industry standard pinout and package size, for which many compatible replacements are available. The chips are communicated with over the defacto standard <a href="http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus">SPI Bus</a> (Serial Peripheral Interface Bus), and use a common wire protocol. The protocol itselfuses 24-bit addressing; in theory, there’s no issue with swapping out a smaller 64KB chip for a larger 128KB chip, and having the card address the additional space. I was able to find a <a href="http://www.digikey.com/product-detail/en/W25X20CLSNIG/W25X20CLSNIG-ND/3008613">compatible replacement</a> for the original Atmel chip from Digi-Key.</p><p>The first step is to remove the previous flash chip. If preserving the chip is important to you, you might use hot air rework or similar to lift the chip without damaging it. Given that you can easily copy a PCI option ROM’s contents from a running system, there’s no real need to preserve the actual chip; I went the more destructive approach of clipping the leads using a pair of small flush cutters, and then removing the remaining solder and pins with solder wick.</p><p>With the chip removed, the next step is to solder in the replacement. Soldering surface-mount components can be a bit daunting at first, but I’ve found it’s actually quite a bit easier (and less time consuming) than working with through-hole. Lately I’ve been getting the hang of hot air rework using solder paste and the <a href="http://www.hakko.com/english/products/hakko_fm206.html">Hakko FM-206</a> we have in the lab, but for replacing this chip, I wanted to minimize the risk of heat damage to surrounding components.</p><p>My approach for resoldering the chip was to use a standard soldering iron with a “hoof” soldering tip. These tips have a broad, flat or concave tip that can be easily dragged over a set of pins. After tacking down opposing corners of the chip, you can simply drag the tip across the pins, letting surface tension wick the solder around the pins. I’d recommend watching the <a href="http://www.eevblog.com/">EEVBlog</a>‘s <a href="http://www.youtube.com/watch?v=b9FC9fAlfQE">video tutorial</a> for more details on hand-soldering surface mount components, including drag soldering.</p><p>After dropping the card into my Power Mac 9600, I was able to reflash the new ROM using ATI’s tools. One reboot later, and I could sit in awe of System 7.6 running at 1920×1200 over DVI. Now I just need to get copy of <a href="https://en.wikipedia.org/wiki/Marathon_Trilogy">Marathon</a> running…</p>
@@ -188,33 +188,33 @@ cpsr: 0x00000010
     <ul>
         
             <li>
-                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft">PLCrashReporter Stewardship Moving to Microsoft</a>
                 <span class="archive_date">September 12, 2019</span>
             </li>
         
             <li>
-                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad">A New Home for VoodooPad</a>
                 <span class="archive_date">December 14, 2017</span>
             </li>
         
             <li>
-                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <a href="../../2017/10/03/plrelational-query-optimization">PLRelational: Query Optimization and Execution</a>
                 <span class="archive_date">October 3, 2017</span>
             </li>
         
             <li>
-                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <a href="../../2017/09/28/build-with-plrelational-part-2">Let&#x27;s Build with PLRelational, Part 2</a>
                 <span class="archive_date">September 28, 2017</span>
             </li>
         
             <li>
-                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <a href="../../2017/09/18/build-with-plrelational-part-1">Let&#x27;s Build with PLRelational, Part 1</a>
                 <span class="archive_date">September 18, 2017</span>
             </li>
         
     </ul>
     <p class="archives">
-        <a href="../../archive/index.html">Browse Archive</a>
+        <a href="../../archive">Browse Archive</a>
     </p>
 
     <h3>More from Lab Members</h3>
@@ -235,36 +235,36 @@ cpsr: 0x00000010
     <div class="nav-links">
         
         
-            <a class="prev page-numbers" href="../7/index.html">Previous</a>
+            <a class="prev page-numbers" href="../7">Previous</a>
         
         
         
             
-                <a class="page-numbers" href="../1/index.html">1</a>
+                <a class="page-numbers" href="../1">1</a>
             
         
             
-                <a class="page-numbers" href="../2/index.html">2</a>
+                <a class="page-numbers" href="../2">2</a>
             
         
             
-                <a class="page-numbers" href="../3/index.html">3</a>
+                <a class="page-numbers" href="../3">3</a>
             
         
             
-                <a class="page-numbers" href="../4/index.html">4</a>
+                <a class="page-numbers" href="../4">4</a>
             
         
             
-                <a class="page-numbers" href="../5/index.html">5</a>
+                <a class="page-numbers" href="../5">5</a>
             
         
             
-                <a class="page-numbers" href="../6/index.html">6</a>
+                <a class="page-numbers" href="../6">6</a>
             
         
             
-                <a class="page-numbers" href="../7/index.html">7</a>
+                <a class="page-numbers" href="../7">7</a>
             
         
             
@@ -272,20 +272,20 @@ cpsr: 0x00000010
             
         
             
-                <a class="page-numbers" href="../9/index.html">9</a>
+                <a class="page-numbers" href="../9">9</a>
             
         
             
-                <a class="page-numbers" href="../10/index.html">10</a>
+                <a class="page-numbers" href="../10">10</a>
             
         
             
-                <a class="page-numbers" href="../11/index.html">11</a>
+                <a class="page-numbers" href="../11">11</a>
             
         
 
         
-            <a class="next page-numbers" href="../9/index.html">Next</a>
+            <a class="next page-numbers" href="../9">Next</a>
         
         
     </div>

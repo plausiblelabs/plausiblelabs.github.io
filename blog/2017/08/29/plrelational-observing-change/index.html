@@ -42,10 +42,10 @@
                 </a>
             </h3>
             <ul>
-                <li><a href="../../../../../software/index.html">Open Source</a></li>
-                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
-                <li><a href="../../../../index.html">Blog</a></li>
-                <li><a href="../../../../../about/index.html">About</a></li>
+                <li><a href="../../../../../software">Open Source</a></li>
+                <li><a href="../../../../../portfolio">Portfolio</a></li>
+                <li><a href="../../../..">Blog</a></li>
+                <li><a href="../../../../../about">About</a></li>
             </ul>
         </header>
             <div id="main">
@@ -59,7 +59,7 @@
                     <a href="#">PLRelational: Observing Change</a>
                 </h1>
                 <p class="author">August 29, 2017, by Chris Campbell</p>
-                <p><em>This is the second in a series of articles exploring the PLRelational framework. For a more general overview of PLRelational and friends, check out <a href="../../10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a>. To learn more about relational algebra and how it is used in PLRelational, head over to the <a href="../../24/intro-to-relational-algebra-using-plrelational/index.html">first article</a> in this series.</em></p><p>Before looking into all the goodies that PLRelational and PLRelationalBinding have to offer, it helps to first understand how the core <code>Relation</code> classes compute and deliver changes.</p><p>As a brief recap, PLRelational provides <a href="../../24/intro-to-relational-algebra-using-plrelational/index.html">combinators</a> that allow you to express a <code>Relation</code> through composition of other relations, and then register an observer that is notified whenever something changes. When a change is made to a lower-level <code>Relation</code>, each subsequent <code>Relation</code> interprets the changes reported by the one that came before it in the chain, producing a new set of changes, and so on.</p><p>To help illustrate this, we will set up a couple very simple "source" <code>Relations</code> and then use them to build up more interesting <code>Relations</code> through composition.</p><h4>Step 0: Declaring Relations</h4><p>First we will declare some <code>Attribute</code>s for our two <code>Relation</code>s using enums for quick-and-easy namespacing. It is possible to use a string literal in place of an <code>Attribute</code> but to avoid typos it's best to just declare an <code>Attribute</code> for each.</p>
+                <p><em>This is the second in a series of articles exploring the PLRelational framework. For a more general overview of PLRelational and friends, check out <a href="../../10/reactive-relational-programming-with-plrelational">Reactive Relational Programming with PLRelational</a>. To learn more about relational algebra and how it is used in PLRelational, head over to the <a href="../../24/intro-to-relational-algebra-using-plrelational">first article</a> in this series.</em></p><p>Before looking into all the goodies that PLRelational and PLRelationalBinding have to offer, it helps to first understand how the core <code>Relation</code> classes compute and deliver changes.</p><p>As a brief recap, PLRelational provides <a href="../../24/intro-to-relational-algebra-using-plrelational">combinators</a> that allow you to express a <code>Relation</code> through composition of other relations, and then register an observer that is notified whenever something changes. When a change is made to a lower-level <code>Relation</code>, each subsequent <code>Relation</code> interprets the changes reported by the one that came before it in the chain, producing a new set of changes, and so on.</p><p>To help illustrate this, we will set up a couple very simple "source" <code>Relations</code> and then use them to build up more interesting <code>Relations</code> through composition.</p><h4>Step 0: Declaring Relations</h4><p>First we will declare some <code>Attribute</code>s for our two <code>Relation</code>s using enums for quick-and-easy namespacing. It is possible to use a string literal in place of an <code>Attribute</code> but to avoid typos it's best to just declare an <code>Attribute</code> for each.</p>
 <pre><code>enum Fruit {
     static let id = Attribute(&quot;id&quot;)
     static let name = Attribute(&quot;name&quot;)
@@ -164,7 +164,7 @@ selectedFruitName.asyncUpdateString(&quot;Banana&quot;)
 </code></pre>
 <p style="text-align: center; height: 445px;">
 <img class="gifplayer" src="../../../../../assets/images/blog/uploads/2017/08/29/plrelational-observing-change/rc-step-6-static/index.png" data-gif="/assets/images/blog/uploads/2017/08/29/plrelational-observing-change/rc-step-6.gif" width="646" height="441" data-label="Play"/>
-</p><p>This demonstrates a cool feature of PLRelational, where updates can be applied to a higher-level <code>Relation</code> (i.e., one formed by composition with the help of the core combinators); those changes will propagate through the tree and will ultimately be applied to the underlying source relation. In this case, we applied the update to our <code>selectedFruitName</code> relation, and PLRelational was smart enough to apply those changes back to the corresponding row in the underlying <code>fruits</code> relation.</p><p>This feature is especially handy when working at the UI level. For example, we can have a form-style user interface with a <code>TextField</code> that is bound to the selected employee's first name. The user can edit the <code>TextField</code> and those changes will be written back to the original employee table in an on-disk database. We didn't have to write code that keeps the selected employee ID in memory, or explicitly write to the employee table using that ID.</p><h4>Go Forth and Explore</h4><p>As mentioned above, the examples from this article are taken from the <a href="https://github.com/plausiblelabs/plrelational/tree/master/Examples/RelationChangeApp">RelationChangeApp</a> demo in the PLRelational repository. Using that macOS application, you can step through each example and follow the animated visualizations to see how changes flow through the system. The <code>ViewModel</code> class is where the example steps are defined. Feel free to modify the code and add your own steps to get a better feel for how things work!</p><h4>Next Steps</h4><p>In this article we showed different ways to change the contents of a <code>Relation</code> and what those changes look like to an observer. These are fundamental concepts in PLRelational, and it is important to understand these basics before we move on to explore the features they enable, especially those in the PLRelationalBinding layer. So far we've just scratched the surface in discussing what PLRelational has to offer. In upcoming articles we plan to deep-dive into <em>how</em> things work (efficiently) in the implementation of PLRelational and also explore <em>what</em> becomes possible when you structure your application with a reactive-relational mindset.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio/index.html">consulting</a> page.</em></p>
+</p><p>This demonstrates a cool feature of PLRelational, where updates can be applied to a higher-level <code>Relation</code> (i.e., one formed by composition with the help of the core combinators); those changes will propagate through the tree and will ultimately be applied to the underlying source relation. In this case, we applied the update to our <code>selectedFruitName</code> relation, and PLRelational was smart enough to apply those changes back to the corresponding row in the underlying <code>fruits</code> relation.</p><p>This feature is especially handy when working at the UI level. For example, we can have a form-style user interface with a <code>TextField</code> that is bound to the selected employee's first name. The user can edit the <code>TextField</code> and those changes will be written back to the original employee table in an on-disk database. We didn't have to write code that keeps the selected employee ID in memory, or explicitly write to the employee table using that ID.</p><h4>Go Forth and Explore</h4><p>As mentioned above, the examples from this article are taken from the <a href="https://github.com/plausiblelabs/plrelational/tree/master/Examples/RelationChangeApp">RelationChangeApp</a> demo in the PLRelational repository. Using that macOS application, you can step through each example and follow the animated visualizations to see how changes flow through the system. The <code>ViewModel</code> class is where the example steps are defined. Feel free to modify the code and add your own steps to get a better feel for how things work!</p><h4>Next Steps</h4><p>In this article we showed different ways to change the contents of a <code>Relation</code> and what those changes look like to an observer. These are fundamental concepts in PLRelational, and it is important to understand these basics before we move on to explore the features they enable, especially those in the PLRelationalBinding layer. So far we've just scratched the surface in discussing what PLRelational has to offer. In upcoming articles we plan to deep-dive into <em>how</em> things work (efficiently) in the implementation of PLRelational and also explore <em>what</em> becomes possible when you structure your application with a reactive-relational mindset.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio">consulting</a> page.</em></p>
             </div>
 
             
@@ -182,33 +182,33 @@ selectedFruitName.asyncUpdateString(&quot;Banana&quot;)
     <ul>
         
             <li>
-                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft">PLCrashReporter Stewardship Moving to Microsoft</a>
                 <span class="archive_date">September 12, 2019</span>
             </li>
         
             <li>
-                <a href="../../../12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <a href="../../../12/14/a-new-home-for-voodoopad">A New Home for VoodooPad</a>
                 <span class="archive_date">December 14, 2017</span>
             </li>
         
             <li>
-                <a href="../../../10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <a href="../../../10/03/plrelational-query-optimization">PLRelational: Query Optimization and Execution</a>
                 <span class="archive_date">October 3, 2017</span>
             </li>
         
             <li>
-                <a href="../../../09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <a href="../../../09/28/build-with-plrelational-part-2">Let&#x27;s Build with PLRelational, Part 2</a>
                 <span class="archive_date">September 28, 2017</span>
             </li>
         
             <li>
-                <a href="../../../09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <a href="../../../09/18/build-with-plrelational-part-1">Let&#x27;s Build with PLRelational, Part 1</a>
                 <span class="archive_date">September 18, 2017</span>
             </li>
         
     </ul>
     <p class="archives">
-        <a href="../../../../archive/index.html">Browse Archive</a>
+        <a href="../../../../archive">Browse Archive</a>
     </p>
 
     <h3>More from Lab Members</h3>
