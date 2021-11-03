@@ -1,0 +1,1318 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/page/2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:09:33 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../assets/images/main/favicon/index.ico">
+        <script src="../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../index/index.html">
+                    <img src="../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../index.html">Blog</a></li>
+                <li><a href="../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                
+                    <h1>
+                        <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                    </h1>
+                    <p class="author">September 28, 2017, by Chris Campbell</p>
+                    <script>
+$(document).ready(function() {
+  var pt2regions = {
+    'req-link-6': { 'x': 323, 'y': 34, 'w': 304, 'h': 415, 'id': '6' },
+    'req-link-7': { 'x': 341, 'y': 48, 'w': 32, 'h': 32, 'id': '7' },
+    'req-link-8': { 'x': 370, 'y': 48, 'w': 150, 'h': 32, 'id': '8' },
+    'req-link-9': { 'x': 343, 'y': 103, 'w': 265, 'h': 32, 'id': '9' },
+    'req-link-10': { 'x': 343, 'y': 134, 'w': 265, 'h': 94, 'id': '10' },
+    'req-link-11': { 'x': 343, 'y': 252, 'w': 265, 'h': 130, 'id': '11' },
+    'req-link-12': { 'x': 343, 'y': 398, 'w': 162, 'h': 32, 'id': '12' },
+    'req-link-13': { 'x': 565, 'y': 394, 'w': 44, 'h': 40, 'id': '13' }
+  };
+  
+  $(".pt2-req-link").click(function(){
+      var region = pt2regions[this.id];
+      var reqID = region.id;
+      $('html, body').animate({
+          scrollTop: $( "#req" + reqID + "-head" ).offset().top - 60
+      }, 500);
+      return false;
+  });
+
+  $(".pt2-req-link").hover(
+    function(e) {
+      var region = pt2regions[this.id];
+      
+      $("#pt2-blackout").empty();
+      $("#pt2-blackout").append(` \
+        <svg viewbox="0 0 640 462" width="100%"> \
+          <defs> \
+            <mask id="mask" x="0" y="0" width="100%" height="100%"> \
+              <rect x="0" y="0" width="100%" height="100%" rx="4" ry="4" fill="#fff"/> \
+              <rect x="${region.x}" y="${region.y}" width="${region.w}" height="${region.h}" rx="4" ry="4"/> \
+            </mask> \
+          </defs> \
+          <rect x="0" y="0" width="640" height="462" mask="url(#mask)" fill-opacity="0.6"/> \
+        </svg> \
+      `)
+      
+      var reqID = region.id;
+      var reqHead = $("#req" + reqID + "-head");
+      var title = reqHead.find(".req-title").text();
+      var desc = reqHead.find(".req-desc").text();
+      $("#pt2-req-popup").html("<b>" + title + "</b><br/>" + "<i>" + desc + "</i>");
+
+      $(".pt2-req-link").not(this).hide();
+      $("#pt2-blackout").stop(true, true).fadeIn("fast");
+      $("#pt2-req-popup").stop(true, true).fadeIn("fast");
+    },
+    function(e) {
+      $(".pt2-req-link").not(this).show();
+      $("#pt2-blackout").stop(true, true).fadeOut("fast");
+      $("#pt2-req-popup").stop(true, true).fadeOut("fast");
+    }
+  );
+})
+</script>
+<style>
+.pt2-img-container {
+  position: relative;
+  height: 500px;
+  margin-top: 32px;
+}
+.pt2-img-container img {
+  filter: drop-shadow(0px 2px 4px #888);
+  margin-left: 14px;
+}
+.pt2-img-container a {
+  position: absolute;
+  color: white;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  background-color: red;
+  text-align: center;
+  vertical-align: middle;
+}
+.pt2-img-container .blackout {
+  position: absolute;
+  width: 640px;
+  height: 462px;
+  left: 14px;
+  top: 0px;
+}
+a.pt2-req-target {
+  display: block;
+  position: relative;
+  top: -60px;
+}
+#pt2-req-popup {
+  position: relative;
+  width: 264px;
+  margin-left: 36px;
+  margin-top: -250px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+.pt2-anim-gif-container .gifplayer-wrapper img {
+  border: 0px;
+}
+</style><p><em>This article picks up where <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Part 1</a> left off, continuing our look at building a real application using PLRelational.</em></p><p><em>For more background on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>, check out these other articles in the series:</em></p>
+<ul>
+  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
+  <li><em><a href="../../2017/09/07/plrelational-storage-formats/index.html">PLRelational: Storage Formats</a></em></li>
+</ul><p>In <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Part 1</a> of this article, we used PLRelational to build a portion of a to-do application for macOS. In this article, we will follow the same process and focus on building out the right-hand side of the application, specifically the detail view.</p><p>The detail view allows the user to change the status or text of the selected to-do item, apply tags, add notes, or delete the item. Click the "Play" button below to see the detail view in action:</p>
+<p class="pt2-anim-gif-container" style="text-align: center; height: 520px;">
+<img class="gifplayer" src="../../../assets/images/blog/uploads/2017/09/28/build-with-plrelational-part-2/todo-2-static/index.png" data-gif="/assets/images/blog/uploads/2017/09/28/build-with-plrelational-part-2/todo-2.gif" width="662" height="510" data-label="Play"/>
+</p><p>As in Part 1, we've broken the right half of the application down into distinct functional requirements that describe how each piece of the UI should behave.</p><p>The following interactive screenshot shows the right half of the app in its completed state. Each red dot corresponds to a single functional requirement. Hover over a dot to read a summary of the requirement, then click to see how we implemented it using PLRelational.</p>
+<div class="pt2-img-container">
+    <img width="640" height="462" src="../../../assets/images/blog/uploads/2017/09/28/build-with-plrelational-part-2/screenshot-2/index.png" />
+    <div id="pt2-blackout" class="blackout" hidden="true"></div>
+    <a style="left: 324px; top: 230px;" class="pt2-req-link" id="req-link-6" href="#req6">6</a>
+    <a style="left: 358px; top: 24px;" class="pt2-req-link" id="req-link-7" href="#req7">7</a>
+    <a style="left: 444px; top: 24px;" class="pt2-req-link" id="req-link-8" href="#req8">8</a>
+    <a style="left: 620px; top: 105px;" class="pt2-req-link" id="req-link-9" href="#req9">9</a>
+    <a style="left: 620px; top: 145px;" class="pt2-req-link" id="req-link-10" href="#req10">10</a>
+    <a style="left: 620px; top: 280px;" class="pt2-req-link" id="req-link-11" href="#req11">11</a>
+    <a style="left: 426px; top: 430px;" class="pt2-req-link" id="req-link-12" href="#req12">12</a>
+    <a style="left: 589px; top: 430px;" class="pt2-req-link" id="req-link-13" href="#req13">13</a>
+    <p id="pt2-req-popup" hidden="true"></p>
+</div><p>Let's explore how we implemented this half of the application. (To follow along with the complete source code in Xcode, clone the <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a> repository and open <code>Example Apps</code> &gt; <code>TodoApp</code> in the project.)</p>
+<div class="req" id="req6-head">
+<a class="pt2-req-target" name="req6"></a>
+<h4 class="req-title">REQ-6: Selected Item Detail</h4>
+<p class="req-desc">
+<i>A detail view on the right side that allows the user to change information about the to-do item that is currently selected in the list.  If there is no selection, the detail view should be hidden and replaced by a gray "No Selection" label.</i>
+</p>
+</div><p>There are two parts to this requirement.</p><p>First we need to bind the selection state of the list view to our <code>selectedItemIDs</code> relation. Every time the user selects an item in the list, the identifier of that item will be poked into the <code>selectedItemIDs</code> relation. In later steps, we will <code>join</code> that relation with others to derive data related to the selected item, such as its title.</p><p>Once we have the selection binding in place, we can expose a <code>hasSelection</code> property that resolves to <code>true</code> whenever there is an item selected in the list view. This makes it easy to set up bindings at the view level to toggle between showing the "No Selection" label and the detail view:</p>
+<pre><code>class Model { ...
+    /// Resolves to the item that is selected in the list of to-do items.
+    lazy var selectedItems: Relation = {
+        return self.selectedItemIDs.join(self.items)
+    }()
+
+    /// Resolves to `true` when an item is selected in the list of to-do items.
+    lazy var hasSelection: AsyncReadableProperty&lt;Bool&gt; = {
+        return self.selectedItems.nonEmpty.property()
+    }()
+}
+
+class ChecklistViewModel { ...
+    /// Holds the ID of the to-do item that is selected in the list view.  This
+    /// is a read/write property that is backed by UndoableDatabase, meaning that
+    /// even selection changes can be undone (which admittedly is taking things
+    /// to an extreme but we&#39;ll keep it like this for demonstration purposes).
+    lazy var itemsListSelection: AsyncReadWriteProperty&lt;Set&lt;RelationValue&gt;&gt; = {
+        return self.model.selectedItemIDs
+            .undoableAllRelationValues(self.model.undoableDB, &quot;Change Selection&quot;)
+    }()
+}
+
+class ChecklistView { ...
+    init() { ...
+        // Bidirectionally bind list view selection to the view model
+        listView.selection &lt;~&gt; model.itemsListSelection
+    }
+}
+
+class AppDelegate { ...
+    func applicationDidFinishLaunching() { ...
+        // Toggle the &quot;No Selection&quot; label and detail view depending
+        // on the selection state
+        detailView.visible &lt;~ model.hasSelection
+        noSelectionLabel.visible &lt;~ not(model.hasSelection)
+    }
+}
+</code></pre><p>Note that we define <code>itemsListSelection</code> as an undoable property, just to show that even things like selection state can be modeled using relations and can participate in the undo system. (Lightroom is an example of an application where selection changes are part of the history stack.)</p>
+<div class="req" id="req7-head">
+<a class="pt2-req-target" name="req7"></a>
+<h4 class="req-title">REQ-7: Selected Item Completed Checkbox</h4>
+<p class="req-desc">
+<i>A checkbox at the top-left of the detail view.  This should reflect whether the selected to-do item is pending (unchecked) or completed (checked).  The behavior of this checkbox is the same as described in <a href="../../2017/09/18/build-with-plrelational-part-1/index.html#req3">REQ-3</a>, except that it controls the selected item's position in the list.</i>
+</p>
+</div><p>Hooking up the checkbox in the detail view is almost identical to the way we did it for list cells in <a href="../../2017/09/18/build-with-plrelational-part-1/index.html#req3">REQ-3</a>. In fact, we use the same <code>itemCompleted</code> function from <code>Model</code>, except this time we pass it a <code>Relation</code> that focuses on the <code>status</code> value of the selected item:</p>
+<pre><code>class DetailViewModel { ...
+    /// The completed status of the item.
+    lazy var itemCompleted: AsyncReadWriteProperty&lt;CheckState&gt; = {
+        let relation = self.model.selectedItems.project(Item.status)
+        return self.model.itemCompleted(relation, initialValue: nil)
+    }()
+}
+
+class DetailView { ...
+    init() { ...
+        // Bidirectionally bind checkbox state to the view model
+        checkbox.checkState &lt;~&gt; model.itemCompleted
+    }
+}
+</code></pre>
+<div class="req" id="req8-head">
+<a class="pt2-req-target" name="req8"></a>
+<h4 class="req-title">REQ-8: Selected Item Title Field</h4>
+<p class="req-desc">
+<i>A text field to the right of the checkbox in the detail view.  This should reflect the title of the selected to-do item.  If the user changes the title in the detail view and presses enter, the title should also be updated in the selected list cell.</i>
+</p>
+</div><p>Just like with the last step, wiring up the text field in the detail view follows the same approach used in <a href="../../2017/09/18/build-with-plrelational-part-1/index.html#req4">REQ-4</a> (list cell text field):</p>
+<pre><code>class DetailViewModel { ...
+    /// The item&#39;s title.  This is a read/write property that is backed
+    /// by UndoableDatabase, so any changes made to it in the text field
+    /// can be rolled back by the user.
+    lazy var itemTitle: AsyncReadWriteProperty&lt;String&gt; = {
+        let titleRelation = self.model.selectedItems.project(Item.title)
+        return self.model.itemTitle(titleRelation, initialValue: nil)
+    }()
+}
+
+class DetailView { ...
+    init() { ...
+        // Bidirectionally bind title field to the view model
+        titleField.string &lt;~&gt; model.itemTitle
+    }
+}
+</code></pre>
+<div class="req" id="req9-head">
+<a class="pt2-req-target" name="req9"></a>
+<h4 class="req-title">REQ-9: Assign Tag Combo Box</h4>
+<p class="req-desc">
+<i>A combo box with placeholder "Assign a tag".  The pull-down menu should include a list of available tags (all tags that haven't yet been applied; if a tag has been applied it should not appear in the menu).  The user can also type in an existing tag or new tag.  If the user clicks or enters a tag, that tag should be added to the set of applied tags for the selected to-do item.</i>
+</p>
+</div><p>Combo boxes are complex controls (they are part menu and part text field), so let's break this up into a few parts. First we'll show how we populate the menu of available tags:</p>
+<pre><code>class Model { ...
+    /// Resolves to the set of tags that are associated with the selected to-do
+    /// item (assumes there is either zero or one selected items).
+    lazy var tagsForSelectedItem: Relation = {
+        return self.selectedItemIDs
+            .join(self.itemTags)
+            .join(self.tags)
+            .project([Tag.id, Tag.name])
+    }()
+
+    /// Resolves to the set of tags that are not yet associated with the
+    /// selected to-do item, i.e., the available tags.
+    lazy var availableTagsForSelectedItem: Relation = {
+        // This is simply &quot;all tags&quot; minus &quot;already applied tags&quot;, nice!
+        return self.tags
+            .difference(self.tagsForSelectedItem)
+    }()
+}
+
+class DetailViewModel { ...
+    /// The tags that are available (i.e., not already applied) for the selected
+    /// to-do item, sorted by name.  We use `fullArray` so that the entire array
+    /// is delivered any time there is a change; this helps to make it
+    /// compatible with the `EphemeralComboBox` class.
+    lazy var availableTags: AsyncReadableProperty&lt;[RowArrayElement]&gt; = {
+        return self.model.availableTagsForSelectedItem
+            .arrayProperty(idAttr: Tag.id, orderAttr: Tag.name)
+            .fullArray()
+    }()
+}
+
+class DetailView { ...
+    init() { ...
+        // Bind combo box menu items to the view model
+        tagComboBox.items &lt;~ model.availableTags
+    }
+}
+</code></pre><p>Next we'll show how to handle when an existing tag is selected in the menu:</p>
+<pre><code>class Model { ...
+    /// Applies an existing tag to the given to-do item.
+    func addExistingTag(_ tagID: TagID, to itemID: ItemID) {
+        undoableDB.performUndoableAction(&quot;Add Tag&quot;, {
+            self.itemTags.asyncAdd([
+                ItemTag.itemID: itemID,
+                ItemTag.tagID: tagID
+            ])
+        })
+    }
+}
+
+class DetailViewModel { ...
+    /// Adds an existing tag to the selected to-do item.
+    lazy var addExistingTagToSelectedItem: ActionProperty&lt;RelationValue&gt; = ActionProperty { tagID in
+        self.model.addExistingTag(TagID(tagID), to: self.itemID.value!!)
+    }
+}
+
+class DetailView { ...
+    init() { ...
+        // When a tag is selected, add that tag to the selected to-do item
+        tagComboBox.selectedItemID ~~&gt; model.addExistingTagToSelectedItem
+    }
+}
+</code></pre><p>Finally we'll show how to handle when a new tag is entered in the combo field:</p>
+<pre><code>class Model { ...
+    /// Creates a new tag and applies it to the given to-do item.
+    func addNewTag(named name: String, to itemID: ItemID) {
+        let tagID = TagID()
+
+        undoableDB.performUndoableAction(&quot;Add New Tag&quot;, {
+            self.tags.asyncAdd([
+                Tag.id: tagID,
+                Tag.name: name
+            ])
+
+            self.itemTags.asyncAdd([
+                ItemTag.itemID: itemID,
+                ItemTag.tagID: tagID
+            ])
+        })
+    }
+}
+
+class DetailViewModel { ...
+    /// Creates a new tag of the given name and adds it to the selected to-do item.
+    lazy var addNewTagToSelectedItem: ActionProperty&lt;String&gt; = ActionProperty { name in
+        // See if a tag already exists with the given name
+        let itemID = self.itemID.value!!
+        let existingIndex = self.model.allTags.value?.index(where: {
+            let rowName: String = $0.data[Tag.name].get()!
+            return name == rowName
+        })
+        if let index = existingIndex {
+            // A tag already exists with the given name, so apply that tag
+            // rather than creating a new one
+            let elem = self.model.allTags.value![index]
+            let tagID = TagID(elem.data)
+            self.model.addExistingTag(tagID, to: itemID)
+        } else {
+            // No tag exists with that name, so create a new tag and apply
+            // it to this item
+            self.model.addNewTag(named: name, to: itemID)
+        }
+    }
+}
+
+class DetailView { ...
+    init() { ...
+        // Add a new tag each time a string is entered into the combo field
+        tagComboBox.committedString ~~&gt; model.addNewTagToSelectedItem
+    }
+}
+</code></pre>
+<div class="req" id="req10-head">
+<a class="pt2-req-target" name="req10"></a>
+<h4 class="req-title">REQ-10: Selected Item Tags List</h4>
+<p class="req-desc">
+<i>A list of tags that have been applied to the selected to-do item.</i>
+</p>
+</div><p>Setting up this list view follows roughly the same process that we used for the list of to-do items in REQ-2 through REQ-5:</p>
+<ol>
+  <li>Define the <code>ListViewModel</code>. In this case, the list will contain the array of tags for the selected to-do item, sorted by name.</li>
+  <li>Define a property to hold the selection state of the list.</li>
+  <li>Define properties for each element of the list cell. In this case, there is a single text field for the tag name, and we want to allow the user to edit the name so we set it up as a bidirectional binding.</li>
+  <li>Bind the views to those properties we defined in the <em>View Model</em> layer.</li>
+</ol><p>Here's what that process looks like in code form:</p>
+<pre><code>class Model { ...
+    /// Returns a property that reflects the tag name.
+    func tagName(for tagID: TagID, initialValue: String?) -&gt; AsyncReadWriteProperty&lt;String&gt; {
+        return self.tags
+            .select(Tag.id *== tagID)
+            .project(Tag.name)
+            .undoableOneString(undoableDB, &quot;Change Tag Name&quot;, initialValue: initialValue)
+    }
+}
+
+class DetailViewModel { ...
+    /// The tags associated with the selected to-do item, sorted by name.
+    private lazy var itemTags: ArrayProperty&lt;RowArrayElement&gt; = {
+        return self.model.tagsForSelectedItem
+            .arrayProperty(idAttr: Tag.id, orderAttr: Tag.name)
+    }()
+
+    /// The model for the tags list, i.e., the tags that have been applied to the
+    /// selected to-do item.
+    lazy var tagsListViewModel: ListViewModel&lt;RowArrayElement&gt; = {
+        return ListViewModel(
+            data: self.itemTags,
+            cellIdentifier: { _ in &quot;Cell&quot; }
+        )
+    }()
+
+    /// Returns a read/write property that resolves to the name for the given tag.
+    func tagName(for row: Row) -&gt; AsyncReadWriteProperty&lt;String&gt; {
+        let tagID = TagID(row)
+        let name: String? = row[Tag.name].get()
+        return self.model.tagName(for: tagID, initialValue: name)
+    }
+
+    /// Holds the ID of the tag that is selected in the tags list view.
+    lazy var selectedTagID: ReadWriteProperty&lt;Set&lt;RelationValue&gt;&gt; = {
+        return mutableValueProperty(Set())
+    }()
+}
+
+class DetailView { ...
+    init() { ...
+        // Bind outline view to the tags list view model
+        tagsListView = ListView(model: model.tagsListViewModel,
+                                outlineView: tagsOutlineView)
+
+        // Bidirectionally bind list view selection to the view model
+        tagsListView.selection &lt;~&gt; model.selectedTagID
+
+        tagsListView.configureCell = { view, row in
+            // Bidirectionally bind tag name field to the view model
+            let textField = view.textField as! TextField
+            textField.string.unbindAll()
+            textField.string &lt;~&gt; model.tagName(for: row)
+        }
+    }
+}
+</code></pre>
+<div class="req" id="req11-head">
+<a class="pt2-req-target" name="req11"></a>
+<h4 class="req-title">REQ-11: Selected Item Notes</h4>
+<p class="req-desc">
+<i>A text view that allows the user to type in notes about the selected to-do item.</i>
+</p>
+</div><p>This step is straightforward. There is a single read/write property that reflects the <code>notes</code> value for the selected to-do item, and we bidirectionally bind it to the <code>TextView</code>:</p>
+<pre><code>class Model { ...
+    /// Returns a property that reflects the selected item&#39;s notes.
+    lazy var selectedItemNotes: AsyncReadWriteProperty&lt;String&gt; = {
+        return self.selectedItems
+            .project(Item.notes)
+            .undoableOneString(self.undoableDB, &quot;Change Notes&quot;)
+    }()
+}
+
+class DetailViewModel { ...
+    /// The item&#39;s notes.
+    lazy var itemNotes: AsyncReadWriteProperty&lt;String&gt; = {
+        return self.model.selectedItemNotes
+    }()
+}
+
+class DetailView { ...
+    init() { ...
+        // Bidirectionally bind content of notes text view to the view model
+        notesTextView.text &lt;~&gt; model.itemNotes
+    }
+}
+</code></pre><p>The <code>TextView</code> class will take care of delivering changes via its <code>text</code> property whenever the user is done editing (as a result of a change in first responder, for example).</p>
+<div class="req" id="req12-head">
+<a class="pt2-req-target" name="req12"></a>
+<h4 class="req-title">REQ-12: Selected Item "Created On" Label</h4>
+<p class="req-desc">
+<i>A read-only label that shows when the selected to-do item was created, e.g. "Created on Sep 1, 2017".</i>
+</p>
+</div><p>This step is also relatively simple. It's a read-only label, so we only have to worry about transforming the raw <code>created</code> timestamp string, as stored in the <code>items</code> relation, to a display-friendly string:</p>
+<pre><code>class DetailViewModel { ...
+    /// The text that appears in the &quot;Created on &lt;date&gt;&quot; label.  This
+    /// demonstrates the use of `map` to convert the raw timestamp string
+    /// (as stored in the relation) to a display-friendly string.
+    lazy var createdOn: AsyncReadableProperty&lt;String&gt; = {
+        return self.model.selectedItems
+            .project(Item.created)
+            .oneString()
+            .map{ &quot;Created on \(displayString(from: $0))&quot; }
+            .property()
+    }()
+}
+
+class DetailView { ...
+    init() { ...
+        // Bind &quot;Created on &lt;date&gt;&quot; label to the view model
+        createdOnLabel.string &lt;~ model.createdOn
+    }
+}
+</code></pre><p>Let's dissect that <code>createdOn</code> declaration:</p>
+<pre><code>// Start with the `selectedItems` relation
+self.model.selectedItems
+
+// Take (`project`) the `created` attribute of the `selectedItems` relation
+.project(Item.created)
+
+// Derive a `Signal` that carries the raw timestamp string when there is a
+// selected to-do item (or an empty string when there is no selection)
+.oneString()
+
+// Convert the raw timestamp string into a display-friendly one
+.map{ &quot;Created on \(displayString(from: $0))&quot; }
+
+// Lift the `Signal` into an `AsyncReadableProperty` that offers the latest value
+.property()
+</code></pre><p>This is another example of the <code>Relation</code> -&gt; <code>Signal</code> -&gt; <code>Property</code> pattern that we discussed earlier in <a href="../../2017/09/18/build-with-plrelational-part-1/index.html#req5">REQ-5</a>. You will encounter this pattern frequently when working with PLRelationalBinding, so it's a good idea to familiarize yourself with it.</p>
+<div class="req" id="req13-head">
+<a class="pt2-req-target" name="req13"></a>
+<h4 class="req-title">REQ-13: Delete Selected Item Button</h4>
+<p class="req-desc">
+<i>A delete button.  If the user clicks this button, the selected item should be deleted (removed from the list entirely) and the list selection should be cleared (no item selected).</i>
+</p>
+</div><p>We're almost done! Deletion is an interesting case because we need to be able to delete not just the row in the <code>items</code> relation but also the associated rows in <code>itemTags</code> and <code>selectedItemIDs</code>. If we had the ID of the selected item handy we could simply issue three <code>asyncDelete</code> calls and be done with it, but where's the fun in that? Nowhere, that's where. So instead, let's demonstrate the fancy <code>cascadingDelete</code> function:</p>
+<pre><code>class Model { ...
+    /// Deletes the row associated with the selected item and
+    /// clears the selection.  This demonstrates the use of
+    /// `cascadingDelete`, which is kind of overkill for this
+    /// particular case but does show how easy it can be to
+    /// clean up related data with a single call.
+    func deleteSelectedItem() {
+        undoableDB.performUndoableAction(&quot;Delete Item&quot;, {
+            // We initiate the cascading delete by first removing
+            // all rows from `selectedItemIDs`
+            self.selectedItemIDs.cascadingDelete(
+                true, // `true` here means &quot;all rows&quot;
+                affectedRelations: [
+                    self.items, self.selectedItemIDs, self.itemTags
+                ],
+                cascade: { (relation, row) in
+                    if relation === self.selectedItemIDs {
+                        // This row was deleted from `selectedItemIDs`;
+                        // delete corresponding rows from `items`
+                        // and `itemTags`
+                        let itemID = ItemID(row)
+                        return [
+                            (self.items, Item.id *== itemID),
+                            (self.itemTags, ItemTag.itemID *== itemID)
+                        ]
+                    } else {
+                        // Nothing else to clean up
+                        return []
+                    }
+                }
+            )
+        })
+    }
+}
+
+class DetailViewModel { ...
+    /// Deletes the selected item.  This demonstrates the use of
+    /// `ActionProperty` to expose an imperative (side effect producing)
+    /// action as a property that can easily be bound to a `Button`.
+    lazy var deleteItem: ActionProperty&lt;()&gt; = ActionProperty { _ in
+        self.model.deleteSelectedItem()
+    }
+}
+
+class DetailView { ...
+    init() { ...
+        // When the button is clicked, delete the selected item
+        deleteButton.clicks ~~&gt; model.deleteItem
+    }
+}
+</code></pre><p>This was a pretty straightforward use of <code>cascadingDelete</code>, but it offers other features (not used in this particular example) that really come in handy when deleting lots of interconnected data and repairing connections affected by the deletion. Additionally, there is a companion to <code>cascadingDelete</code> called <code>treeDelete</code> that simplifies deletion of hierarchical data. For more on these, check out <code>MutableRelationCascadingDelete.swift</code> in the repository along with some example uses in <code>RelationTests.swift</code>.</p><h3>Quiet Victories</h3><p>While most of this article was focused on showing how succinctly and easily we can build a user interface using PLRelational, it's worth noting the things you <em>didn't</em> see. These are just a few of the things you no longer have to worry about, because PLRelational does the hard work for you:</p>
+<ul>
+  <li><p><em>Objects, object graphs, observers:</em> In a traditional application, we would have defined classes or structs for things like <code>Item</code> and <code>Tag</code>, and we would have had to maintain some sort of manager/controller to handle loading them from disk (and saving them back again), maintaining the relationships in a complex graph, updating those objects and sending out notifications to observers when something has changed, and so forth. With PLRelational, all of this gets handled through <code>Relation</code>s and their reactive extensions; in our to-do application, we never explicitly loaded data into objects, and data flows from disk up to the user interface and back again through those <code>Relation</code>s.</p></li>
+  <li><p><em>Undo/Redo:</em> In a traditional application, we would have had to register with the <code>UndoManager</code> separate imperative methods for each undoable action: one to apply the change, and one to roll it back (along with the required support in the user interface layer to correctly react to those changes). With PLRelational, deltas can be automatically computed with each change, so implementing undo/redo support in your application is as easy as providing a "forward" transaction. When the user performs an undo or redo operation, the framework simply reverts the relations to a particular snapshot, and the user interface layer automatically updates by virtue of the reactive bindings.</p></li>
+  <li><p><em>Table updates:</em> In a traditional Cocoa application, we would have had to implement the <code>NSTableViewDataSource</code> and <code>NSTableViewDelegate</code> protocols, writing fragile logic to coordinate updates to the table view in response to some changes in the object graph. With PLRelational, the <code>ArrayProperty</code> and <code>ListView</code> classes work in concert, tracking changes made in the relations and delivering them in a nice bundle to the underlying <code>NSTableView</code> with almost no custom logic needed on your part.</p></li>
+</ul><h3>Wrapping Up</h3><p>Over the course of this two-part article, we demonstrated how to use PLRelational to model source relations and then use a reactive-relational style of programming to build a working macOS application.</p><p>The vocabulary offered by PLRelational makes it easy to declare — and reason about — the relationships between data in your application and how it is presented in the user interface. Although we focused on building a macOS application in this article, the same techniques can be used to simplify development of iOS applications as well. (And perhaps we will demonstrate just that in a future article!)</p><p>The complete source code for this application is available in the <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a> repository under the <code>Examples/TodoApp</code> directory and can be run directly from the Xcode project.</p><p>Finally, if you've been experimenting with PLRelational and have thoughts to share, or have a topic related to these frameworks that you'd like us to cover, please <a href="https://twitter.com/plausiblelabs">tweet at us</a> or <a href="mailto:contact@plausible.coop">mail it in</a>!</p>
+                
+                    <h1>
+                        <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                    </h1>
+                    <p class="author">September 18, 2017, by Chris Campbell</p>
+                    <script>
+$(document).ready(function() {
+  var pt1regions = {
+    'req-link-1': { 'x': 14, 'y': 40, 'w': 302, 'h': 34, 'id': '1' },
+    'req-link-2': { 'x': 14, 'y': 74, 'w': 302, 'h': 116, 'id': '2' },
+    'req-link-3': { 'x': 30, 'y': 74, 'w': 28, 'h': 116, 'id': '3' },
+    'req-link-4': { 'x': 56, 'y': 74, 'w': 132, 'h': 116, 'id': '4' },
+    'req-link-5': { 'x': 216, 'y': 74, 'w': 88, 'h': 116, 'id': '5' }
+  };
+  
+  $(".pt1-req-link").click(function(){
+      var region = pt1regions[this.id];
+      var reqID = region.id;
+      $('html, body').animate({
+          scrollTop: $( "#req" + reqID + "-head" ).offset().top - 60
+      }, 500);
+      return false;
+  });
+
+  $(".pt1-req-link").hover(
+    function(e) {
+      var region = pt1regions[this.id];
+      
+      $("#pt1-blackout").empty();
+      $("#pt1-blackout").append(` \
+        <svg viewbox="0 0 640 462" width="100%"> \
+          <defs> \
+            <mask id="mask" x="0" y="0" width="100%" height="100%"> \
+              <rect x="0" y="0" width="100%" height="100%" rx="4" ry="4" fill="#fff"/> \
+              <rect x="${region.x}" y="${region.y}" width="${region.w}" height="${region.h}" rx="4" ry="4"/> \
+            </mask> \
+          </defs> \
+          <rect x="0" y="0" width="640" height="462" mask="url(#mask)" fill-opacity="0.6"/> \
+        </svg> \
+      `)
+      
+      var reqID = region.id;
+      var reqHead = $("#req" + reqID + "-head");
+      var title = reqHead.find(".req-title").text();
+      var desc = reqHead.find(".req-desc").text();
+      $("#pt1-req-popup").html("<b>" + title + "</b><br/>" + "<i>" + desc + "</i>");
+
+      $(".pt1-req-link").not(this).hide();
+      $("#pt1-blackout").stop(true, true).fadeIn("fast");
+      $("#pt1-req-popup").stop(true, true).fadeIn("fast");
+    },
+    function(e) {
+      $(".pt1-req-link").not(this).show();
+      $("#pt1-blackout").stop(true, true).fadeOut("fast");
+      $("#pt1-req-popup").stop(true, true).fadeOut("fast");
+    }
+  );
+})
+</script>
+<style>
+.pt1-img-container {
+  position: relative;
+  height: 500px;
+  margin-top: 32px;
+}
+.pt1-img-container img {
+  filter: drop-shadow(0px 2px 4px #888);
+  margin-left: 14px;
+}
+.pt1-img-container a {
+  position: absolute;
+  color: white;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  background-color: red;
+  text-align: center;
+  vertical-align: middle;
+}
+.pt1-img-container .blackout {
+  position: absolute;
+  width: 640px;
+  height: 462px;
+  left: 14px;
+  top: 0px;
+}
+a.pt1-req-target {
+  display: block;
+  position: relative;
+  top: -60px;
+}
+#pt1-req-popup {
+  position: relative;
+  width: 264px;
+  margin-left: 36px;
+  margin-top: -250px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+.pt1-anim-gif-container .gifplayer-wrapper img {
+  border: 0px;
+}
+</style><p><em>This is our latest entry in a series of articles on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>. For more background, check out these other articles in the series:</em></p>
+<ul>
+  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
+  <li><em><a href="../../2017/09/07/plrelational-storage-formats/index.html">PLRelational: Storage Formats</a></em></li>
+</ul><p>Since we started opening up about PLRelational, a number of developers have asked us how it compares to some particular existing technology, e.g. Core Data, Rx, Cocoa Bindings, or SQLite. It's a good question, but before we can clearly explain the differences, we should first dissect a working application that was built using PLRelational.</p><p>Our goal with this article is to give a big picture look at PLRelational and how it can be used to build an actual application. We will show how you can do things the <em>PLRelational Way</em>, and that will give us a baseline to help compare and contrast to existing technologies in a future article.</p><p>We believe PLRelational[+Binding] gives you a unique, expressive vocabulary for declaring how your UI is connected. Once you've declared those relationships, the frameworks can do a lot of heavy lifting, simplifying the way you build an application. As we will demonstrate here, there are a few patterns commonly used when working with PLRelational that can help bring a sense of order and sanity to application development. </p><h3>What Should We Build?</h3><p>To get started, we need to think of a relatively constrained type of application to build, and there's no better (or more clichéd) example than a to-do app, so let's run with that. In a nutshell, our application will allow the user to:</p>
+<ul>
+  <li>enter new to-do items</li>
+  <li>mark an item as completed</li>
+  <li>change the item text</li>
+  <li>add tags to an item</li>
+  <li>add notes for an item</li>
+  <li>delete an item</li>
+</ul><p>When the application is finished, it should look something like the following, except a bit prettier:</p>
+<p style="text-align: center; height: 380px; margin: 24px 0px;">
+<img src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/mockup/index.png" width="590" height="380"/>
+</p><p>Additionally, our application should automatically save everything to disk, and it should allow the user to undo or redo <em>any</em> change.</p><h3>How Do We Organize It?</h3><p>When building applications using PLRelational, we use an approach that is very similar to MVVM (Model / View / View Model).</p><p>In traditional MVVM-based apps, it is often the case that the <em>Model</em> layer is based on some sort of in-memory object graph that is pulled from (and stored back to) some source, e.g. files on disk, a database, or the network.</p><p>With PLRelational, we forego the traditional object graph and instead build the <em>Model</em> by declaring how our source relations are laid out (most likely backed by some on-disk storage, e.g. plists or SQLite) and defining some base operations that modify those relations.</p>
+<p style="text-align: center; height: 468px; margin-top: -20px; margin-bottom: 2px;">
+<img src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/mvvm/index.png" width="624" height="468"/>
+</p><p>As seen in this diagram, when building with PLRelational the implementation of each piece of the user interface is typically spread across three layers:</p>
+<ul>
+  <li><p>In the <strong><em>Model</em></strong> layer, we declare our source <code>Relation</code>s and define transactions that modify those <code>Relation</code>s.</p></li>
+  <li><p>In the <strong><em>View Model</em></strong> layer, we declare <code>Relation</code> / <code>Signal</code> / <code>Property</code> chains that express how the data from our <em>Model</em> layer is to be transformed for display. If the interaction is two-way, as is the case for something like a text field, we'll also declare how changes made by the user should be transformed before being stored back via the <em>Model</em> layer.</p></li>
+  <li><p>In the <strong><em>View</em></strong> layer, we define the views and bind them to the <code>Property</code> chains that we expressed in our <em>View Model</em> layer.</p></li>
+</ul><p>Note that in a larger application, you would probably consider splitting up the <em>Model</em> layer over multiple classes for improved separation of concerns and modularity. Our to-do application on the other hand is relatively simple, so a single <code>Model</code> class will be sufficient to encapsulate all the relations we care about. </p><h3>Declaring Relations</h3><p>Let's begin building our <em>Model</em> layer by declaring the attributes and layout of our 4 relations, which will be stored on disk using property list files:</p>
+<pre><code>/// Scheme for the `item` relation that holds the to-do items.
+enum Item {
+    static let id = Attribute(&quot;item_id&quot;)
+    static let title = Attribute(&quot;title&quot;)
+    static let created = Attribute(&quot;created&quot;)
+    static let status = Attribute(&quot;status&quot;)
+    static let notes = Attribute(&quot;notes&quot;)
+    fileprivate static var spec: Spec { return .file(
+        name: &quot;item&quot;,
+        path: &quot;items.plist&quot;,
+        scheme: [id, title, created, status, notes],
+        primaryKeys: [id]
+    )}
+}
+
+/// Scheme for the `tag` relation that holds the named tags.
+enum Tag {
+    static let id = Attribute(&quot;tag_id&quot;)
+    static let name = Attribute(&quot;name&quot;)
+    fileprivate static var spec: Spec { return .file(
+        name: &quot;tag&quot;,
+        path: &quot;tags.plist&quot;,
+        scheme: [id, name],
+        primaryKeys: [id]
+    )}
+}
+
+/// Scheme for the `item_tag` relation that associates zero
+/// or more tags with a to-do item.
+enum ItemTag {
+    static let itemID = Item.id
+    static let tagID = Tag.id
+    fileprivate static var spec: Spec { return .file(
+        name: &quot;item_tag&quot;,
+        path: &quot;item_tags.plist&quot;,
+        scheme: [itemID, tagID],
+        primaryKeys: [itemID, tagID]
+    )}
+}
+
+/// Scheme for the `selected_item` relation that maintains
+/// the selection state for the list of to-do items.
+enum SelectedItem {
+    static let id = Item.id
+    fileprivate static var spec: Spec { return .transient(
+        name: &quot;selected_item&quot;,
+        scheme: [id],
+        primaryKeys: [id]
+    )}
+}
+</code></pre><p>We use enums to provide a namespace for the <code>Attribute</code>s associated with each <code>Relation</code>. For each one we also declare a <code>Spec</code> (typealias for <code>PlistDatabase.RelationSpec</code>) that tells our <code>PlistDatabase</code> how the relations will be stored on disk in property list format. In the case of <code>ItemTag</code> and <code>SelectedItem</code>, we use identifier attributes that act as foreign keys referring to the <code>Item</code> and <code>Tag</code> relations.</p><h3>Preparing the Model</h3><p>The next step is to use these "specs" to initialize a <code>PlistDatabase</code> by loading existing data from disk or creating a new one. We wrap it in a <code>TransactionalDatabase</code> so that we can capture and apply snapshots. That class also has a handy <code>saveOnTransactionEnd</code> feature that, when enabled, gives us auto-save functionality. Finally, we wrap the <code>TransactionalDatabase</code> in an <code>UndoableDatabase</code> which will help us coordinate undoable/redoable operations:</p>
+<pre><code>class Model {
+    let items: TransactionalRelation
+    let tags: TransactionalRelation
+    let itemTags: TransactionalRelation
+    let selectedItemIDs: TransactionalRelation
+
+    ...
+
+    init(undoManager: PLRelationalBinding.UndoManager) {
+        let specs: [Spec] = [
+            Item.spec,
+            Tag.spec,
+            ItemTag.spec,
+            SelectedItem.spec
+        ]
+
+        // Create a database or open an existing one (stored on disk using plists)
+        let path = &quot;/tmp/TodoApp.db&quot;
+        let plistDB = PlistDatabase.create(URL(fileURLWithPath: path), specs).ok!
+
+        // Wrap it in a TransactionalDatabase so that we can use snapshots, and
+        // enable auto-save so that all changes are persisted to disk as needed
+        let db = TransactionalDatabase(plistDB)
+        db.saveOnTransactionEnd = true
+        self.db = db
+
+        // Wrap that in an UndoableDatabase for easy undo/redo support
+        self.undoableDB = UndoableDatabase(db: db, undoManager: undoManager)
+
+        // Make references to our source relations
+        func relation(for spec: Spec) -&gt; TransactionalRelation {
+            return db[spec.name]
+        }
+        items = relation(for: Item.spec)
+        tags = relation(for: Tag.spec)
+        itemTags = relation(for: ItemTag.spec)
+        selectedItemIDs = relation(for: SelectedItem.spec)
+    }
+}
+</code></pre><h3>Wiring Up the User Interface</h3><p>Now that we've laid out our primary relations, let's set our sights on building out the user interface.</p><p>In this article we will be focusing on the left side of the application, namely the "Add a to-do" field and the list of to-do items. (There is a lot to share about the implementation of the right side too, but in the interests of time and space we will save that for Part 2, coming soon.)</p><p>Click the "Play" button below to see this part of the application in action:</p>
+<p class="pt1-anim-gif-container" style="text-align: center; height: 520px;">
+<img class="gifplayer" src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/todo-1-static/index.png" data-gif="/assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/todo-1.gif" width="662" height="510" data-label="Play"/>
+</p><p>To keep things organized, I decided to break the application down into distinct functional requirements. Each requirement corresponds to a specific portion of the UI and explains how we want it to behave.</p><p>The following interactive screenshot shows the left half of the app in its completed state. Each red dot corresponds to a single functional requirement. Hover over a dot to read a summary of the requirement, then click to see how we implemented it using PLRelational.</p>
+<div class="pt1-img-container">
+    <img width="640" height="462" src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/screenshot-1/index.png" />
+    <div id="pt1-blackout" class="blackout" hidden="true"></div>
+    <a style="left: 2px; top: 43px;" class="pt1-req-link" id="req-link-1" href="#req1">1</a>
+    <a style="left: 2px; top: 100px;" class="pt1-req-link" id="req-link-2" href="#req2">2</a>
+    <a style="left: 44px; top: 182px;" class="pt1-req-link" id="req-link-3" href="#req3">3</a>
+    <a style="left: 100px; top: 182px;" class="pt1-req-link" id="req-link-4" href="#req4">4</a>
+    <a style="left: 284px; top: 182px;" class="pt1-req-link" id="req-link-5" href="#req5">5</a>
+    <p id="pt1-req-popup" hidden="true"></p>
+</div><p>In each of the sections that follow, we will show the relevant portions of code (really, a cross section of the <code>Model</code>, <code>*ViewModel</code>, and <code>*View</code> classes) that were used to implement a functional requirement. To explore the sources in Xcode, feel free to clone the <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a> repository and follow along with the sources under <code>Example Apps</code> &gt; <code>TodoApp</code> in the project.</p>
+<div class="req" id="req1-head">
+<a class="pt1-req-target" name="req1"></a>
+<h4 class="req-title">REQ-1: New Item Field</h4>
+<p class="req-desc">
+<i>A text field at top-left that allows the user to enter new to-do items.  When the user types a non-empty string, a new pending item should be added at the top of the list, and the text field should be cleared.</i>
+</p>
+</div><p>Let's translate this requirement into some code. The first step is to define an undoable transaction in the <code>Model</code> that adds a single row to the <code>items</code> relation. We expose this as an <code>ActionProperty</code> in the <code>ChecklistViewModel</code>, and then set up a binding in <code>ChecklistView</code>:</p>
+<pre><code>class Model { ...
+    /// Adds a new row to the `items` relation.
+    private func addItem(_ title: String) {
+        // Use UUIDs to uniquely identify rows.  Note that we can pass `id` directly
+        // when initializing the row because `ItemID` conforms to the
+        // `RelationValueConvertible` protocol.
+        let id = ItemID()
+
+        // Use a string representation of the current time to make our life easier
+        let now = timestampString()
+
+        // Here we cheat a little.  ArrayProperty currently only knows how to sort
+        // on a single attribute (temporary limitation), we cram two things -- the
+        // completed flag and the timestamp of the action -- into a single string of
+        // the form &quot;&lt;0/1&gt; &lt;timestamp&gt;&quot;.  This allows us to keep to-do items sorted
+        // in the list with pending items at top and completed ones at bottom.
+        let status = statusString(pending: true, timestamp: now)
+
+        // Insert a row into the `items` relation
+        items.asyncAdd([
+            Item.id: id,
+            Item.title: title,
+            Item.created: now,
+            Item.status: status,
+            Item.notes: &quot;&quot;
+        ])
+    }
+
+    /// Adds a new row to the `items` relation.  This is an undoable action.
+    func addNewItem(with title: String) {
+        undoableDB.performUndoableAction(&quot;Add Item&quot;, {
+            self.addItem(title)
+        })
+    }
+}
+
+class ChecklistViewModel { ...
+    /// Creates a new to-do item with the given title.
+    lazy var addNewItem: ActionProperty&lt;String&gt; = ActionProperty { title in
+        self.model.addNewItem(with: title)
+    }
+}
+
+class ChecklistView { ...
+    init() { ...
+        // Add a new item each time a string is entered into the text field
+        newItemField.strings ~~&gt; model.addNewItem
+    }
+}
+</code></pre><p>Note that the <code>EphemeralTextField</code> class in PLBindableControls takes care of delivering the text via its <code>strings</code> signal and clearing out the text field when the user presses enter.</p><p>Here we've established a pattern &mdash; breaking things down across the three components &mdash; that we'll see again and again in the implementation of our app. This layout encourages isolation between individual pieces of the UI and also allows for easy testing (a topic that we'll cover in a future article).</p>
+<div class="req" id="req2-head">
+<a class="pt1-req-target" name="req2"></a>
+<h4 class="req-title">REQ-2: Items List</h4>
+<p class="req-desc">
+<i>A list view on the left side that contains all to-do items.  The list should be sorted such that the first part of the list contains pending items, and the second part contains completed items.  Pending items should be sorted with most recently added items at top.  Completed items should be sorted with most recently completed at top.</i>
+</p>
+</div><p>Table and outline views are a frequent source of headaches when building iOS and macOS applications. PLRelationalBinding and PLBindableControls include the <code>ArrayProperty</code> and <code>ListView</code> classes, respectively, that do a lot of heavy lifting so that we can focus simply on how the data is related. Here we use <code>arrayProperty</code> to lift the contents of our <code>items</code> relation into a form that can track rows by their unique identifier and keep them sorted by their <code>status</code> value:</p>
+<pre><code>class ChecklistViewModel { ...
+    /// The model for the list of to-do items.
+    lazy var itemsListModel: ListViewModel&lt;RowArrayElement&gt; = {
+        return ListViewModel(
+            data: self.model.items.arrayProperty(idAttr: Item.id,
+                                                 orderAttr: Item.status,
+                                                 descending: true),
+            cellIdentifier: { _ in &quot;Cell&quot; }
+        )
+    }()
+}
+
+class ChecklistView { ...
+    init() { ...
+        // Bind outline view to the list view model
+        listView = CustomListView(model: model.itemsListModel,
+                                  outlineView: outlineView)
+    }
+}
+</code></pre><p>The <code>ListView</code> class reacts to changes in the <code>ArrayProperty</code>, taking care of animating insertions and deletions (as seen in the animation at the top of this section). As you can see, it takes very little code to set this up; no custom <code>NSTableViewDataSource</code> or <code>NSTableViewDelegate</code> implementation required.</p>
+<div class="req" id="req3-head">
+<a class="pt1-req-target" name="req3"></a>
+<h4 class="req-title">REQ-3: Item Cell Completed Checkbox</h4>
+<p class="req-desc">
+<i>Each list cell will have a checkbox on the left side indicating whether the item is pending (unchecked) or completed (checked).  If the user clicks the checkbox such that it becomes checked, the item should animate down the list to sit at the top of the completed section.  If the user clicks the checkbox such that it becomes unchecked, the item should animate to the top of the list.</i>
+</p>
+</div><p>In the previous step, we used <code>ArrayProperty</code> to describe how the rows of to-do items are organized, but we still need to break each list cell down into three parts: checkbox, text field, and (tags) label.</p><p>For each of these cell components, we need to set up a conduit that takes data from a specific part of the underlying relation and delivers it to that part of the list cell.</p><p>Click the following to see an animation that helps visualize how, for each checkbox, we define a <code>Property</code> (in this case, an <code>AsyncReadWriteProperty&lt;CheckState&gt;</code>) that serves as a two-way transform:</p>
+<p class="pt1-anim-gif-container" style="text-align: center; height: 299px; margin-bottom: 32px;">
+<img class="gifplayer" src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/check-anim-static/index.png" data-gif="/assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/check-anim.gif" width="660" height="299" data-label="Play"/>
+</p><p>Now, let's translate this into code. In <code>Model</code> we define a bidirectional transform that converts the checkbox state to our custom status string and vice versa. <code>ChecklistViewModel</code> creates an instance of that transform for a given <code>Row</code> (i.e., a list cell), and then in <code>ChecklistView</code> we bind the checkbox state to the view model:</p>
+<pre><code>class Model { ...
+    /// Returns a property that reflects the completed status for the given relation.
+    func itemCompleted(_ relation: Relation, initialValue: String?) -&gt; AsyncReadWriteProperty&lt;CheckState&gt; {
+        return relation.undoableTransformedString(
+            undoableDB, &quot;Change Status&quot;, initialValue: initialValue,
+            fromString: { CheckState(parseCompleted($0)) },
+            toString: { statusString(pending: $0 != .on, timestamp: timestampString()) }
+        )
+    }
+}
+
+class ChecklistViewModel { ...
+    /// Returns a read/write property that resolves to the completed status for
+    /// the given to-do item.
+    func itemCompleted(for row: Row) -&gt; AsyncReadWriteProperty&lt;CheckState&gt; {
+        let itemID = ItemID(row[Item.id])
+        let initialValue: String? = row[Item.status].get()
+        let relation = self.model.items.select(Item.id *== itemID).project(Item.status)
+        return self.model.itemCompleted(relation, initialValue: initialValue)
+    }
+}
+
+class ChecklistView { ...
+    init() { ...
+        listView.configureCell = { view, row in ...
+            // Bidirectionally bind checkbox state to the view model
+            let checkbox = cellView.checkbox!
+            checkbox.checkState.unbindAll()
+            checkbox.checkState &lt;~&gt; model.itemCompleted(for: row)
+        }
+    }
+}
+</code></pre><p>There are a few things worth highlighting here:</p>
+<ul>
+  <li><p>In <code>Model</code>, our <code>itemCompleted</code> transform is set up using <code>undoableTransformedString</code> which provides built-in support for registering an action with the underlying <code>UndoManager</code>. <code>UndoableDatabase</code> will take care of reverting to the previous state if the user performs an "Undo" action, or reapplying the change after a "Redo" action.</p></li>
+  <li><p>In <code>ChecklistViewModel</code>, note how we use <code>select</code> and <code>project</code> to hone in an individual value in a specific row of a relation. We are effectively setting up a live connection to that value, but note that we never have to explicitly load or store an object.</p></li>
+  <li><p>In <code>ChecklistView</code>, the <code>&lt;~&gt;</code> operator means "set up a bidirectional binding between these two things": changes initiated by the user flow back to the model, and vice versa.</p></li>
+</ul>
+<div class="req" id="req4-head">
+<a class="pt1-req-target" name="req4"></a>
+<h4 class="req-title">REQ-4: Item Cell Title Field</h4>
+<p class="req-desc">
+<i>Each list cell will have the to-do item title to the right of the checkbox.  The user should be able to change the title by clicking in the list cell's text field.  The title field should be updated if the user changes it in the detail view, and vice versa.</i>
+</p>
+</div><p>The process we use to hook up the text field for each list cell is almost the same as what we did for the checkboxes in the previous step. Click to visualize:</p>
+<p class="pt1-anim-gif-container" style="text-align: center; height: 299px; margin-bottom: 32px;">
+<img class="gifplayer" src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/text-anim-static/index.png" data-gif="/assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/text-anim.gif" width="660" height="299" data-label="Play"/>
+</p><p>Once again, let's translate this into code. The implementation of this requirement is very similar to the previous one, so it should all look familiar:</p>
+<pre><code>class Model { ...
+    /// Returns a property that reflects the item title.
+    func itemTitle(_ relation: Relation, initialValue: String?) -&gt; AsyncReadWriteProperty&lt;String&gt; {
+        return relation.undoableOneString(undoableDB, &quot;Change Title&quot;, initialValue: initialValue)
+    }
+}
+
+class ChecklistViewModel { ...
+    /// Returns a read/write property that resolves to the title for the given
+    /// to-do item.
+    func itemTitle(for row: Row) -&gt; AsyncReadWriteProperty&lt;String&gt; {
+        let itemID = ItemID(row[Item.id])
+        let initialValue: String? = row[Item.title].get()
+        let relation = self.model.items.select(Item.id *== itemID).project(Item.title)
+        return self.model.itemTitle(relation, initialValue: initialValue)
+    }
+}
+
+class ChecklistView { ...
+    init() { ...
+        listView.configureCell = { view, row in ...
+            // Bidirectionally bind title field to the view model
+            let textField = cellView.textField as! TextField
+            textField.string.unbindAll()
+            textField.string &lt;~&gt; model.itemTitle(for: row)
+        }
+    }
+}
+</code></pre><p>The <code>itemTitle</code> transform is even simpler than the <code>itemCompleted</code> transform that we saw in the previous step. The <code>undoableOneString</code> convenience gives us a two-way (read/write) property that resolves to the title string value of the to-do item, and then writes updates back to the source relation when the user changes that string in the UI (again the undo support is handled for us).</p>
+<div class="req" id="req5-head">
+<a class="pt1-req-target" name="req5"></a>
+<h4 class="req-title">REQ-5: Item Cell Tags Label</h4>
+<p class="req-desc">
+<i>Each list cell will have a read-only label containing applied tags on the right side.  The tags should be comma-separated and in alphabetical order.  The label should be updated whenever the user adds or removes a tag for that item in the detail view.</i>
+</p>
+</div><p>For the third and final piece of our list cells, we will display a string representation of the list of tags applied to that item. Unlike the previous two steps (checkbox and text field), this one doesn't accept input from the user, so it's just a matter of creating a read-only property. Click to visualize:</p>
+<p class="pt1-anim-gif-container" style="text-align: center; height: 299px; margin-bottom: 32px;">
+<img class="gifplayer" src="../../../assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/tags-anim-static/index.png" data-gif="/assets/images/blog/uploads/2017/09/18/build-with-plrelational-part-1/tags-anim.gif" width="660" height="299" data-label="Play"/>
+</p><p>Here's what that looks like in code form:</p>
+<pre><code>class Model { ...
+    /// Returns a property that resolves to a string containing a comma-separated
+    /// list of tags that have been applied to the given to-do item.
+    func tagsString(for itemID: ItemID) -&gt; AsyncReadableProperty&lt;String&gt; {
+        return self.itemTags
+            .select(ItemTag.itemID *== itemID)
+            .join(self.tags)
+            .project(Tag.name)
+            .allStrings()
+            .map{ $0.sorted().joined(separator: &quot;, &quot;) }
+            .property()
+    }
+}
+
+class ChecklistViewModel { ...
+    /// Returns a property that resolves to the list of tags for the given
+    /// to-do item.
+    func itemTags(for row: Row) -&gt; AsyncReadableProperty&lt;String&gt; {
+        return self.model.tagsString(for: ItemID(row))
+    }
+}
+
+class ChecklistView { ...
+    init() { ...
+        listView.configureCell = { view, row in ...
+            // Bind detail (tags) label to the view model
+            let detailLabel = cellView.detailLabel!
+            detailLabel.string.unbindAll()
+            detailLabel.string &lt;~ model.itemTags(for: row)
+        }
+    }
+}
+</code></pre><p>It's worth dissecting that <code>tagsString</code> declaration; it's an interesting one. Let's break it down step by step:</p>
+<pre><code>// Start with the `itemTags` source relation (Item.id : Tag.id pairs)
+self.itemTags
+
+// Select the rows corresponding to the given to-do item
+.select(ItemTag.itemID *== itemID)
+
+// Join with the `tags` relation to get the tag names
+.join(self.tags)
+
+// Take just the tag names (we can drop the IDs)
+.project(Tag.name)
+
+// Derive a `Signal` that carries the tag names as a `Set&lt;String&gt;`
+.allStrings()
+
+// Convert the `Set&lt;String&gt;` into a sorted, comma-separated string
+.map{ $0.sorted().joined(separator: &quot;, &quot;) }
+
+// Lift the `Signal` into an `AsyncReadableProperty` that offers the latest value
+.property()
+</code></pre><p>This demonstrates a common practice when working with PLRelational:</p>
+<ul>
+  <li>Start with one or more <code>Relation</code>s</li>
+  <li>Slice and dice (i.e., <code>select</code>, <code>join</code>, and <code>project</code>) until you've narrowed your focus onto a small set of data</li>
+  <li>Derive a <code>Signal</code> that extracts Swift-ly typed values</li>
+  <li>Transform the values using <code>Signal</code> operators like <code>map</code></li>
+  <li>Lift to an <code>AsyncReadableProperty</code> for easier binding (and unit testing)</li>
+</ul><p>By declaring the relationships in this manner, any time the list of tags changes for that to-do item (by virtue of the user adding/removing tags, or as a result of undo/redo, etc), the list cell will automatically be updated to display the latest string value.</p><h3>Wrapping Up</h3><p>In this article, we demonstrated how to use PLRelational and its reactive-relational style of programming to build a real, working macOS application.</p><p>Building the <em>PLRelational Way</em> takes a slightly different mindset as compared to more imperative, object-oriented approaches. However, once you've learned the few core patterns that we presented here, the reactive-relational approach becomes second nature, and using the vocabulary offered by PLRelational can help simplify the way you build applications.</p><p>In Part 2, we will continue our deep dive and explore the right half of the to-do application. In that article we will cover topics such as modeling list selection, building with complex controls like combo boxes, using cascading deletion, and more.</p><p>The complete source code for this application is available in the <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a> repository under the <code>Examples/TodoApp</code> directory and can be run directly from the Xcode project.</p>
+                
+                    <h1>
+                        <a href="../../2017/09/13/best-new-features-in-swift-4/index.html">The Best New Features in Swift 4</a>
+                    </h1>
+                    <p class="author">September 13, 2017, by Mike Ash</p>
+                    <p>Swift 4 is here, and it's bringing some nice changes. We're not getting a radical rework of the syntax like we did last year, nor are we getting a breathtaking pile of new features like we did for Swift 2, but there are some nice additions you can use to improve your code. Let's take a look!</p><h3>Multi-Line String Literals</h3><p>Sometimes you want long, multi-line strings in your code. It might be an HTML template, a blob of XML, or a long message for the user. Either way, they're painful to write in Swift 3.</p><p>You can write them out all on one line, which gets ugly fast:</p>
+<pre><code>let message = &quot;Please disable your Frobnitz before proceeding.\n\nTo do this, visit Settings -&gt; Frobnitz, then toggle the switch to \&quot;off\&quot;.\n\nIf you need the Frobnitz to remain enabled, tap \&quot;Proceed Anyway\&quot; below.&quot;
+</code></pre><p>You can split it onto multiple lines by concatenating strings:</p>
+<pre><code>let message =
+    &quot;Please disable your Frobnitz before proceeding.\n\n&quot;
+  + &quot;To do this, visit Settings -&gt; Frobnitz, then toggle the switch to \&quot;off\&quot;.\n\n&quot;
+  + &quot;If you need the Frobnitz to remain enabled, tap \&quot;Proceed Anyway\&quot; below.&quot;
+</code></pre><p>There are other ways to do it too, but none of them are all that good.</p><p>Swift 4 solves this problem with multi-line string literals. To write a multi-line string literal, use three quote marks at the beginning and end:</p>
+<pre><code>let message = &quot;&quot;&quot;
+    Please disable your Frobnitz before proceeding.
+
+    To do this, visit Settings -&gt; Frobnitz, then toggle the switch to &quot;off&quot;.
+
+    If you need the Frobnitz to remain enabled, tap &quot;Proceed Anyway&quot; below.
+    &quot;&quot;&quot;
+</code></pre><p>If you've used Python, then this new syntax will look familiar. However, it's not quite the same. There are some interesting limitations and features of this syntax in Swift.</p><p>This triple-quote syntax cannot be used on a single line. Something like the following will not compile:</p>
+<pre><code>// Will not compile
+label.text = &quot;&quot;&quot;Put your text in &quot;quotes&quot; to make them look quoted.&quot;&quot;&quot;
+</code></pre><p>This could be handy to avoid having to escape quotes, but it's not allowed. The content of the string must be on separate lines between the <code>&quot;&quot;&quot;</code> marks.</p><p>Multi-line strings can be indented in your code without indenting the final result. The multi-line string above indents each line in the code, but the string placed into <code>message</code> has no leading whitespace. This is really nice, but what if you want some indentation? This feature is based on the indentation of the closing <code>&quot;&quot;&quot;</code> mark. Its indentation will be stripped off all of the other lines. If for some reason you needed the contents of <code>message</code> to be indented, you can do so by indenting the text farther than the closing <code>&quot;&quot;&quot;</code> mark:</p>
+<pre><code>let message = &quot;&quot;&quot;
+        Please disable your Frobnitz before proceeding.
+
+        To do this, visit Settings -&gt; Frobnitz, then toggle the switch to &quot;off&quot;.
+
+        If you need the Frobnitz to remain enabled, tap &quot;Proceed Anyway&quot; below.
+    &quot;&quot;&quot;
+</code></pre><p>To avoid confusion, each line of text <em>must</em> be indented at least as much as the closing <code>&quot;&quot;&quot;</code> mark. A line with less indentation will produce an error.</p><p>You may want to split your text onto multiple lines without producing multiple lines in the output. You can remove a line break from the resulting string by adding a <code>\</code> at the end of the line:</p>
+<pre><code>let message = &quot;&quot;&quot;
+    Please disable your Frobnitz before proceeding. \
+    To do this, visit Settings -&gt; Frobnitz, then toggle the switch to &quot;off&quot;. \
+    If you need the Frobnitz to remain enabled, tap &quot;Proceed Anyway&quot; below.
+    &quot;&quot;&quot;
+</code></pre><h3>One-Sided Ranges</h3><p>This is a nice, small change that's mostly self explanatory. Ranges can now be one-sided, and the "empty" side is implied to be the minimum or maximum value that makes sense in context.</p><p>When subscripting a container, this means you can leave off things like <code>string.endIndex</code> or <code>array.count</code>. For example, if you want to split an array into halves:</p>
+<pre><code>let middle = array.count / 2
+let firstHalf = array[..&lt;middle]
+let secondHalf = array[middle...]
+</code></pre><p>Or if you want to get a substring up to a particular index:</p>
+<pre><code>let index = string.index(of: &quot;e&quot;)!
+string[..&lt;index]
+</code></pre><p>It can also be handy in <code>switch</code> statements:</p>
+<pre><code>switch x {
+case ..&lt;0:
+    print(&quot;That&#39;s a negative.&quot;)
+case 0:
+    print(&quot;Nothing!&quot;)
+case 1..&lt;10:
+    print(&quot;Pretty small.&quot;)
+case 10..&lt;100:
+    print(&quot;Bigger.&quot;)
+case 100...:
+    print(&quot;Huge!&quot;)
+default:
+    // Unfortunately, the compiler can&#39;t figure out
+    // that the above cases are exhaustive.
+    break
+}
+</code></pre><p>For one-sided ranges up to a given value, you can use <code>..&lt;</code> for an exclusive range or <code>...</code> for an inclusive range, just like two-sided ranges. For one-sided ranges starting at a given value, only <code>...</code> is allowed, since the distinction between <code>...</code> and <code>..&lt;</code> makes no sense there.</p><h3>Combined Class and Protocol Types</h3><p>Sometimes you need an object which both subclasses a class and conforms to a protocol. For example, you might need a <code>UITableViewController</code> that also implements <code>KittenProvider</code>. Swift 3 had no way to express this idea, requiring various ugly workarounds. Interestingly, Objective-C is able to express this idea:</p>
+<pre><code>UITableViewController&lt;KittenProvider&gt; *object;
+</code></pre><p>Swift 4 can now express this concept as well by using the <code>&amp;</code> symbol. This could already be used to combine multiple protocols into a single type, and now it can also be used to combine protocols with a class:</p>
+<pre><code>let object: UITableViewController &amp; KittenProvider
+</code></pre><p>Note that only one class can be included in any such type, since you can't subclass more than one class at a time anyway.</p><h3>Generic Subscripts</h3><p>Swift has supported generic methods forever, but before Swift 4 it did not support generic subscripts. You could overload subscripts by implementing more than one with different types, but you couldn't use generics. Now you can!</p>
+<pre><code>subscript&lt;T: Hashable&gt;(key: T) -&gt; Value?
+</code></pre><p>Generics are fully supported, so you can use things like <code>where</code> clauses:</p>
+<pre><code>subscript&lt;S: Sequence&gt;(key: S) -&gt; [Value] where S.Element == Key
+</code></pre><p>Just like methods, the generic type can be used as a return value as well:</p>
+<pre><code>subscript&lt;T&gt;(key: Key) -&gt; T?
+</code></pre><p>This could be really handy for dynamically-typed containers, such as when dealing with JSON objects.</p><h3>Codable</h3><p>Speaking of JSON, perhaps the biggest new feature in Swift 4 is the <code>Codable</code> protocol. The compiler will now auto-generate serialization and deserialization code for your types, and all you have to do is declare conformance to <code>Codable</code>.</p><p>Imagine you have a <code>Person</code> type:</p>
+<pre><code>struct Person {
+    var name: String
+    var age: Int
+    var quest: String
+}
+</code></pre><p>If you wanted to read and write <code>Person</code> values to and from JSON, you previously had to write a bunch of annoying repetitive code to do so.</p><p>In Swift 4, you can make this happen by adding half a line:</p>
+<pre><code>struct Person: Codable {
+</code></pre><p>If for some reason you only want to support encoding or decoding, but not both, you can declare conformance to <code>Encodable</code> or <code>Decocable</code> separately:</p>
+<pre><code>struct EncodablePerson: Encodable { ... }
+
+struct DecodablePerson: Decodable { ... }
+</code></pre><p>Conforming to <code>Codable</code> is just a shortcut for conforming to both.</p><p>Using a <code>Codable</code> type requires an encoder or decoder, which determines the serialization format and how Swift values are translated to and from serialized values. Swift provides encoders and decoders for JSON and property lists, and Foundation's archivers also support <code>Codable</code> types.</p><p>To encode something as JSON, create a <code>JSONEncoder</code> and call its <code>encode</code> method:</p>
+<pre><code>let jsonEncoder = JSONEncoder()
+let data = try jsonEncoder.encode(person)
+</code></pre><p>To decode, create a <code>JSONDecoder</code> and call <code>decode</code>, passing it the type you want to decode and the data to decode from:</p>
+<pre><code>let jsonDecoder = JSONDecoder()
+let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
+</code></pre><p>Note that encoding and decoding methods are marked as <code>throws</code> because there are a lot of potential errors that can occur during the process, such as type mismatches or incomplete data, so you'll need to add <code>try</code> to these calls and catch the errors they throw.</p><p>Since JSON doesn't natively support dates or binary data, those values need to be converted to/from some other JSON representation. For example, it's common to use base64 encoding for data. <code>JSONEncoder</code> and <code>JSONDecoder</code> can be customized with different strategies for handling these values. For example, if you want to encode dates as ISO-8601 and data as base64:</p>
+<pre><code>let jsonEncoder = JSONEncoder()
+jsonEncoder.dateEncodingStrategy = .iso8601
+jsonEncoder.dataEncodingStrategy = .base64
+let data = try jsonEncoder.encode(person)
+</code></pre><p>And on the decode side:</p>
+<pre><code>let jsonDecoder = JSONDecoder()
+jsonDecoder.dateDecodingStrategy = .iso8601
+jsonDecoder.dataDecodingStrategy = .base64
+let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
+</code></pre><p>They also provide the option for providing a totally custom strategy by writing your own code.</p><p>Property list coding is similar. Use <code>PropertyListEncoder</code> and <code>PropertyListDecoder</code> instead of the JSON coders. Since property lists can natively represent dates and binary data, the property list coders don't provide those options.</p><p>If you're already using <code>NSCoding</code> then you can mix and match it with <code>Codable</code> so that you don't have to change everything at once. <code>NSKeyedArchiver</code> provides a new <code>encodeEncodable</code> method which takes any <code>Encodable</code> type and encodes it under the given key. <code>NSKeyedUnarchiver</code> provides a corresponding <code>decodeDecodable</code> which can decode any <code>Decodable</code> type.</p><p><code>Codable</code> is a flexible protocol with lots of room for custom behavior. The compiler provides a default implementation, but you can provide your own if you need different behavior. This makes it straightforward to write implementations that migrate old data into new types, use different names in the serialized representation than in the source code, or make other customizations.</p><p>A full discussion of all the possibilities of <code>Codable</code> is beyond the scope of this article, but you can read more about it in <a href="https://mikeash.com/pyblog/friday-qa-2017-07-14-swiftcodable.html">my Friday Q&amp;A post about <code>Swift.Codable</code></a>.</p><h3>Wrapping Up</h3><p>Swift 4 hasn't brought us the dramatic changes we've seen in earlier years, but it's a solid improvement. <code>Codable</code> will make some really common tasks a lot easier, and it's probably my favorite feature out of the bunch. Other features like multi-line string literals and generic subscripts won't have the same impact, but put together they should make for nice improvement in the code we write.</p>
+                
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../index-2.html?feed=rss2"><img src="../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+        
+
+<nav class="paging-navigation" role="navigation">
+    <div class="nav-links">
+        
+        
+            <a class="prev page-numbers" href="../1/index.html">Previous</a>
+        
+        
+        
+            
+                <a class="page-numbers" href="../1/index.html">1</a>
+            
+        
+            
+                <span class="page-numbers current">2</span>
+            
+        
+            
+                <a class="page-numbers" href="../3/index.html">3</a>
+            
+        
+            
+                <a class="page-numbers" href="../4/index.html">4</a>
+            
+        
+            
+                <a class="page-numbers" href="../5/index.html">5</a>
+            
+        
+            
+                <a class="page-numbers" href="../6/index.html">6</a>
+            
+        
+            
+                <a class="page-numbers" href="../7/index.html">7</a>
+            
+        
+            
+                <a class="page-numbers" href="../8/index.html">8</a>
+            
+        
+            
+                <a class="page-numbers" href="../9/index.html">9</a>
+            
+        
+            
+                <a class="page-numbers" href="../10/index.html">10</a>
+            
+        
+            
+                <a class="page-numbers" href="../11/index.html">11</a>
+            
+        
+
+        
+            <a class="next page-numbers" href="../3/index.html">Next</a>
+        
+        
+    </div>
+</nav>
+
+        
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/page/2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:09:37 GMT -->
+</html>
+

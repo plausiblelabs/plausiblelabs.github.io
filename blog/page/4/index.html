@@ -1,0 +1,324 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/page/4 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:09:37 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../assets/images/main/favicon/index.ico">
+        <script src="../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../index/index.html">
+                    <img src="../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../index.html">Blog</a></li>
+                <li><a href="../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                
+                    <h1>
+                        <a href="../../2017/08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a>
+                    </h1>
+                    <p class="author">August 10, 2017, by Chris Campbell</p>
+                    <p>While working on the next major version of VoodooPad [<a href="#ref1">1</a>], an observation was made: user interfaces are basically <em>just</em> bidirectional transformation functions, taking data from some source and presenting it to the user, and vice versa. It sounds so simple when boiled down like that, but the reality of app development is a different story, often filled with twisty, error-prone UI code, even with the help of functional programming aids (e.g. Rx and its ilk). A question then emerged: can we build a library that allows us to express those transformations in a concise way, with an eye towards simplifying app development?</p><p><strong>PLRelational</strong> is our (exploratory) answer to that question. At its core, PLRelational is a Swift framework that allows you to:</p>
+<ul>
+  <li>declaratively express relationships using relational algebra</li>
+  <li>asynchronously query and update those relations</li>
+  <li>observe fine-grained deltas when a relation's data has changed</li>
+</ul><p>Perhaps some example code can help explain what that all means:</p>
+<pre><code>// Use combinators to `join` our two on-disk relations and `project`
+// a subset of attributes
+let allEmployees = employees
+    .join(depts)
+    .project([Employee.id, Employee.name, Dept.name])
+
+// The following...
+print(allEmployees)
+// will print:
+// &quot;emp_id&quot;, &quot;name&quot;,  &quot;dept_name&quot;
+// 1,        &quot;Alice&quot;, &quot;HR&quot;
+// 2,        &quot;Bob&quot;,   &quot;Sales&quot;
+// 3,        &quot;Cathy&quot;, &quot;HR&quot;
+
+// Observe changes made to Cathy&#39;s record.  When the underlying relation
+// changes, extract the changed name and append to `empThreeNames`.
+var empThreeNames = [String]()
+let empThree = employees.select(Employee.id *== 3)
+empThree.addAsyncObserver(...)
+
+// Update all employees in the HR department to have the name Linda
+allEmployees.asyncUpdate(Dept.name *== &quot;HR&quot;, [Employee.name: &quot;Linda&quot;])
+
+// (Async updates and queries are processed in the background; results
+// will be delivered on the main queue when ready...)
+...
+
+// Once the update is processed, our observer will see the change
+print(empThreeNames) // will print: [Linda]
+</code></pre><p>In the above example, we used some basic relational algebra operations (e.g. <code>join</code> and <code>select</code>) that are familiar if you've spent time with SQL. PLRelational includes a full set of combinators, including aggregate functions (e.g. <code>max</code>, <code>count</code>) and other operations like <code>leftOuterJoin</code> that are considered extensions to the relational algebra.</p><p>For example, we can find the number of employees in the HR department that like chocolate ice cream:</p>
+<pre><code>let chocoholicsInHR = employees.
+    .select(Employee.dept *== &quot;HR&quot;)
+    .join(favoriteFlavors)
+    .select(Flavor.name *== &quot;chocolate&quot;)
+    .count()
+</code></pre><p>Or suppose we are building an application to manage the company's sports teams. We can use relational algebra to find out which teams a certain employee hasn't yet joined:</p>
+<pre><code>// Figure out which teams the employee *has* already joined
+let selectedEmployeeTeams = employeeTeams
+    .join(selectedEmployeeID)
+    .join(teams)
+    .project([Team.ID, Team.Name])
+
+// Use `difference` to determine which teams are available to join
+let availableTeams = teams
+    .difference(selectedEmployeeTeams)
+</code></pre><p>Note that in these examples, we're not actually forcing any data to load. We simply declare how the data is related, and then PLRelational takes care of efficiently loading and transforming the data as it is needed. For example, that hypothetical application might have a table view to display the available teams, and the data wouldn't need to be pulled until that table view is loaded for the first time.</p><p>One other great thing about PLRelational is that you can use the same <code>Relation</code> operations to interact with data from different sources. Out of the box, PLRelational has support for data stored in memory, in an SQLite database, or from plist data stored in a single file or spread out over multiple directories. There is also support for layering additional functionality, such as caching and change logging, through simple composition. In other words, the <code>Relation</code> API looks the same regardless of how or where the data is stored underneath.</p><p>Taken on its own, there are a <em>lot</em> of interesting things happening behind the scenes in PLRelational -- efficiently pulling and storing data, using relational algebra to compute derivatives, and so forth. But things get <em>really</em> interesting once we have a way to bind relations at the UI level, and that's where our PLRelationalBinding library comes in.</p><p><strong>PLRelationalBinding</strong> is a separate Swift framework that builds on PLRelational and adds reactive concepts. Think of it as a layer for massaging raw, low-level deltas produced by PLRelational into something that's easier for a UI toolkit (e.g. AppKit or UIKit) to digest. And to assist with the latter, we have a third framework, <strong>PLBindableControls</strong> that is not so much an exhaustive UI toolkit but rather a handful of extensions to existing AppKit and UIKit controls that allow for binding to a <code>Relation</code> or <code>Property</code>.</p><p>With PLRelationalBinding, you can take an MVVM-like approach, using Properties to build an easily testable Model/ViewModel layer, and binding to those Properties from a separate View layer. While PLRelational mainly operates in terms of relational concepts like attributes and rows, PLRelationalBinding adds operators like <code>map</code> and <code>zip</code> that are familiar from the world of functional programming.</p><p>The various <code>Property</code> implementations in PLRelationalBinding take care of transforming data from those low-level rows into Swift-ly typed values. For example, if you have a single-string <code>Relation</code>, PLRelationalBinding lets you easily expose that as an <code>AsyncReadableProperty&lt;String&gt;</code> that can be bound to an <code>NSTextField</code>. Likewise, if you have a multi-row <code>Relation</code>, you can easily create an <code>ArrayProperty</code> or <code>TreeProperty</code> from it that can be bound to, say, an <code>UITableView</code> in one step.</p><p>Building on our example from above:</p>
+<pre><code>class FlavorsViewModel {
+    private let selectedEmployee: Relation
+    private let selectedEmployeeFlavors: Relation
+
+    init(...) {
+        ...
+        self.selectedEmployee = employees.join(selectedEmployeeID)
+        self.selectedEmployeeFlavors = favoriteFlavors.join(selectedEmployeeID)
+    }
+
+    lazy var employeeName: AsyncReadableProperty&lt;String&gt; = {
+        return self.selectedEmployee
+            .project(Employee.name)
+            .oneString()
+            .property()
+    }()
+
+    lazy var labelText: AsyncReadableProperty&lt;String&gt; = {
+        return self.employeeName
+            .map{ &quot;\($0)&#39;s Favorite Flavors&quot; }
+    }()
+
+    lazy var favoriteFlavors: ArrayProperty&lt;RowArrayElement&gt; = {
+        return self.selectedEmployeeFlavors
+            .arrayProperty(idAttr: Flavor.id, orderAttr: Flavor.name)
+    }()
+
+    lazy var favoriteFlavorsModel: ListViewModel&lt;RowArrayElement&gt; = {
+        ...
+    }()
+}
+
+class FlavorsView: NSView {
+
+    @IBOutlet var nameLabel: Label!
+    @IBOutlet var flavorsOutlineView: NSOutlineView!
+    private var flavorsListView: ListView&lt;RowArrayElement&gt;!
+
+    init(model: ViewModel) {
+        // Load the xib to connect the outlets
+        ...
+
+        // Bind our UI controls to the ViewModel layer
+        nameLabel.text &lt;~ model.labelText
+        flavorsListView = ListView(model: model.favoriteFlavorsModel,
+                                   outlineView: flavorsOutlineView)
+    }    
+
+    ...
+}
+</code></pre><p>With typical ORM-ish frameworks like CoreData and Realm, you shuttle objects back and forth and often have to worry about things like "if this view over here changes part of this object will that other view over there see those changes?" and so forth. PLRelational and friends take a less object-oriented approach, instead favoring a more dataflow-like strategy that maintains a traceable connection between a UI component that displays/edits some data, the source of that data (e.g. a table in an SQLite data store), and all the transformations in between. In other words, it's relations all the way down, which makes it possible for the query optimizer to determine what is changing and how to efficiently deliver those changes up to the UI layer.</p><p>In addition, thinking with a reactive-relational mindset instead of an object-oriented one leads to some rather nifty benefits for application developers. There are a number of traditionally tedious or tricky tasks that can be made elegant with PLRelational. Here are just a few examples:</p><p><strong>Undo/Redo:</strong> When using a <code>ChangeLoggingRelation</code>, PLRelational automatically computes the minimal set of deltas that result each time a relation is mutated. Those deltas are bundled up into a transactional database snapshot, so implementing undo/redo at the app level becomes as simple as using a custom <code>UndoManager</code> that reverts to a particular snapshot. This works even in cases where a user action triggers many complex changes to multiple relations. From the perspective of the UI controls, the undo or redo action just looks like any other relation change (inserts, deletes, and updates), so no additional logic is required to handle undo/redo.</p><p><strong>Table Updates:</strong> If you've ever written logic to update a table view in response to drag-and-drop reordering or changes to underlying data, you probably know how tricky it can be to get things <em>just right</em>. With the help of <code>ArrayProperty</code> (from PLRelationalBinding), insertions/deletions/updates made to a Relation are translated into changesets that can be applied directly to an <code>NSTableView</code> or <code>UITableView</code>; you no longer have to write that error-prone update logic yourself. Similarly, the <code>TreeProperty</code> class can do the same for structured, hierarchical data of the type that is typically displayed in an <code>NSOutlineView</code>.</p><p><strong>Full Text Search:</strong> Full text search results (with highlighted snippets and all) can be treated as just another <code>Relation</code> and easily bound to, say, a <code>UITableView</code>. The <code>RelationTextIndex</code> class takes care of keeping an SQLite index updated when the associated searchable content is changed. It also maintains a <code>Relation</code> that contains search results and automatically refreshes its contents when the search query string is changed.</p><p>More depth on these and other perks is best left as fodder for future articles.</p><p>PLRelational is still in its nascent stages. There's a lot that works (well), but plenty that we'd still like to improve — one thing in particular would be stronger typing at the Relation level. That said, we're pleased with the way it is coming together, so much so that we've been happily using it as the foundation for the next version of VoodooPad on macOS and iOS.</p><p>This has been an intentionally brief introduction to PLRelational. If your interest has been piqued, we recommend checking out the sources at the official <a href="https://github.com/plausiblelabs/plrelational">PLRelational repository</a>. There are working example apps for macOS in the Xcode project that serve as a more complete companion to the simplified code examples in this article. All feedback is welcome!</p><p><em><strong>Also of note:</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../portfolio/index.html">consulting</a> page.</em></p><p><a name="ref1"></a> [1] Yes, we're still working on it, and no, it's not quite ready for public consumption — sorry!</p>
+                
+                    <h1>
+                        <a href="../../2015/07/06/voodoopad-encryption-vulnerability/index.html">VoodooPad Encryption Vulnerability</a>
+                    </h1>
+                    <p class="author">July 6, 2015, by Landon Fuller</p>
+                    <p>After Plausible Labs’ acquisition of VoodooPad, a cryptography audit was performed and VoodooPad’s document encryption implementation was found to use weak or improperly employed cryptographic primitives. The discovered issues include weak key derivation, use of known-weak ciphers, predictable RNG seeding, and improper IV re-use.</p><p>As a result, an attacker with access to an encrypted document may be able to decrypt the document’s contents without access to the original encryption password.</p><p>To resolve these issues, we’ve invested heavily in a complete redesign and rewrite of VoodooPad’s encryption implementation; as of VoodooPad 5.1.4:</p>
+<ul>
+  <li>All VoodooPad releases now ship with an encryption implementation based on industry standards and best practices.</li>
+  <li>VoodooPad will display a warning upon opening an insecurely encrypted document, and will optionally perform an in-place upgrade of the document’s encryption.</li>
+  <li>We have published complete technical specifications documenting VoodooPad’s new encryption implementation; refer to “Additional Resources” below.</li>
+</ul><p>Due to the sweeping implementation changes that were required in VoodooPad’s document storage:</p>
+<ul>
+  <li>Encrypted documents produced in VoodooPad 5.1.4 and later will not be readable in earlier releases of VoodooPad.</li>
+  <li>We are initially releasing VoodooPad 5.1.4 as a <a href="https://www.plausible.coop/voodoopad/release_notes#5.1.4b2">public beta</a> to allow for further testing while allowing affected customers to upgrade immediately. We do recommend that affected customers <a href="https://www.plausible.coop/voodoopad/release_notes#5.1.4b2">upgrade now</a>.</li>
+</ul><h2>Common Questions</h2><h4>I’m a VoodooPad user but I don’t use encryption. I didn’t even know VoodooPad had encryption! Do I have anything to worry about?</h4><p>Nope! This issue only applies to documents using encryption.</p><h4>I have some encrypted VoodooPad documents. How could this impact me?</h4><p>Unfortunately, anyone that is able to gain access to your VoodooPad-encrypted documents can potentially decrypt any document that was encrypted with a previous VoodooPad release, even if they do not know the document password.</p><p>When using a cloud file or backup service, encrypted VoodooPad documents could be decrypted by anyone with access to your account (including the cloud service provider).</p><p>For documents stored locally on your computer, an attacker would require access to your computer, or access to your local files via another means — such as unencrypted backups.</p><h4>OK — So how do I secure my documents?</h4><p>The first step is to upgrade to the <a href="https://www.plausible.coop/voodoopad/release_notes#5.1.4b2">VoodooPad 5.1.4 Beta</a> release. If you’re a Mac App Store customer, you’ll need to download the beta from the provided link instead of the App Store, but you won’t need to purchase a separate license. If you are an iOS user, reading securely encrypted documents will also require <a href="https://itunes.apple.com/us/app/voodoopad/id777792045">VoodooPad 5.1.4 for iOS</a>, available as a free upgrade via the App Store.</p><p>Next, open your encrypted documents (or documents containing encrypted pages) with VoodooPad 5.1.4 on Mac OS X — VoodooPad will offer to upgrade the documents immediately in-place. An unmodified copy of your document will also be placed in the Trash — you may wish to empty the trash after you’ve verified that your document has been upgraded successfully.</p><p>Lastly, be aware that cloud services like Dropbox may store backup copies of files, and those backups may include an insecurely encrypted version of your document. You can request that Dropbox <a href="https://www.dropbox.com/help/115">permanently delete</a> a file, but just to be safe, we recommend saving a local backup of the file on your own computer first.</p><h4>What if I’m using VoodooPad 4 or earlier?</h4><p>Previous releases of VoodooPad used a different design for document and page encryption; unfortunately, this was also found to use weak or improperly employed cryptographic primitives. We recommend that all customers upgrade to VoodooPad 5.</p><p>Discounted upgrade pricing is available to direct-purchase customers via the <a href="../../../store/index.html">Plausible Store</a>. For Mac App Store customers, Apple does not support discount upgrade pricing via the Mac App Store – if you previously purchased VoodooPad 4 through the Mac App Store, please <a href="mailto:support@plausible.coop">contact us directly</a> to arrange for upgrade pricing.</p><h2>Additional Resources</h2><p>We’ve published additional technical details on the design and implementation of VoodooPad 5.1.4′s document encryption implementation, including:</p>
+<ul>
+  <li><a href="https://www.plausible.coop/voodoopad/docs-5/encryption overview.html">VoodooPad Cryptography Overview</a> - A high-level technical overview of how VoodooPad utilizes cryptography and the overall design of the VoodooPad’s document encryption.</li>
+  <li><a href="https://www.plausible.coop/voodoopad/docs-5/encryption specification.html">VoodooPad Cryptography Specification</a> – The concrete specification of VoodooPad’s document encryption, including file formats, keying, ciphers, algorithms, and parameters.</li>
+  <li><a href="https://www.plausible.coop/voodoopad/docs-5/etm-aead-v1.html">VoodooPad Encrypt-then-MAC AEAD Specification</a> – Defines VoodooPad’s ETM-AEAD composition of AES-CBC, PKCS#7, and HMAC used for all authenticated encryption.</li>
+</ul>
+                
+                    <h1>
+                        <a href="../../2014/12/15/plausible-2/index.html">Plausible 2.0</a>
+                    </h1>
+                    <p class="author">December 15, 2014, by Landon Fuller</p>
+                    <p>Seven years ago, we founded Plausible Labs as a <a href="http://techworker.coop/about">worker-owned cooperative</a> with the aim of building a company focused on sustainability, operating for the benefit of its owner-employees, and standing as a vibrant example of an alternative to the venture capital model in Silicon Valley.</p><p>I’m incredibly happy to announce that starting next year, for the first time in the co-operative’s history, our <a href="../../../about/index.html">entire team</a> will be focused on self-directed, self-funded product development. I look forward to sharing more about what we’re working on over the coming months, and the results of our labors over the coming years.</p><p>This has been a long road — founded with a $10,000 personal loan, we’ve neither borrowed money nor received investment since. The success of the co-operative has instead been entirely the product of the hard work of our employee-owners; including our current team of <a href="https://twitter.com/terrikramer">Terri Kramer</a>, <a href="http://labonnesoupe.org/">Chris Campbell</a>, <a href="https://mikeash.com/">Mike Ash</a>, and <a href="http://rebeccabratburd.com/">Rebecca Bratburd</a> — all of whom I could not be more proud to work with. Relying heavily on consulting work, it took enormous dedication and stamina on everyone’s part to continue to invest our income, where we could, in our long-term goal of becoming a full-time product company.</p><p>We’ve accomplished a great deal to be proud of: early projects such as <a href="../../../software/jukebox/index.html">PLJukebox</a>, a re-implementation of Apple’s Cover Flow that helped fund our initial growth, our consulting work on products such as <a href="http://www.comixology.com/">comiXology’s</a> mobile <a href="../../../portfolio/comics/index.html">Comics</a> applications, and on our ongoing stewardship of open source projects like <a href="https://www.plcrashreporter.org/">PLCrashReporter</a>, a library that powers most of the crash reporting services available for Apple’s platforms today.</p><p>Now we’ll demonstrate what Plausible Labs can do with time, resources, and a singular focus.</p>
+                
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../index-2.html?feed=rss2"><img src="../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+        
+
+<nav class="paging-navigation" role="navigation">
+    <div class="nav-links">
+        
+        
+            <a class="prev page-numbers" href="../3/index.html">Previous</a>
+        
+        
+        
+            
+                <a class="page-numbers" href="../1/index.html">1</a>
+            
+        
+            
+                <a class="page-numbers" href="../2/index.html">2</a>
+            
+        
+            
+                <a class="page-numbers" href="../3/index.html">3</a>
+            
+        
+            
+                <span class="page-numbers current">4</span>
+            
+        
+            
+                <a class="page-numbers" href="../5/index.html">5</a>
+            
+        
+            
+                <a class="page-numbers" href="../6/index.html">6</a>
+            
+        
+            
+                <a class="page-numbers" href="../7/index.html">7</a>
+            
+        
+            
+                <a class="page-numbers" href="../8/index.html">8</a>
+            
+        
+            
+                <a class="page-numbers" href="../9/index.html">9</a>
+            
+        
+            
+                <a class="page-numbers" href="../10/index.html">10</a>
+            
+        
+            
+                <a class="page-numbers" href="../11/index.html">11</a>
+            
+        
+
+        
+            <a class="next page-numbers" href="../5/index.html">Next</a>
+        
+        
+    </div>
+</nav>
+
+        
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/page/4 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:09:39 GMT -->
+</html>
+

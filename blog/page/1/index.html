@@ -1,0 +1,641 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/page/1 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../assets/images/main/favicon/index.ico">
+        <script src="../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../index/index.html">
+                    <img src="../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../index.html">Blog</a></li>
+                <li><a href="../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                
+                    <h1>
+                        <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                    </h1>
+                    <p class="author">September 12, 2019, by Chris Campbell</p>
+                    <p>We're very pleased to announce that the <a href="https://devblogs.microsoft.com/appcenter/">App Center team</a> at Microsoft will be taking on stewardship of <a href="https://github.com/plausiblelabs/plcrashreporter">PLCrashReporter</a>, the popular open source crash reporting framework made by Plausible Labs Cooperative.</p><p>PLCrashReporter was created by (Plausible co-founder and alumnus) Landon Fuller way back in 2008, and it was the first crash reporting solution available for iOS. In the years that followed, many applications and crash reporting services have adopted PLCrashReporter as a critical part of their foundation. In that time, Plausible continued to maintain PLCrashReporter as an open source project, and developed improvements in collaboration with crash reporting services such as HockeyApp (which later became part of Microsoft).</p><p>In recent years, our focus has shifted to things unrelated to crash reporting, and it has become more difficult to find time for maintenance of this important project. Meanwhile, the world kept turning, and every so often a change in Apple's platforms would break the build, or require small tweaks, in PLCrashReporter. The App Center team at Microsoft maintained a fork of the main PLCrashReporter repository to help keep their services running smoothly in those times we weren't on hand to fix things upstream.</p><p>Given that the App Center team was already very familiar with PLCrashReporter, and that they had expressed interest in contributing their changes upstream, it seemed like a natural fit for Microsoft to take over as stewards of PLCrashReporter. To that end, we talked it over and they have graciously agreed to take on responsibility of the PLCrashReporter repository and related sites. To be clear, the licensing of PLCrashReporter isn't changing, and Microsoft looks forward to working with the community on this open source project.</p><p>We feel that Microsoft has been making positive strides in the open source community over the past few years, and we are confident that they'll be great hosts of PLCrashReporter as it enters its second decade of existence. For more on the transition, check out <a href="https://devblogs.microsoft.com/appcenter/plcrashreporter-maintainership-moving-to-microsoft/">Microsoft's announcement</a> or visit this <a href="https://github.com/plausiblelabs/plcrashreporter/issues/16">GitHub issue</a>.</p>
+                
+                    <h1>
+                        <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                    </h1>
+                    <p class="author">December 14, 2017, by Rebecca Bratburd</p>
+                    <p>We are pleased to announce that the team at <a href="https://www.primatelabs.com/">Primate Labs</a> has taken over sales and development of <a href="https://voodoopad.com/">VoodooPad</a>.</p><p>Earlier this year, a significant member of our team resigned, which, along with other changes in direction for our cooperative, made it difficult to provide continued development and support of VoodooPad. Thus, we're passing the VoodooPad torch to a company better suited to support it now and in the future.</p><p>We trust Primate Labs, a company we've known for about a decade, to take over the reins. Primate Labs develops performance analysis software for desktop and mobile platforms, namely Geekbench. We think they'll make excellent custodians of VoodooPad alongside it.</p><p>Existing users of VoodooPad will be able to continue using the app as they have been. We will transfer the apps, but users won't need to take any action. Support requests will be handled by Primate Labs, and we'll be available to them during a transition period to help them get up to speed.</p><p>We’re grateful to the customers who wrote in with feature requests and bug reports that we were able to learn from and strengthen VoodooPad. We’re sad to let VoodooPad go, but at the same time we’re excited to see the product live on with Primate Labs as its new stewards. We wish them, and you, all the best!</p>
+                
+                    <h1>
+                        <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                    </h1>
+                    <p class="author">October 3, 2017, by Mike Ash</p>
+                    <p><em>This is our latest entry in a series of articles on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>. For more background, check out these other articles in the series:</em></p>
+<ul>
+  <li><em><a href="../../2017/08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../2017/08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
+  <li><em><a href="../../2017/09/07/plrelational-storage-formats/index.html">PLRelational: Storage Formats</a></em></li>
+  <li><em><a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let's Build with PLRelational, Part 1</a> (and <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Part 2</a>)</em></li>
+</ul><p><br/> We've been talking a lot about PLRelational lately and what you can do with it. Today I want to talk about some of its internals. In particular, I want to talk about how it optimizes and executes queries, which is one of the most interesting components of the framework.</p><h3>Simple Query Execution</h3><p>PLRelational's relations are divided into two kinds: <em>source</em> relations that contain data directly, and <em>intermediate</em> relations that produce data by operating on other relations. (The latter are implemented in the <code>IntermediateRelation</code> type.)</p><p>To get data out of a relation, PLRelational executes a query. For source relations, this is simple: ask it for its data, and that's it. Executing a query on intermediate relations gets more complicated.</p><p>Executing a query on intermediate relations is easy to implement if speed isn't a concern. Fetch the contents of the operands, perform the operation on those contents, and provide the result. For example, here's pseudocode for the intersection operation:</p>
+<pre><code>for row in operand[0] {
+    if operand[1].contains(row) {
+        provide(row)
+    }
+}
+</code></pre><p>Difference is almost identical, just with the condition reversed:</p>
+<pre><code>for row in operand[0] {
+    if !operand[1].contains(row) {
+        provide(row)
+    }
+}
+</code></pre><p>Union is slightly more complicated due to the need to avoid providing duplicate rows, but still straightforward:</p>
+<pre><code>for row in operand[0] {
+    provide(row)
+}
+for row in operand[1] {
+    if !operand[0].contains(row) {
+        provide(row)
+    }
+}
+</code></pre><p>Early versions of PLRelational implemented operations in this way. It works fine, but can be really slow.</p><p>To see why, let's build up a small example. We'll start off with a list of pets:</p>
+<pre><code>let pets = MakeRelation(
+    [&quot;id&quot;, &quot;name&quot;,   &quot;animal&quot;],
+    [1,    &quot;Mickey&quot;, &quot;cat&quot;],
+    [2,    &quot;Fido&quot;,   &quot;dog&quot;],
+    [3,    &quot;Nudges&quot;, &quot;cat&quot;],
+    [4,    &quot;Rover&quot;,  &quot;dog&quot;])
+</code></pre><p>Let's pull out the cats:</p>
+<pre><code>let cats = pets.select(Attribute(&quot;animal&quot;) *== &quot;cat&quot;)
+</code></pre><p>How is the <code>select</code> method implemented? A really simple implementation might look like this:</p>
+<pre><code>for row in operand[0] {
+    if expression.valueWithRow(row).boolValue {
+        provide(row)
+    }
+}
+</code></pre><p>Of course, this requires iterating over all of the pets. This is fine when there's only four of them, but what if there are thousands?</p><p>We could improve this by adding some code to the underlying <code>Relation</code> type produced by <code>MakeRelation</code>. It could implement <code>select</code> to return a new <code>Relation</code> which knows how to efficiently perform the operation.</p><p>What if the situation is more complicated, though? For example, maybe <code>pets</code> is loaded from disk, and then we make in-memory modifications by adding and deleting rows. We can express that by creating <code>Relation</code>s for the added and removed rows, then using a union and a difference to combine it all:</p>
+<pre><code>let added = MakeRelation(
+    [&quot;id&quot;, &quot;name&quot;, &quot;animal&quot;],
+    [5, &quot;Pointy&quot;, &quot;cat&quot;])
+let removed = MakeRelation(
+    [&quot;id&quot;, &quot;name&quot;, &quot;animal&quot;],
+    [6, &quot;Nudges&quot;, &quot;cat&quot;])
+
+let currentPets = pets.union(added).difference(removed)
+</code></pre><p>Then we pull out these cats:</p>
+<pre><code>let currentCats = currentPets.select(Attribute(&quot;animal&quot;) *== &quot;cat&quot;)
+</code></pre><p>Unfortunately, we're back to iterating over all of the pets.</p><p>We should be able to do better. Filtering the output of a union produces the same results as filtering the inputs, then performing the union on the filtered results. The same is true for intersections and differences. If the system could take the filter and push it down to the storage relations, each one could efficiently perform the select and we'd avoid iterating over everything.</p><p>How do you make that happen? You could override <code>select</code> in unions and differences to do this, but then what if you derive multiple relations from a union? What about other operations? What about more complicated derived relations? What we really want is a separate system that can see the big picture and optimize it all.</p><h3>Query Execution Structure</h3><p>PLRelational implements such a system using three high-level components.</p><p>The <em>query planner</em> is responsible for translating a set of <code>Relation</code>s into a more execution-oriented representation. <code>Relation</code> objects in memory are easy to work with in code, but a bit challenging to work with for query execution. The <code>QueryPlanner</code> class takes an array of <code>Relation</code>s and output callbacks (which will be provided with the data from those <code>Relation</code>s), and builds a <code>Node</code> for each <code>Relation</code> passed in and all of the <code>Relation</code>s they depend on. Each <code>Node</code> contains things such as an operation describing what it does, an approximate count, and pointers to parent and child nodes.</p><p>Next, the <em>query optimizer</em> takes the nodes that the planner produced and performs optimizations on them.</p><p>After the optimizer is done, the nodes are sent to the <em>query runner</em>. It performs all the work of actually fetching data, computing results, and invoking the output callbacks. The runner is also able to perform optimizations which are better suited to being performed as the query runs rather than in advance.</p><h3>Ahead-of-Time Optimizations</h3><p>The distinction between optimizations performed in advance and optimizations performed while running the query mirrors the world of compilers, where you have ahead-of-time and just-in-time compilers. As I implemented this system, the best optimizations came from the query runner, and the query optimizer ended up with a pretty small role.</p><p>The current implementation only optimizes a couple of degenerate cases with unions. Unions with only one operand, which are used internally as placeholders in some situations, are eliminated. Nested union operations are compressed into a single operation, within limits. Finally, a garbage collection pass removes nodes that have been orphaned by these optimizations.</p><h3>Just-in-Time Optimizations</h3><p>The query runner is responsible for some key optimizations which can dramatically speed up. Most importantly, it tracks filters which can be applied to each node, and pushes those filters to the children when possible. When those filters make it all the way to a child which provides data directly, the filter can be used to efficiently fetch only the needed data.</p><p>First, it finds all of the select operations in the graph and applies the select expressions as filters to the children. This is done before running the query, and so strictly speaking could be done as part of the query optimizer instead. However, the query runner tracks the nodes' filter states, which makes it a more suitable place to implement this step.</p><p>The query runner tracks two important pieces of information about each node's filter state: the current filter expression, and the number of parent nodes which have not yet provided a filter. As long as there are parents which have not provided a filter, the node must provide its data unfiltered, because those parents may need it all. When a parent node provides a filter, the filter expression is ORed with the current filter expression, and the number of parents which haven't provided a filter is decremented. Once that number reaches zero, the filter expression can be used, and it's propagated to the node's children.</p><p>Once select operations are applied, the query runner begins to run the query and process data. At this point, another big optimization kicks in for join operations.</p><p>A join works a lot like a select, where the expression is dynamically derived from the contents of the operands. For example, let's take the <code>currentPets</code> data above, and track the IDs of the selected animals stored in another <code>Relation</code>:</p>
+<pre><code>let selectedPetIDs = MakeRelation(
+    [&quot;id&quot;],
+    [5])
+</code></pre><p>If we need the selected pet's name and animal type, we could do this with a <code>select(Attribute(&quot;id&quot;) *== 5)</code>, but we'd have to manually manage that. It's much easier to do a join:</p>
+<pre><code>let selectedPets = selectedPetIDs.join(currentPets)
+</code></pre><p>The fact that <code>selectedPetIDs</code> contains a single row with <code>id: 5</code> makes it act like a select on <code>currentPets</code>, returning only the rows where <code>id</code> is <code>5</code>.</p><p>Equivalently, we could look at <code>currentPets</code> as providing a massive select expression based on all of its <code>id</code> values, which then applies to <code>selectedPetIDs</code>. This produces the exact same output, but is far more expensive to compute, which will be crucial!</p><p>When a join node receives all data for one of its operands, it will attempt to turn it into a filter which it can push to the other operand. It creates the filter by constructing a filter from each input row and ORing them all together. To avoid making a massive, inefficient filter that wouldn't actually speed anything up, it only does this if the number of rows is below a certain threshold, currently set at 100 rows.</p><h3>Ordering Operations</h3><p>The order in which data is fetched is crucial. Joins where one operand is small can be wonderfully optimized if the small side is computed first, but will be woefully inefficient if the large side is computed first. Figuring out which side is the small side ahead of time can be really tough, since each operand can be an arbitrarily complex operation. Instead, the query runner attempts to make this happen as it fetches and computes data.</p><p>The query runner operates by choosing a node which can produce data (called an "initiator node") and asking it for some rows. It then propagates those rows through the graph until as much processing as possible has been done. It then goes back to the initiator and asks for more data, and this repeats until the initiator has provided all of its data. The query runner then chooses the next initiator, and repeats everything again until all initiators have been drained.</p><p>Initiator nodes are able to estimate the number of rows they contain which match a certain filter. It's important for this operation to be fast, which is why it's not an exact number. If the estimate is incorrect, the query will still produce correct results, just potentially slower. If the initiator can't come up with an estimate at all, it can return <code>nil</code>, in which case the query runner considers it to be bigger than anything else.</p><p>When the query runner chooses a new initiator node to pull data from, it picks the one with the smallest estimated size at the time. This usually results in the small sides of joins being filled first, which then allows the query runner to filter the other join operand. Estimated sizes change as filters are pushed down, so this can result in a chain reaction as one small initiator is used, filtering another initiator making it small, which then filters even more.</p><h3>Subtree Copying</h3><p>A child node must receive filters from all parents before it can apply that filter to itself. If one parent doesn't have a filter, then it must be assumed that this parent needs all of the data. This is problematic when one parent provides a filter, and then that parent's own data provides an input to the other parent which would generate a filter. Subtree copying fixes this seeming chicken-and-egg problem.</p><p>This is a lot easier to understand with an example. Let's consider a <code>Relation</code> which contains metadata for a document hierarchy. Each document gets an ID and a name. It also gets a parent ID, which expresses the nesting relationship. Documents at the top level have a null parent ID:</p>
+<pre><code>let documentMetadata = MakeRelation(
+    [&quot;id&quot;, &quot;name&quot;,               &quot;parent_id&quot;],
+    [1,    &quot;A Story&quot;,            .null],
+    [2,    &quot;Cake Recipe&quot;,        .null],
+    [3,    &quot;A Story: Chapter 1&quot;, 1],
+    [4,    &quot;A Story: Chapter 2&quot;, 1])
+</code></pre><p>We'll track the notion of the currently selected document ID in another <code>Relation</code>:</p>
+<pre><code>let selectedDocumentID = MakeRelation(
+    [&quot;id&quot;],
+    [3])
+</code></pre><p>We can derive a <code>Relation</code> containing the metadata of only the currently selected document by performing a join:</p>
+<pre><code>let selectedDocumentMetadata = selectedDocumentID.join(documentMetadata)
+</code></pre><p>Now let's imagine that we want the metadata of the currently selected document's parent as well. We can obtain this by projecting <code>selectedDocumentMetadata</code> on the <code>parent_id</code> attribute (removing the ID and name data), renaming <code>parent_id</code> to <code>id</code>, and then joining the result to <code>documentMetadata</code>:</p>
+<pre><code>let selectedDocumentParentID = selectedDocumentMetadata
+    .project(&quot;parent_id&quot;)
+    .renameAttributes([&quot;parent_id&quot;: &quot;id&quot;])
+let selectedDocumentParentMetadata = selectedDocumentParentID
+    .join(documentMetadata)
+</code></pre><p>Let's take a more graphical look at this setup. PLRelational has code which can dump a <code>Relation</code> into a Graphviz <code>dot</code> file, which we can then convert to SVG for display on the web. Here's what <code>selectedDocumentParentMetadata</code> looks like:</p>
+<div style="margin: 24px 0; position: relative; width: 550px; height: 534px;">
+<!-- Join-join relation dump (original: width="604pt" height="587pt")-->
+<svg style="position: absolute;" viewBox="0.00 0.00 604.21 586.77" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 582.7666)">
+<title>relation_graph</title>
+<polygon fill="transparent" stroke="transparent" points="-4,4 -4,-582.7666 600.2067,-582.7666 600.2067,4 -4,4"/>
+<!-- _10241aa00 -->
+<g id="node1" class="node">
+<title>_10241aa00</title>
+<ellipse fill="none" stroke="#000000" cx="355.4924" cy="-541.2899" rx="200.2225" ry="37.4533"/>
+<text text-anchor="middle" x="355.4924" y="-552.5899" font-family="Times,serif" font-size="14.00" fill="#000000">IntermediateRelation</text>
+<text text-anchor="middle" x="355.4924" y="-537.5899" font-family="Times,serif" font-size="14.00" fill="#000000">op: equijoin([id: id])</text>
+<text text-anchor="middle" x="355.4924" y="-522.5899" font-family="Times,serif" font-size="14.00" fill="#000000">debugName: selectedDocumentParentMetadata</text>
+</g>
+<!-- _10241a7d0 -->
+<g id="node2" class="node">
+<title>_10241a7d0</title>
+<ellipse fill="none" stroke="#000000" cx="254.4924" cy="-415.3366" rx="173.4827" ry="37.4533"/>
+<text text-anchor="middle" x="254.4924" y="-426.6366" font-family="Times,serif" font-size="14.00" fill="#000000">IntermediateRelation</text>
+<text text-anchor="middle" x="254.4924" y="-411.6366" font-family="Times,serif" font-size="14.00" fill="#000000">op: rename([parent_id: id])</text>
+<text text-anchor="middle" x="254.4924" y="-396.6366" font-family="Times,serif" font-size="14.00" fill="#000000">debugName: selectedDocumentParentID</text>
+</g>
+<!-- _10241aa00&#45;&gt;_10241a7d0 -->
+<g id="edge5" class="edge">
+<title>_10241aa00&#45;&gt;_10241a7d0</title>
+<path fill="none" stroke="#000000" d="M325.7354,-504.181C314.7377,-490.4663 302.1516,-474.7705 290.6482,-460.4251"/>
+<polygon fill="#000000" stroke="#000000" points="293.3723,-458.2275 284.3858,-452.6155 287.9112,-462.6067 293.3723,-458.2275"/>
+<text text-anchor="middle" x="340.9924" y="-474.6133" font-family="Times,serif" font-size="14.00" fill="#000000">operands_0</text>
+</g>
+<!-- _102415100 -->
+<g id="node6" class="node">
+<title>_102415100</title>
+<ellipse fill="none" stroke="#000000" cx="455.4924" cy="-37.4767" rx="140.9288" ry="37.4533"/>
+<text text-anchor="middle" x="455.4924" y="-48.7767" font-family="Times,serif" font-size="14.00" fill="#000000">MemoryTableRelation</text>
+<text text-anchor="middle" x="455.4924" y="-33.7767" font-family="Times,serif" font-size="14.00" fill="#000000">scheme: [id, name, parent_id]</text>
+<text text-anchor="middle" x="455.4924" y="-18.7767" font-family="Times,serif" font-size="14.00" fill="#000000">debugName: documentMetadata</text>
+</g>
+<!-- _10241aa00&#45;&gt;_102415100 -->
+<g id="edge6" class="edge">
+<title>_10241aa00&#45;&gt;_102415100</title>
+<path fill="none" stroke="#000000" d="M405.7854,-504.8525C430.6874,-482.3175 455.4924,-450.9356 455.4924,-415.3366 455.4924,-415.3366 455.4924,-415.3366 455.4924,-163.43 455.4924,-137.5245 455.4924,-108.622 455.4924,-85.0442"/>
+<polygon fill="#000000" stroke="#000000" points="458.9925,-84.9536 455.4924,-74.9536 451.9925,-84.9536 458.9925,-84.9536"/>
+<text text-anchor="middle" x="487.9924" y="-285.6833" font-family="Times,serif" font-size="14.00" fill="#000000">operands_1</text>
+</g>
+<!-- _10241a620 -->
+<g id="node3" class="node">
+<title>_10241a620</title>
+<ellipse fill="none" stroke="#000000" cx="254.4924" cy="-289.3833" rx="104.8038" ry="37.4533"/>
+<text text-anchor="middle" x="254.4924" y="-300.6833" font-family="Times,serif" font-size="14.00" fill="#000000">IntermediateRelation</text>
+<text text-anchor="middle" x="254.4924" y="-285.6833" font-family="Times,serif" font-size="14.00" fill="#000000">op: project([parent_id])</text>
+<text text-anchor="middle" x="254.4924" y="-270.6833" font-family="Times,serif" font-size="14.00" fill="#000000">debugName: nil</text>
+</g>
+<!-- _10241a7d0&#45;&gt;_10241a620 -->
+<g id="edge4" class="edge">
+<title>_10241a7d0&#45;&gt;_10241a620</title>
+<path fill="none" stroke="#000000" d="M254.4924,-377.5465C254.4924,-364.9676 254.4924,-350.7836 254.4924,-337.529"/>
+<polygon fill="#000000" stroke="#000000" points="257.9925,-337.1467 254.4924,-327.1468 250.9925,-337.1468 257.9925,-337.1467"/>
+<text text-anchor="middle" x="286.9924" y="-348.66" font-family="Times,serif" font-size="14.00" fill="#000000">operands_0</text>
+</g>
+<!-- _10241a570 -->
+<g id="node4" class="node">
+<title>_10241a570</title>
+<ellipse fill="none" stroke="#000000" cx="252.4924" cy="-163.43" rx="174.8109" ry="37.4533"/>
+<text text-anchor="middle" x="252.4924" y="-174.73" font-family="Times,serif" font-size="14.00" fill="#000000">IntermediateRelation</text>
+<text text-anchor="middle" x="252.4924" y="-159.73" font-family="Times,serif" font-size="14.00" fill="#000000">op: equijoin([id: id])</text>
+<text text-anchor="middle" x="252.4924" y="-144.73" font-family="Times,serif" font-size="14.00" fill="#000000">debugName: selectedDocumentMetadata</text>
+</g>
+<!-- _10241a620&#45;&gt;_10241a570 -->
+<g id="edge3" class="edge">
+<title>_10241a620&#45;&gt;_10241a570</title>
+<path fill="none" stroke="#000000" d="M253.8924,-251.5931C253.6926,-239.0143 253.4674,-224.8303 253.2569,-211.5757"/>
+<polygon fill="#000000" stroke="#000000" points="256.7505,-211.1366 253.0921,-201.1935 249.7514,-211.2478 256.7505,-211.1366"/>
+<text text-anchor="middle" x="286.9924" y="-222.7066" font-family="Times,serif" font-size="14.00" fill="#000000">operands_0</text>
+</g>
+<!-- _102419cb0 -->
+<g id="node5" class="node">
+<title>_102419cb0</title>
+<ellipse fill="none" stroke="#000000" cx="148.4924" cy="-37.4767" rx="148.4848" ry="37.4533"/>
+<text text-anchor="middle" x="148.4924" y="-48.7767" font-family="Times,serif" font-size="14.00" fill="#000000">MemoryTableRelation</text>
+<text text-anchor="middle" x="148.4924" y="-33.7767" font-family="Times,serif" font-size="14.00" fill="#000000">scheme: [id]</text>
+<text text-anchor="middle" x="148.4924" y="-18.7767" font-family="Times,serif" font-size="14.00" fill="#000000">debugName: selectedDocumentID</text>
+</g>
+<!-- _10241a570&#45;&gt;_102419cb0 -->
+<g id="edge1" class="edge">
+<title>_10241a570&#45;&gt;_102419cb0</title>
+<path fill="none" stroke="#000000" d="M221.8515,-126.3211C210.4261,-112.4839 197.3356,-96.6301 185.4051,-82.1812"/>
+<polygon fill="#000000" stroke="#000000" points="187.9803,-79.803 178.9144,-74.3203 182.5826,-84.2599 187.9803,-79.803"/>
+<text text-anchor="middle" x="236.9924" y="-96.7533" font-family="Times,serif" font-size="14.00" fill="#000000">operands_0</text>
+</g>
+<!-- _10241a570&#45;&gt;_102415100 -->
+<g id="edge2" class="edge">
+<title>_10241a570&#45;&gt;_102415100</title>
+<path fill="none" stroke="#000000" d="M309.5795,-128.0098C334.9712,-112.2552 364.9821,-93.6346 391.1643,-77.3897"/>
+<polygon fill="#000000" stroke="#000000" points="393.2324,-80.2255 399.8844,-71.9792 389.5418,-74.2774 393.2324,-80.2255"/>
+<text text-anchor="middle" x="392.9924" y="-96.7533" font-family="Times,serif" font-size="14.00" fill="#000000">operands_1</text>
+</g>
+</g>
+</svg>
+</div><p>Note that in this graph, the <code>selectedDocumentParentMetadata</code> is at the top, and the arrows point from operations to their operands.</p><p>After going through the query planner, but not yet running the query, the query planner nodes look like this:</p>
+<div style="margin: 24px 0; position: relative; width: 500px; height: 798px;">
+<!-- Join-join query planner dump (original: width="580pt" height="926pt") -->
+<svg style="position: absolute;" viewBox="0.00 0.00 580.19 926.18" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 922.1778)">
+<title>query_planner_graph</title>
+<polygon fill="transparent" stroke="transparent" points="-4,4 -4,-922.1778 576.1859,-922.1778 576.1859,4 -4,4"/>
+<!-- node_0 -->
+<g id="node1" class="node">
+<title>node_0</title>
+<ellipse fill="none" stroke="#000000" cx="184.5929" cy="-79.9031" rx="147.1565" ry="79.8063"/>
+<text text-anchor="middle" x="184.5929" y="-121.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Node 0</text>
+<text text-anchor="middle" x="184.5929" y="-106.2031" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentParentMetadata</text>
+<text text-anchor="middle" x="184.5929" y="-91.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [name, id, parent_id]</text>
+<text text-anchor="middle" x="184.5929" y="-76.2031" font-family="Times,serif" font-size="14.00" fill="#000000">equijoin([id: id])</text>
+<text text-anchor="middle" x="184.5929" y="-61.2031" font-family="Times,serif" font-size="14.00" fill="#000000">1 output callbacks</text>
+<text text-anchor="middle" x="184.5929" y="-46.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 2</text>
+<text text-anchor="middle" x="184.5929" y="-31.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_1 -->
+<g id="node2" class="node">
+<title>node_1</title>
+<ellipse fill="none" stroke="#000000" cx="289.5929" cy="-280.1026" rx="120.4167" ry="69.0935"/>
+<text text-anchor="middle" x="289.5929" y="-313.9026" font-family="Times,serif" font-size="14.00" fill="#000000">Node 1</text>
+<text text-anchor="middle" x="289.5929" y="-298.9026" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentParentID</text>
+<text text-anchor="middle" x="289.5929" y="-283.9026" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [id]</text>
+<text text-anchor="middle" x="289.5929" y="-268.9026" font-family="Times,serif" font-size="14.00" fill="#000000">rename([parent_id: id])</text>
+<text text-anchor="middle" x="289.5929" y="-253.9026" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 1</text>
+<text text-anchor="middle" x="289.5929" y="-238.9026" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_1&#45;&gt;node_0 -->
+<g id="edge1" class="edge">
+<title>node_1&#45;&gt;node_0</title>
+<path fill="none" stroke="#000000" d="M254.7753,-213.7171C246.7163,-198.3513 238.0279,-181.7854 229.6022,-165.7206"/>
+<polygon fill="#000000" stroke="#000000" points="232.6984,-164.0883 224.954,-156.8581 226.4992,-167.3396 232.6984,-164.0883"/>
+<text text-anchor="middle" x="263.0929" y="-181.6061" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_2 -->
+<g id="node3" class="node">
+<title>node_2</title>
+<ellipse fill="none" stroke="#000000" cx="138.5929" cy="-838.2748" rx="138.6859" ry="79.8062"/>
+<text text-anchor="middle" x="138.5929" y="-879.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Node 2</text>
+<text text-anchor="middle" x="138.5929" y="-864.5748" font-family="Times,serif" font-size="14.00" fill="#000000">documentMetadata</text>
+<text text-anchor="middle" x="138.5929" y="-849.5748" font-family="Times,serif" font-size="14.00" fill="#000000">~1000.0 rows</text>
+<text text-anchor="middle" x="138.5929" y="-834.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [parent_id, id, name]</text>
+<text text-anchor="middle" x="138.5929" y="-819.5748" font-family="Times,serif" font-size="14.00" fill="#000000">selectableGenerator((Function))</text>
+<text text-anchor="middle" x="138.5929" y="-804.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="138.5929" y="-789.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_2&#45;&gt;node_0 -->
+<g id="edge2" class="edge">
+<title>node_2&#45;&gt;node_0</title>
+<path fill="none" stroke="#000000" d="M138.5929,-757.9083C138.5929,-721.3459 138.5929,-677.5243 138.5929,-638.0753 138.5929,-638.0753 138.5929,-638.0753 138.5929,-280.1026 138.5929,-243.0999 146.1494,-203.2049 155.137,-168.8405"/>
+<polygon fill="#000000" stroke="#000000" points="158.6111,-169.4 157.8345,-158.8337 151.8523,-167.5781 158.6111,-169.4"/>
+<text text-anchor="middle" x="158.0929" y="-455.3889" font-family="Times,serif" font-size="14.00" fill="#000000">child 1</text>
+</g>
+<!-- node_4 -->
+<g id="node4" class="node">
+<title>node_4</title>
+<ellipse fill="none" stroke="#000000" cx="298.5929" cy="-638.0753" rx="131.5437" ry="69.0935"/>
+<text text-anchor="middle" x="298.5929" y="-671.8753" font-family="Times,serif" font-size="14.00" fill="#000000">Node 4</text>
+<text text-anchor="middle" x="298.5929" y="-656.8753" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentMetadata</text>
+<text text-anchor="middle" x="298.5929" y="-641.8753" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [name, id, parent_id]</text>
+<text text-anchor="middle" x="298.5929" y="-626.8753" font-family="Times,serif" font-size="14.00" fill="#000000">equijoin([id: id])</text>
+<text text-anchor="middle" x="298.5929" y="-611.8753" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 2</text>
+<text text-anchor="middle" x="298.5929" y="-596.8753" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_2&#45;&gt;node_4 -->
+<g id="edge3" class="edge">
+<title>node_2&#45;&gt;node_4</title>
+<path fill="none" stroke="#000000" d="M196.8092,-765.4318C211.1438,-747.4957 226.4885,-728.2957 240.8029,-710.3848"/>
+<polygon fill="#000000" stroke="#000000" points="243.7909,-712.2523 247.3,-702.2554 238.3227,-707.882 243.7909,-712.2523"/>
+<text text-anchor="middle" x="248.0929" y="-729.1717" font-family="Times,serif" font-size="14.00" fill="#000000">child 1</text>
+</g>
+<!-- node_3 -->
+<g id="node5" class="node">
+<title>node_3</title>
+<ellipse fill="none" stroke="#000000" cx="292.5929" cy="-459.0889" rx="91.8478" ry="58.8803"/>
+<text text-anchor="middle" x="292.5929" y="-485.3889" font-family="Times,serif" font-size="14.00" fill="#000000">Node 3</text>
+<text text-anchor="middle" x="292.5929" y="-470.3889" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [parent_id]</text>
+<text text-anchor="middle" x="292.5929" y="-455.3889" font-family="Times,serif" font-size="14.00" fill="#000000">project([parent_id])</text>
+<text text-anchor="middle" x="292.5929" y="-440.3889" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 1</text>
+<text text-anchor="middle" x="292.5929" y="-425.3889" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_4&#45;&gt;node_3 -->
+<g id="edge5" class="edge">
+<title>node_4&#45;&gt;node_3</title>
+<path fill="none" stroke="#000000" d="M296.2646,-568.6183C295.8157,-555.2281 295.3457,-541.2071 294.8976,-527.8395"/>
+<polygon fill="#000000" stroke="#000000" points="298.3931,-527.643 294.5599,-517.7659 291.397,-527.8776 298.3931,-527.643"/>
+<text text-anchor="middle" x="315.0929" y="-539.5788" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_3&#45;&gt;node_1 -->
+<g id="edge4" class="edge">
+<title>node_3&#45;&gt;node_1</title>
+<path fill="none" stroke="#000000" d="M291.6023,-399.9861C291.3874,-387.1656 291.1567,-373.4009 290.9309,-359.9316"/>
+<polygon fill="#000000" stroke="#000000" points="294.4268,-359.6496 290.7596,-349.7097 287.4278,-359.767 294.4268,-359.6496"/>
+<text text-anchor="middle" x="311.0929" y="-371.1991" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_5 -->
+<g id="node6" class="node">
+<title>node_5</title>
+<ellipse fill="none" stroke="#000000" cx="433.5929" cy="-838.2748" rx="138.6859" ry="79.8062"/>
+<text text-anchor="middle" x="433.5929" y="-879.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Node 5</text>
+<text text-anchor="middle" x="433.5929" y="-864.5748" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentID</text>
+<text text-anchor="middle" x="433.5929" y="-849.5748" font-family="Times,serif" font-size="14.00" fill="#000000">~1.0 rows</text>
+<text text-anchor="middle" x="433.5929" y="-834.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [id]</text>
+<text text-anchor="middle" x="433.5929" y="-819.5748" font-family="Times,serif" font-size="14.00" fill="#000000">selectableGenerator((Function))</text>
+<text text-anchor="middle" x="433.5929" y="-804.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="433.5929" y="-789.5748" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_5&#45;&gt;node_4 -->
+<g id="edge6" class="edge">
+<title>node_5&#45;&gt;node_4</title>
+<path fill="none" stroke="#000000" d="M383.3239,-763.7279C371.9608,-746.8768 359.8994,-728.9903 348.5492,-712.1584"/>
+<polygon fill="#000000" stroke="#000000" points="351.1789,-709.7978 342.686,-703.4636 345.3751,-713.7115 351.1789,-709.7978"/>
+<text text-anchor="middle" x="386.0929" y="-729.1717" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+</g>
+</svg>
+</div><p>This graph is inverted from the last one. <code>selectedDocumentParentMetadata</code> is now at the bottom, and the arrows point in the direction of data flow.</p><p>In this graph, we can see the problem visually. <code>selectedDocumentID</code> has the smallest number of rows, so the query runner will fetch its data first. That will go into the join, which will convert the input to a filter and push that filter to <code>documentMetadata</code>. However, because <code>documentMetadata</code> has two parents and only one filter has been applied, that's not enough to activate a filter, so it produces all of its rows. That means that potentially thousands of rows flow through this graph just to produce one output row, which is terribly inefficient.</p><p>Subtree copying fixes this problem. When certain criteria are met, a node and all of its parent nodes are copied when pushing a filter to a node. In this example, <code>documentMetadata</code> is duplicated, with one copy providing input to <code>selectedDocumentMetadata</code> and the other copy providing input to <code>selectedDocumentParentMetadata</code>. This is the state of things when the query runner completes, and it looks like this:</p>
+<div style="margin: 24px 0; position: relative; width: 650px; height: 827px;">
+<!-- Join-join query planner dump, post-run (original: width="778pt" height="990pt")-->
+<svg style="position: absolute;" viewBox="0.00 0.00 777.76 989.82" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 985.8175)">
+<title>query_planner_graph</title>
+<polygon fill="transparent" stroke="transparent" points="-4,4 -4,-985.8175 773.763,-985.8175 773.763,4 -4,4"/>
+<!-- node_0 -->
+<g id="node1" class="node">
+<title>node_0</title>
+<ellipse fill="none" stroke="#000000" cx="451.5929" cy="-79.9031" rx="147.1565" ry="79.8063"/>
+<text text-anchor="middle" x="451.5929" y="-121.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Node 0</text>
+<text text-anchor="middle" x="451.5929" y="-106.2031" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentParentMetadata</text>
+<text text-anchor="middle" x="451.5929" y="-91.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [name, id, parent_id]</text>
+<text text-anchor="middle" x="451.5929" y="-76.2031" font-family="Times,serif" font-size="14.00" fill="#000000">equijoin([id: id])</text>
+<text text-anchor="middle" x="451.5929" y="-61.2031" font-family="Times,serif" font-size="14.00" fill="#000000">1 output callbacks</text>
+<text text-anchor="middle" x="451.5929" y="-46.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="451.5929" y="-31.2031" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 2</text>
+</g>
+<!-- node_1 -->
+<g id="node2" class="node">
+<title>node_1</title>
+<ellipse fill="none" stroke="#000000" cx="299.5929" cy="-301.3158" rx="120.4167" ry="69.0935"/>
+<text text-anchor="middle" x="299.5929" y="-335.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Node 1</text>
+<text text-anchor="middle" x="299.5929" y="-320.1158" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentParentID</text>
+<text text-anchor="middle" x="299.5929" y="-305.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [id]</text>
+<text text-anchor="middle" x="299.5929" y="-290.1158" font-family="Times,serif" font-size="14.00" fill="#000000">rename([parent_id: id])</text>
+<text text-anchor="middle" x="299.5929" y="-275.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="299.5929" y="-260.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 1</text>
+</g>
+<!-- node_1&#45;&gt;node_0 -->
+<g id="edge1" class="edge">
+<title>node_1&#45;&gt;node_0</title>
+<path fill="none" stroke="#000000" d="M343.9662,-236.6789C359.6432,-213.8428 377.5054,-187.8237 394.1115,-163.6342"/>
+<polygon fill="#000000" stroke="#000000" points="397.153,-165.3878 399.9272,-155.1626 391.382,-161.426 397.153,-165.3878"/>
+<text text-anchor="middle" x="400.0929" y="-181.6061" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_2 -->
+<g id="node3" class="node">
+<title>node_2</title>
+<ellipse fill="none" stroke="#000000" cx="603.5929" cy="-301.3158" rx="166.3404" ry="90.5193"/>
+<text text-anchor="middle" x="603.5929" y="-350.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Node 2</text>
+<text text-anchor="middle" x="603.5929" y="-335.1158" font-family="Times,serif" font-size="14.00" fill="#000000">documentMetadata</text>
+<text text-anchor="middle" x="603.5929" y="-320.1158" font-family="Times,serif" font-size="14.00" fill="#000000">~1000.0 rows</text>
+<text text-anchor="middle" x="603.5929" y="-305.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [parent_id, id, name]</text>
+<text text-anchor="middle" x="603.5929" y="-290.1158" font-family="Times,serif" font-size="14.00" fill="#000000">selectableGenerator((Function))</text>
+<text text-anchor="middle" x="603.5929" y="-275.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Parental select: (id) = (1) &#45; 0 remaining</text>
+<text text-anchor="middle" x="603.5929" y="-260.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="603.5929" y="-245.1158" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_2&#45;&gt;node_0 -->
+<g id="edge2" class="edge">
+<title>node_2&#45;&gt;node_0</title>
+<path fill="none" stroke="#000000" d="M545.2605,-216.3451C533.3172,-198.9478 520.7578,-180.6529 508.8526,-163.3112"/>
+<polygon fill="#000000" stroke="#000000" points="511.6117,-161.146 503.0664,-154.8826 505.8407,-165.1078 511.6117,-161.146"/>
+<text text-anchor="middle" x="547.0929" y="-181.6061" font-family="Times,serif" font-size="14.00" fill="#000000">child 1</text>
+</g>
+<!-- node_3 -->
+<g id="node4" class="node">
+<title>node_3</title>
+<ellipse fill="none" stroke="#000000" cx="299.5929" cy="-501.5153" rx="91.8478" ry="58.8803"/>
+<text text-anchor="middle" x="299.5929" y="-527.8153" font-family="Times,serif" font-size="14.00" fill="#000000">Node 3</text>
+<text text-anchor="middle" x="299.5929" y="-512.8153" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [parent_id]</text>
+<text text-anchor="middle" x="299.5929" y="-497.8153" font-family="Times,serif" font-size="14.00" fill="#000000">project([parent_id])</text>
+<text text-anchor="middle" x="299.5929" y="-482.8153" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="299.5929" y="-467.8153" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 1</text>
+</g>
+<!-- node_3&#45;&gt;node_1 -->
+<g id="edge3" class="edge">
+<title>node_3&#45;&gt;node_1</title>
+<path fill="none" stroke="#000000" d="M299.5929,-442.8016C299.5929,-423.3677 299.5929,-401.4079 299.5929,-380.6874"/>
+<polygon fill="#000000" stroke="#000000" points="303.093,-380.6315 299.5929,-370.6315 296.093,-380.6316 303.093,-380.6315"/>
+<text text-anchor="middle" x="319.0929" y="-413.6255" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_4 -->
+<g id="node5" class="node">
+<title>node_4</title>
+<ellipse fill="none" stroke="#000000" cx="299.5929" cy="-680.5017" rx="131.5437" ry="69.0935"/>
+<text text-anchor="middle" x="299.5929" y="-714.3017" font-family="Times,serif" font-size="14.00" fill="#000000">Node 4</text>
+<text text-anchor="middle" x="299.5929" y="-699.3017" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentMetadata</text>
+<text text-anchor="middle" x="299.5929" y="-684.3017" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [name, id, parent_id]</text>
+<text text-anchor="middle" x="299.5929" y="-669.3017" font-family="Times,serif" font-size="14.00" fill="#000000">equijoin([id: id])</text>
+<text text-anchor="middle" x="299.5929" y="-654.3017" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="299.5929" y="-639.3017" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 2</text>
+</g>
+<!-- node_4&#45;&gt;node_3 -->
+<g id="edge4" class="edge">
+<title>node_4&#45;&gt;node_3</title>
+<path fill="none" stroke="#000000" d="M299.5929,-611.0447C299.5929,-597.7328 299.5929,-583.7975 299.5929,-570.5005"/>
+<polygon fill="#000000" stroke="#000000" points="303.093,-570.4776 299.5929,-560.4776 296.093,-570.4777 303.093,-570.4776"/>
+<text text-anchor="middle" x="319.0929" y="-582.0052" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_5 -->
+<g id="node6" class="node">
+<title>node_5</title>
+<ellipse fill="none" stroke="#000000" cx="138.5929" cy="-891.3078" rx="138.6859" ry="79.8062"/>
+<text text-anchor="middle" x="138.5929" y="-932.6078" font-family="Times,serif" font-size="14.00" fill="#000000">Node 5</text>
+<text text-anchor="middle" x="138.5929" y="-917.6078" font-family="Times,serif" font-size="14.00" fill="#000000">selectedDocumentID</text>
+<text text-anchor="middle" x="138.5929" y="-902.6078" font-family="Times,serif" font-size="14.00" fill="#000000">~1.0 rows</text>
+<text text-anchor="middle" x="138.5929" y="-887.6078" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: &#160;[id]</text>
+<text text-anchor="middle" x="138.5929" y="-872.6078" font-family="Times,serif" font-size="14.00" fill="#000000">selectableGenerator((Function))</text>
+<text text-anchor="middle" x="138.5929" y="-857.6078" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="138.5929" y="-842.6078" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_5&#45;&gt;node_4 -->
+<g id="edge5" class="edge">
+<title>node_5&#45;&gt;node_4</title>
+<path fill="none" stroke="#000000" d="M194.4511,-818.1697C210.5577,-797.0804 228.1209,-774.0839 244.1993,-753.0316"/>
+<polygon fill="#000000" stroke="#000000" points="246.9945,-755.1381 250.2826,-745.0664 241.4314,-750.8893 246.9945,-755.1381"/>
+<text text-anchor="middle" x="249.0929" y="-771.5981" font-family="Times,serif" font-size="14.00" fill="#000000">child 0</text>
+</g>
+<!-- node_6 -->
+<g id="node7" class="node">
+<title>node_6</title>
+<ellipse fill="none" stroke="#000000" cx="461.5929" cy="-891.3078" rx="166.3404" ry="90.5193"/>
+<text text-anchor="middle" x="461.5929" y="-940.1078" font-family="Times,serif" font-size="14.00" fill="#000000">Node 6</text>
+<text text-anchor="middle" x="461.5929" y="-925.1078" font-family="Times,serif" font-size="14.00" fill="#000000">documentMetadata</text>
+<text text-anchor="middle" x="461.5929" y="-910.1078" font-family="Times,serif" font-size="14.00" fill="#000000">~1000.0 rows</text>
+<text text-anchor="middle" x="461.5929" y="-895.1078" font-family="Times,serif" font-size="14.00" fill="#000000">Scheme: [parent_id, id, name]</text>
+<text text-anchor="middle" x="461.5929" y="-880.1078" font-family="Times,serif" font-size="14.00" fill="#000000">selectableGenerator((Function))</text>
+<text text-anchor="middle" x="461.5929" y="-865.1078" font-family="Times,serif" font-size="14.00" fill="#000000">Parental select: (id) = (3) &#45; 0 remaining</text>
+<text text-anchor="middle" x="461.5929" y="-850.1078" font-family="Times,serif" font-size="14.00" fill="#000000">Active buffers: 0</text>
+<text text-anchor="middle" x="461.5929" y="-835.1078" font-family="Times,serif" font-size="14.00" fill="#000000">Rows input: 0</text>
+</g>
+<!-- node_6&#45;&gt;node_4 -->
+<g id="edge6" class="edge">
+<title>node_6&#45;&gt;node_4</title>
+<path fill="none" stroke="#000000" d="M397.3336,-807.6889C383.3912,-789.5461 368.757,-770.5029 355.1822,-752.8384"/>
+<polygon fill="#000000" stroke="#000000" points="357.8946,-750.624 349.026,-744.8275 352.3442,-754.8894 357.8946,-750.624"/>
+<text text-anchor="middle" x="396.0929" y="-771.5981" font-family="Times,serif" font-size="14.00" fill="#000000">child 1</text>
+</g>
+</g>
+</svg>
+</div><p>The <code>documentMetadata</code> node has been duplicated. One of them now points into <code>selectedDocumentMetadata</code>, and the other one points into <code>selectedDocumentParentMetadata</code>. When <code>selectedDocumentMetadata</code> receives input from <code>selectedDocumentID</code>, it creates a filter and pushes it to its copy of <code>documentMetadata</code>.</p><p>Since that node only has one parent, the filter is immediately activated, which lets it efficiently produce a single row. The query runner pulls data from that node next, since it's now the smallest. That then allows <code>selectedDocumentMetadata</code> to compute the output of the join. That data then flows up the chain until it reaches <code>selectedDocumentParentMetadata</code>. That join is then able to compute a filter and push it to the other copy of <code>documentMetadata</code>. This allows both fetches from <code>documentMetadata</code> to be performed efficiently, and avoids the chicken-and-egg problem posed by the original structure.</p><p>I mentioned that certain criteria must be met for the query runner to copy a subtree. Those criteria are:</p>
+<ol>
+  <li>The total number of nodes in the subtree must be no more than a certain limit, currently set at 100 nodes.</li>
+  <li>The node at the top of the subtree must have at least one other parent that hasn't yet provided a filter.</li>
+  <li>There must be at least one initiator node in the subtree which can efficiently produce less data when given a filter.</li>
+</ol><p>#1 is an arbitrary limit put in place to avoid doing the optimization if it's going to require a lot of work. Really complicated subtrees may cost more to duplicate than the time saved by the operation. It's hard to figure out exactly where the tradeoff is no longer worth it, but 100 is a workable limit for now.</p><p>#2 avoids pointless work. If the node isn't waiting on any other parents, then it can propagate the filter directly and copying won't help anything.</p><p>#3 likewise avoids pointless work. If none of the initiators in the subtree can efficiently produce filtered data, then there's no point in trying to ensure that they can be filtered. We'll pay the cost one way or another, and we might as well skip the cost of copying the subtree on top of that.</p><p>Subtree copying can make a big difference. Testing with 1,000 rows in memory, the query runs in about 30 milliseconds on my computer with subtree copying disabled, and about 7 milliseconds with it enabled. On 100,000 rows, it takes 2.4 seconds to run without subtree copying, and only 18 milliseconds to run with it.</p><h3>Conclusion</h3><p>That's the basic tour of PLRelational's query infrastructure. One of the interesting aspects of building the framework around relational algebra is the ability to optimize complicated data flow graphs constructed by the programmer on the fly based on the actual data being used at the time. Our optimizer is still fairly basic and there's a lot of room for improvement and new optimizations, but what we currently have is already enough to provide many orders of magnitude improvement on real-world data.</p>
+                
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../index-2.html?feed=rss2"><img src="../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+        
+
+<nav class="paging-navigation" role="navigation">
+    <div class="nav-links">
+        
+        
+        
+        
+            
+                <span class="page-numbers current">1</span>
+            
+        
+            
+                <a class="page-numbers" href="../2/index.html">2</a>
+            
+        
+            
+                <a class="page-numbers" href="../3/index.html">3</a>
+            
+        
+            
+                <a class="page-numbers" href="../4/index.html">4</a>
+            
+        
+            
+                <a class="page-numbers" href="../5/index.html">5</a>
+            
+        
+            
+                <a class="page-numbers" href="../6/index.html">6</a>
+            
+        
+            
+                <a class="page-numbers" href="../7/index.html">7</a>
+            
+        
+            
+                <a class="page-numbers" href="../8/index.html">8</a>
+            
+        
+            
+                <a class="page-numbers" href="../9/index.html">9</a>
+            
+        
+            
+                <a class="page-numbers" href="../10/index.html">10</a>
+            
+        
+            
+                <a class="page-numbers" href="../11/index.html">11</a>
+            
+        
+
+        
+            <a class="next page-numbers" href="../2/index.html">Next</a>
+        
+        
+    </div>
+</nav>
+
+        
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/page/1 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:06 GMT -->
+</html>
+

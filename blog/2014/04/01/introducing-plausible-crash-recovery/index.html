@@ -1,0 +1,137 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/2014/04/01/introducing-plausible-crash-recovery by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Introducing Plausible Crash Recovery</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../../../assets/images/main/favicon/index.ico">
+        <script src="../../../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+    
+    
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../../../index/index.html">
+                    <img src="../../../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../../../index.html">Blog</a></li>
+                <li><a href="../../../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                <h1>
+                    <a href="#">Introducing Plausible Crash Recovery</a>
+                </h1>
+                <p class="author">April 1, 2014, by Landon Fuller</p>
+                <p><strong>Update:</strong> Check out the <a href="https://www.plausible.coop/blog/?p=263">post-April Fools Follow-up</a>, which delves deeply into the actual implementation of Plausible Crash Recovery, and where this work could actually see practical use.</p><p>Sheer performance and deep insight are essential in a crash reporting solution like <a href="https://www.plcrashreporter.org/">PLCrashReporter</a>, but our hardcore team is never satisfied by just pushing the envelope — we’re here to <em>destroy it</em>.</p><p>Today, I’m extremely pleased to announce the future of iOS and Mac OS crash reporting: <strong>Plausible Crash Recovery™.</strong></p><p>Plausible Crash Recovery™ works almost by <em>magic</em>, automatically detecting iOS and Mac application crashes, and <em>resuming</em> execution at the next available statement, ensuring that your users never have to deal with a crashed application again. Why just <em>report</em> crashes when you can <em>prevent them</em>?</p><p>Crash Recovery is a bit like a time machine, using PLCrashReporter’s best-in-class async-safe stack unwinding to <em>step backwards</em> from the crashing function, restoring non-volatile register state and returning <em>nil</em> to the original caller — think of it like nil messaging <strong>on steroids</strong>. It truly has to be seen to be believed:</p><p><video class="wp-video-shortcode" id="video-204-1" width="640" height="360" poster="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_Poster/index.png" preload="metadata" controls="controls"><source type="video/mp4" src="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_480p/index.mp4" /><source type="video/mp4" src="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_720p/index.mp4" /><source type="video/ogg" src="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_Firefox/index.ogv" /><a href="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_480p/index.mp4">/assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_480p.mp4</a></video></p><p><em><a href="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Plausible_Crash_Recovery_720p/index.mp4">View in HD</a></em></p><p>Of course, our engineers weren’t satisfied until Plausible Crash Recovery™ handled more fatal signals than <em>any other crash recovery product on the market</em>. NULL dereference? No problem. CFRelease(NULL)? Piece of cake. Sending an Objective-C message to invalid memory? We’ve got you covered.</p><h2>Developer Preview – Available Today</h2><p>We could not be happier to get these improvements into the hands of billions of app developers.</p><p>If you want to take Plausible Crash Recovery™ for a spin, we’re making it available to early adopters <em>today</em>. Our April 1st preview release contains both the source code to PLCrashReporter with Plausible Crash Recovery™, as well as iOS and Mac OS X demo applications that you can use to test Plausible Crash Recovery™ <em>immediately</em>.</p>
+<ul>
+  <li>You can experiment immediately with the <a href="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/Mac-CrashRecoveryDemo/index.html" title="Mac OS X Demo">Mac OS X Demo</a>.</li>
+  <li>See the code in action on your own iOS (and Mac) devices using the <a href="http://landonf.org/share/040114_85A71DA5_CrashRecoveryDemo-Source.zip">Mac and iOS Demo Source Code</a>.<a href="../../../../../assets/images/blog/uploads/2014/04/01/introducing-plausible-crash-recovery/CrashRecoveryDemo-Source/index.html"><br/></a></li>
+  <li>Integrate PLCrashReporter with Plausible Crash Recovery™ in your own applications using the <a href="http://landonf.org/share/040114_86931047_PLCrashReporter-1.2-april-crp.zip">PLCrashReporter Crash Recovery April 1st Preview Release</a> (also on <a href="https://github.com/plausiblelabs/plcrashreporter/tree/feature/PLCR-534-on-error-resume">GitHub</a>).</li>
+</ul><p>To use PLCrashReporter with Plausible Crash Recovery™ in your own code, simply link against the provided iOS or Mac OS X <code>PLCrashReporter.framework</code> and <a href="https://www.plcrashreporter.org/documentation/api/v1.2-rc4/interface_p_l_crash_reporter.html#a9eb80ff9808937d991f6130aaeaad7b7">enable the crash reporter</a>.</p><p><strong>Warning</strong>: While PLCrashReporter with Plausible Crash Recovery™ <em>does actually work as advertised</em>, it has seen limited testing, and application developers are cautioned to pay close attention to the release date of this announcement prior to shipping PLCrashReporter with Plausible Crash Recovery™ in an actual product.</p><p>We also must give credit to Microsoft Visual Basic’s ground-breaking <a href="http://msdn.microsoft.com/en-us/library/aa266173">On Error Resume Next</a>, which directly inspired the implementation of PLCrashReporter with Plausible Crash Recovery™.</p>
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../../../index-2.html?feed=rss2"><img src="../../../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/2014/04/01/introducing-plausible-crash-recovery by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:04 GMT -->
+</html>

@@ -1,0 +1,231 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/2013/04/11/exploring-ios-crash-reports by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Exploring iOS Crash Reports</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../../../assets/images/main/favicon/index.ico">
+        <script src="../../../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+    
+    
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../../../index/index.html">
+                    <img src="../../../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../../../index.html">Blog</a></li>
+                <li><a href="../../../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                <h1>
+                    <a href="#">Exploring iOS Crash Reports</a>
+                </h1>
+                <p class="author">April 11, 2013, by Plausible Labs</p>
+                <h3>Introduction</h3><p>As developers, when one of our applications crashes, we would like to gather enough information about the crash such that we can reason about its cause and (ideally) fix it. Crash reports generated and provided by tools and services such as iTunes Connect, <a href="http://code.google.com/p/plcrashreporter/">PLCrashReporter</a>, <a href="http://hockeyapp.net/">HockeyApp</a> or others can look a bit daunting at first. We will demystify the important aspects of such reports, so that after reading this article one should be able to use crash report data more effectively.</p><p>We are going to be talking mainly about crashes of iOS applications, but some of the concepts can be carried over to crashes on other platforms.</p><p>Also, there are some reasons for crashes that are of special interest for iOS developers, such as when a watchdog timeout happens, or when the application is killed due to memory constraints. We are not going to cover those here, because others have already <a href="https://developer.apple.com/videos/wwdc/2010/?id=317">done</a> <a href="http://developer.apple.com/library/ios/#technotes/tn2151/_index.html">that</a>.</p><h3>A First Look</h3><p>Let us dive right in and consider <a href="https://gist.github.com/dennda/56851a63d935b54d3147">a full, real-world crash report</a> from a production app. There is a lot of information shown there. We are going to break it up into more easily digestable fragments and discuss those individually.</p><h3>The Header</h3><p>At the start of every crash report, you’ll find the basic header:</p>
+<pre><code>Incident Identifier: A8111234-3CD8-4FF0-BD99-CFF7FDACB212
+CrashReporter Key: A54D28AF-3010-5839-BBA6-FE72C8AFCC2E
+Hardware Model: iPod3,1
+Process: OurApp [476]
+Path: /Users/USER/OurApp.app/OurApp
+Identifier: coop.plausible.OurApp
+Version: 48
+Code Type: ARM
+Parent Process: launchd [1]
+
+Date/Time: 2013-03-30T04:42:07Z
+OS Version: iPhone OS 5.1.1 (9B206)
+Report Version: 104
+</code></pre><p>Most of these fields are self-explanatory, but a few deserve note:</p>
+<ul>
+  <li><strong>Incident Identifier:</strong> Client-assigned unique identifier for the report.</li>
+  <li><strong>CrashReporter Key:</strong> This is a client-assigned, anonymized, per-device identifier, similar to the UDID. This helps in determining how widespread an issue is.</li>
+  <li><strong>Hardware Model:</strong> This is the hardware on which a crash occurred, as available from the “hw.machine” sysctl. This can be useful for reproducing some bugs that are specific to a given phone model, but those cases are rare.</li>
+  <li><strong>Code Type:</strong> This is the target processor type. On an iOS device, this will always be ‘ARM’, even if the code is ARMv7 or ARMv7s.</li>
+  <li><strong>OS Version:</strong> The OS version on which the crash occurred, including the build number. This can be used to identify regressions that are specific to a given OS release. Note that while different models of iOS devices are assigned unique build numbers (eg, 9B206), crashes are only very rarely specific to a given OS build.</li>
+  <li><strong>Report Version:</strong> This opaque value is used by Apple to version the actual format of the report. As the report format is changed, Apple <em>may</em> update this version number. In PLCrashReporter, we generate and store reports in our own structured protobuf-based format, and generate Apple-compatible reports on-demand.</li>
+</ul><h3>The Stack Trace</h3><p>On iOS, an application is a single process that typically contains multiple active threads, including the main UI thread, the dispatch manager thread, and other worker threads for things like I/O. Each thread executes code, and a thread’s stack trace shows a list of the function calls the thread took to ultimately end up at its current place. A good crash report contains a stack trace for every thread at the time of crashing, and will also tell us in which thread the crash occurred. We read this from the bottom up, with the topmost entry being the top stack item, i.e. the innermost function that was called. The following shows an example crash on the main thread:</p>
+<pre><code>Thread 0 Crashed:
+0 libsystem_kernel.dylib 0x3466e32c ___pthread_kill + 8
+1 libsystem_c.dylib 0x3526829f abort + 95
+2 OurApp 0x0015dfc3 uncaught_exception_handler + 27
+3 CoreFoundation 0x3601b957 __handleUncaughtException + 75
+4 libobjc.A.dylib 0x30f91345 __objc_terminate + 129
+5 libc++abi.dylib 0x34d333c5 __ZL19safe_handler_callerPFvvE + 77
+6 libc++abi.dylib 0x34d33451 __ZdlPv + 1
+7 libc++abi.dylib 0x34d34825 ___cxa_current_exception_type + 1
+8 libobjc.A.dylib 0x30f912a9 _objc_exception_rethrow + 13
+9 CoreFoundation 0x35f7150d _CFRunLoopRunSpecific + 405
+10 CoreFoundation 0x35f7136d _CFRunLoopRunInMode + 105
+11 GraphicsServices 0x31876439 _GSEventRunModal + 137
+12 UIKit 0x3192ecd5 _UIApplicationMain + 1081
+13 OurApp 0x000938e7 main (main.m:16)
+
+Thread 1:
+...
+</code></pre><p>If we eyeball that stack trace, we can easily see that the cause of the crash is an unhandled exception. (If you find yourself getting a lot of these, you might want to set up an <em>Exception Breakpoint</em> in Xcode, which takes you to the function that throws the exception when testing your application <strong>during development</strong>.)</p><p>It is probably safe to say that a crash report’s stack traces are what most programmers first consider, as they are relatively easy to comprehend. Often but not always a stack trace is all that’s required to understand the underlying cause of a crash.</p><h4>Debug Symbols</h4><p>It is important to note that at the time an application is built for deployment, the debug symbols (which associate constructs of the programming language with the machine code that the compiler generated from them) will be stripped so as to produce a smaller build product. For iOS applications, it is therefore important to keep a copy of the <code>.dSYM</code> bundle that is generated alongside the binary, as it cannot easily be recovered even if the same set of source files is compiled again. The <code>.dSYM</code> bundle is generated by the <code>dsymutil</code> program, which <a href="http://wiki.dwarfstd.org/index.php?title=Apple's_%22Lazy%22_DWARF_Scheme">crafts it</a> from the executable and its intermediate object files (<code>.o</code>, which still contain the DWARF debug information).</p><p>Using a binary’s <code>.dSYM</code>, crash reporting services can later map the symbol addresses from the binary to more comprehensible, human-readable symbol names, and even file and line numbers.</p><p>Let’s illustrate the difference that symbolication makes using two short examples from stack traces.</p>
+<pre><code>// Before symbolication
+8 OurApp 0x000029d4 0x1000 + 6612
+</code></pre><p>The first column gives us the index of the stack frame in the stack trace. The second column indicates the name of the binary the function belongs to. The third column tells us the address of the function that was called in the process’ address space. The last column divides this into a base address for the library’s binary image (see section <em>Binary Images</em>) and an offset.</p><p>We can see that this is not all that intuitive. Let’s look at the same example after symbolication:</p>
+<pre><code>// After symbolication
+8 OurApp 0x000029d4 -[OurAppDelegate applicationDidFinishLaunching:] (OurAppDelegate.m:128)
+</code></pre><p>The first three columns are the same. The last column however, contains the actual file name, line number, and function name, which we humans can more easily look up.</p><h3>The Exception Section</h3><p>The exception section of a crash report provides us with the exception type, the exception codes, and the index of the thread where the crash occurred:</p>
+<pre><code>Exception Type: SIGABRT
+Exception Codes: #0 at 0x3466e32c
+Crashed Thread: 0
+</code></pre><p>When we talk about ‘exceptions’ in this context, we do not refer to Objective-C exceptions (although those may be reason for a crash), but <em>Mach Exceptions</em>. The example also shows a UNIX signal, <code>SIGABRT</code>, which many UNIX programmers will find familiar. There is a whole ecosystem of APIs built around Mach Exceptions and UNIX signals (e.g. to attach custom signal/exception handlers to given types of UNIX signals/Mach Exceptions), that we’re not going to cover here. If you’re interested, see the <em>Further Reading</em> section below.</p><p>The kernel will send such exceptions and signals under a variety of circumstances. For the sake of brevity, we limit our discussion to the most common ones that either lead to process termination or that are otherwise of interest in the face of crash analysis.</p><h4>Signals</h4><p>The following is a list of commonly encountered, process-terminating signals and a brief description:</p><p>Signal Description SIGILL Attempted to execute an illegal (malformed, unknown, or privileged) instruction. This may occur if your code jumps to an invalid but executable memory address. SIGTRAP Mostly used for debugger watchpoints and other debugger features. SIGABRT Tells the process to abort. It can only be initiated by the process itself using the <code>abort()</code> C stdlib function. Unless you’re using <code>abort()</code> yourself, this is probably most commonly encountered if an <code>assert()</code> or <code>NSAssert()</code> fails. SIGFPE A floating point or arithmetic exception occurred, such as an attempted division by zero. SIGBUS A bus error occurred, e.g. when trying to load an unaligned pointer. SIGSEGV Sent when the kernel determines that the process is trying to access invalid memory, e.g. when an invalid pointer is dereferenced. A signal has either a default signal handler, or a custom one (if the program set it up using <code>sigaction</code>). As the second argument to the signal handler, a <code>siginfo_t</code> structure is passed that contains further information about the error that occurred. Of special interest is the <code>si_addr</code> field, which indicates the address at which the fault occurred. The following is a quote of a comment from the kernel’s <a href="http://fxr.watson.org/fxr/source/bsd/sys/signal.h?v=xnu-517"><code>bsd/sys/signal.h</code></a> file:</p>
+<pre><code>When the signal is SIGILL or SIGFPE, si_addr contains the address of the faulting
+instruction. When the signal is SIGSEGV or SIGBUS, si_addr contains the address of
+the faulting memory reference. Although for x86 there are cases of SIGSEGV for
+which si_addr cannot be determined and is NULL.
+</code></pre><h4>Exceptions</h4><p>On Darwin, UNIX signals are built on top of Mach Exceptions, and the kernel performs some mapping between the two. For a more comprehensive list of exception types, see <a href="http://fxr.watson.org/fxr/source/osfmk/mach/exception_types.h?v=xnu-2050.18.24"><code>osfmk/mach/exception_types.h</code></a>. Again, we list only the most important exception types:</p><p>Exception Description EXC_BAD_ACCESS Memory could not be accessed. The memory address where an access attempt was made is provided by the kernel. EXC_BAD_INSTRUCTION Instruction failed. Illegal or undefined instruction or operand. EXC_ARITHMETIC For arithmetic errors. The exact nature of the problem is also made available. It is also possible for an exception to have an associated exception code that contains further information about the problem. For instance, <code>EXC_BAD_ACCESS</code> could point to a <code>KERN_PROTECTION_FAILURE</code>, which would indicate that the address being accessed is valid, but does not permit the required form of access (see<a href="http://fxr.watson.org/fxr/source/osfmk/mach/kern_return.h?v=xnu-2050.18.24"><code>osfmk/mach/kern_return.h</code></a>). <code>EXC_ARITHMETIC</code> exceptions will also include the precise nature of the problem as part of the exception code.</p><h4>Example</h4><p>The example exception section shown above is an excerpt from <a href="https://gist.github.com/dennda/56851a63d935b54d3147">this crash report</a>. We can see that the reason for the crash is a <code>SIGABRT</code>, which makes us think that this crash might have been caused by a failing assertion. If we inspect the exception code, we can see that the kernel included the address of the instruction in question (<code>0x3466e32c</code>), and the crashed thread’s index. Sure enough, if we search for that address in the report, we’ll find it in both the program counter register (see below), and the crashing thread’s stack trace:</p>
+<pre><code>0 libsystem_kernel.dylib 0x3466e32c ___pthread_kill + 8
+</code></pre><p>In this example, we can see that there’s even more to discover in the ‘Application Specific Information’ section, which tells us that a <code>NSInternalInconsistencyException</code> (a Foundation exception) occurred which was not caught and led to a call to <code>abort()</code>, which is ultimately why we saw the <code>SIGABRT</code> signal.</p><h3>Binary Images</h3><p>At the end of a crash report, we find a list of the loaded binary images, which in essence tells us which libraries were loaded by the application, and what their address space is within the process. Each entry in this list also shows the UUID for the respective binary, which is generated and set by the linker as part of the build process. It is stored in the <a href="https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/MachORuntime/Reference/reference.html">Mach-O</a> binary and identified by the <a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/MachORuntime/Reference/reference.html#//apple_ref/doc/uid/20001298-load_command">LC_UUID</a> command. The UUID is the same for the binary and the <code>.dSYM</code> bundle generated for it, which ensures that there’s no mismatch during symbolication.</p><p>For example, we might find the following in the list of binary images:</p>
+<pre><code>0x35f62000 - 0x36079fff CoreFoundation armv7 /System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+</code></pre><p>The first two hexadecimal numbers indicate the beginning and end of the address space that the CoreFoundation image is loaded into. If we consider a line from a stack trace such as the following, we can see that the function that was traced falls into this library’s address space:</p>
+<pre><code>9 CoreFoundation 0x35fee2ad ___CFRunLoopRun + 1269
+</code></pre><p>When is this information useful? Imagine that for some reason we desire to analyze the assembly of one of the libraries that our application is using, let’s say CoreFoundation. CoreFoundation is not statically linked (i.e. it’s not part of the application’s own binary), but is dynamically loaded at runtime. When such loading occurs, the library’s binary image ends up at some arbitrary location in the process’ address space.</p><p>Let’s now assume that we know the value of the <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Babbdajb.html"><em>program counter</em></a> (PC, i.e. the address of the instruction to be executed next) of the process, and that the PC refers to an instruction somewhere in CoreFoundation’s address space, relative to the process. If on our development machine we disassemble a local, on-disk copy of the CoreFoundation binary that the application previously loaded, we’d not be able to map the process-relative PC to the address space of the local copy, given that CoreFoundation was mapped to some arbitrary address. If, however, we know the offset the CoreFoundation binary image was at during the process’ lifetime, we can easily map the process-relative PC to the corresponding value for the on-disk binary.</p><p>As an example, if CoreFoundation’s binary image was loaded into our process with an offset of <code>0x35f62000</code>, and the PC is <code>0x35fee2ad</code>, then we can compute the actual address of the CoreFoundation instruction as:</p>
+<pre><code>0x35fee2ad - 0x35f62000 == 0x8c2ad
+</code></pre><p>In our locally disassembled CoreFoundation binary, we can now inspect the instruction at address <code>0x8c2ad</code>.</p><h3>Register State</h3><p>Further down in the crash report we find the ARM thread state of the crashed thread, which is essentially a list of the CPU registers and their respective values at the time of the crash. The section may look like so:</p>
+<pre><code>Thread 0 crashed with ARM Thread State:
+r0: 0x00000000 r1: 0x00000000 r2: 0x00000001 r3: 0x00000000
+r4: 0x00000006 r5: 0x3f09cd98 r6: 0x00000002 r7: 0x2fe80a70
+r8: 0x00000001 r9: 0x00000000 r10: 0x0000000c r11: 0x00000001
+ip: 0x00000148 sp: 0x2fe80a64 lr: 0x3526f20f pc: 0x3466e32c
+cpsr: 0x00000010
+</code></pre><p>A crashing thread’s register state is not always required to read a crash report, but there are certainly instances where this information can be very useful. For instance, if the crashing instruction tries to access a register that has a value of <code>0x0</code>, and the thread tries to access memory at that register’s address or with only a small offset the failure cause is extremely likely to be a <code>NULL</code> dereference. That’s because the entire page from 0-4095 is mapped with read/write/execution permissions <span style="font-family: monospace;">disabled, i.e. no access is allowed.</p><p>In the following section, we’ll give another more elaborate example.</p><h4>An Example</h4><p>Let us now consider a contrived example that illustrates why it can be handy to have the register state of a crashing application.</p><p>Assume that the crash report tells us the thread that the crash happened in, and that we’ve identified the line in our program that causes the crash. Imagine that the line reads as such:</p>
+<pre><code>new_data-&gt;ptr2 = [myObject executeSomeMethod:old_data-&gt;ptr2];
+</code></pre><p>If we consider the UNIX signal that got sent (SIGSEGV), we can guess that the crash happened due to the application trying to dereference a memory address that for some reason is invalid. In this example, there are two pointers being evidently dereferenced (<code>new_data</code> and <code>old_data</code>). The question then becomes: Which one is responsible for the crash?</p><h5>Assembly to the Rescue</h5><p>If we still have a copy of the crashing binary, we can disassemble it and look at the exact instruction that was being executed when the application crashed (the address of which is made available as part of the <code>SIGSEGV</code>‘s<code>si_addr</code>).</p><p>Assume that the application at the time of crashing was executing the following ARM instruction:</p>
+<pre><code>str r0, [r1, #4]
+</code></pre><p>There are two registers being used here: <code>r0</code> and <code>r1</code>. Imagine that <code>r1</code> points to the address of a C struct with the following declaration:</p>
+<pre><code>typedef struct { void *ptr1, void *ptr2 } data_t;
+</code></pre><p>Then, given that pointers on ARM have a width of 4 bytes, we know that <code>r1</code> plus four refers to the struct member<code>ptr2</code>.</p><p>In the form above, the <code>str</code> instruction takes the value stored in register <code>r0</code> and attempts to store it at the address pointed to by <code>r1</code>, plus four. We could read the assembly like so:</p>
+<pre><code>*(r1 + 4) = r0;
+</code></pre><p>That is, we can think of <code>str</code> being the equivalent of a C assignment here.</p><p>We now know two things:</p>
+<ul>
+  <li>The application received a <code>SIGSEGV</code> (invalid memory access we already knew this; see above).</li>
+  <li>The crash happened while trying to store a value to some address with an offset of 4.</li>
+</ul><p>At this point we should be able to suspect that the pointer value of <code>new_data</code> might not be what we were expecting it to be.</p><p>Looking at the ARM thread state (the registers and their respective values), we can confirm this theory:</p>
+<pre><code>r1: 0x00000000
+</code></pre><p>In other words, we can now be certain that we are trying to dereference an address (which was computed based on an offset and a <code>NULL</code> pointer) which in all likelihood points to invalid memory. This was ultimately why the application crashed. If this was a real example, the next step would be to look at our code and determine what path the code could have taken such that we ended up on the crashing line with <code>new_data == NULL</code>, and to fix that.</p><h5>Additional Notes</h5><p>To drive the point home, dereferencing <code>old_data</code> can’t be the cause of the crash, given that the access to it only involves reading the value, not writing it (i.e. we wouldn’t be seeing a <code>str</code> instruction). That said, one should not be confused when looking at <a href="https://gist.github.com/landonf/14369e439bc147cce633#file-test-s">a more complete list of ARM assembly instructions</a>, where one might see an instruction such as</p>
+<pre><code>str [r2, #4], r0
+</code></pre><p>This is an example of how the argument is passed to the subroutine (assuming <code>r2</code> points to a struct of type<code>data_t</code>). That is, the value of the second struct member is stored in register <code>r0</code> prior to jumping into the subroutine, which then performs its work.</p><p>When the subroutine is about to return (assuming the <a href="http://developer.apple.com/library/ios/#documentation/Xcode/Conceptual/iPhoneOSABIReference/Articles/ARMv6FunctionCallingConventions.html">Apple ARM ABI</a>), the return value of the function is placed in r0 (if it fits there). In the above case, that would be the value returned by the <code>executeSomeMethod:</code> call, which by the time the crashing instruction executes is already stored in <code>r0</code>.</p><h3>Conclusion</h3><p>A fair number of crashes are easy to comprehend. For many crashes, however, comprehensive data is required for crash analysis. In those cases, a reliable crash reporting facility is desirable. Since you can’t know in advance when a crash will occur, and because you might not be able to narrow the cause down without a report, it’s advisable to set up a crash reporting solution for your app early during development. Using iTunes Connect does get you crash reports, but you can’t use it before your app is on the App Store, which means it’s not suitable for beta testing.</p><p>Using a service such as <a href="http://hockeyapp.net/">HockeyApp</a> has the following advantages over iTunes Connect:</p>
+<ul>
+  <li>You can get crash reports even during beta testing, before the app is on the iTunes Store.</li>
+  <li>You can access crash reports easily through a convenient web interface.</li>
+  <li>You can get notified via mail as soon as a crash happens.</li>
+  <li>Crash reports have already been symbolicated for you (assuming proper setup).</li>
+  <li>Users often opt-out of Apple’s data gathering, which means you wouldn’t get any crash reports. This is because Apple asks the user for permission to “improve its products and services by automatically sending daily diagnostics and usage data” once when a device is first used, which is a global setting that doesn’t easily convey the effect of declining the request.</li>
+</ul><p>It is therefore a good idea to find a crash reporting solution that works for you as soon as you deploy your application. (In the interest of full disclosure: HockeyApp has been a great sponsor of our open-source work on PLCrashReporter).</p><p>We hope that we have succeeded in shedding some light on the more advanced information provided by crash reports. In case you need some expert guidance regarding (our) crash reporting solutions, please note that <a href="../../../../../contact/index.html">we’re available for hire</a>.</p><h4>Further Reading</h4>
+<ul>
+  <li>A <a href="https://developer.apple.com/videos/wwdc/2010/?id=317">WWDC 2010 video</a> on understanding crash reports (login required).</li>
+  <li>Apple <a href="http://developer.apple.com/library/ios/#technotes/tn2151/_index.html">tech note 2151</a> on understanding crash reports.</li>
+  <li>On Mach Exceptions and Signals, we recommend Amit Singh’s <a href="http://osxbook.com/">Mac OS X Internals</a> book and <a href="../../../../../about/index.html">Landon’s</a> <a href="http://www.mikeash.com/pyblog/friday-qa-2013-01-11-mach-exception-handlers.html">guest article</a> on <a href="../../../../../about/index.html">Mike’s</a> <a href="http://mikeash.com/pyblog/">Friday Q&amp;A</a> blog. As Landon highlights, please note that Mach Exceptions Handlers are a partially private API on iOS.</li>
+</ul>
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../../../index-2.html?feed=rss2"><img src="../../../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/2013/04/11/exploring-ios-crash-reports by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:06 GMT -->
+</html>

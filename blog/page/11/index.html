@@ -1,0 +1,261 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/page/11 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:10:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../assets/images/main/favicon/index.ico">
+        <script src="../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../index/index.html">
+                    <img src="../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../index.html">Blog</a></li>
+                <li><a href="../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                
+                    <h1>
+                        <a href="../../2009/07/11/plblocks-1/index.html">PLBlocks 1.0-beta2 Released</a>
+                    </h1>
+                    <p class="author">July 11, 2009, by Landon Fuller</p>
+                    <h3>Changes</h3><p>This release was focused on expanding the supported host and target architectures (thanks to everyone who provided testing!).</p>
+<ul>
+  <li>iPhone OS 2.2 and later are now supported.</li>
+  <li>The runtime is now available as an iPhone 3gs optimized armv6/armv7 universal binary.</li>
+  <li>Development is now supported on PowerPC systems.</li>
+</ul><h3>Download</h3><p>The initial beta of Plausible Blocks is available for Leopard and Snow Leopard:</p>
+<ul>
+  <li>Leopard: <a href="http://plblocks.googlecode.com/files/plblocks-1.0-beta2-leopard.dmg">plblocks-1.0-beta2-leopard.dmg</a></li>
+  <li>Snow Leopard: <a href="http://plblocks.googlecode.com/files/plblocks-1.0-beta2-snowleopard.dmg">plblocks-1.0-beta2-snowleopard.dmg</a></li>
+  <li>Project page: <a href="http://code.google.com/p/plblocks/">http://code.google.com/p/plblocks/</a></li>
+</ul><p>This beta release is provided for <strong>developer testing and experimentation</strong>. Plausible Blocks supports targeting Mac OS X 10.5 (PPC, i386, x86-64), iPhone OS 2.2+ (armv6, armv7), and iPhoneSimulator 2.2+ (i386). Garbage collection and Mac OS X 10.4 are currently unsupported.</p><h3>Further Reading</h3><p>If you’re interested in learning more about blocks, here are a few articles to get your started:</p>
+<ul>
+  <li><a href="http://landonf.bikemonkey.org/code/iphone/Using_Blocks_1.20090704.html">Blocks Examples: NSOperationQueue and UIActionSheet</a> and <a href="http://landonf.bikemonkey.org/code/iphone/Using_Blocks_2.20090710.html">Using Blocks: Understanding the Memory Management Rules</a></li>
+  <li>Mike Ash’s <a href="http://www.mikeash.com/?page=pyblog/friday-qa-2008-12-26.html">Friday Q&amp;A on Blocks</a></li>
+  <li>Jim Dovey’s <a href="http://alanquatermain.net/post/138827791/blocks-episode-2-life-cycles">Blocks Life-Cycles</a> and <a href="http://alanquatermain.net/post/135882428/blocks-episode-1">Blocks Episode 1</a></li>
+</ul>
+                
+                    <h1>
+                        <a href="../../2009/07/02/blocks-for-iphone-3.0-and-mac-os-x-10/index.html">Blocks for iPhoneOS 3.0 and Mac OS X 10.5</a>
+                    </h1>
+                    <p class="author">July 2, 2009, by Landon Fuller</p>
+                    <h3>Introduction</h3><p><strong>Update Sept 3rd 2009: Check out our <a href="http://www.plausiblelabs.com/blog/?tag=plblocks">more recent posts</a> on PLBlocks.</strong></p><p>If you’ve been following the wide variety of developer features planned for <a href="http://www.apple.com/macosx/">Snow Leopard</a>, you may have noticed Apple’s introduction of Blocks, which add [closures](http://en.wikipedia.org/wiki/Closure_(computer_science)) to C and Objective-C, along with preliminary support for C++.</p><p>Blocks are a great addition to Objective-C, but unfortunately, are only available in Mac OS X 10.6. We have a quite a bit of code that could be greatly simplified using blocks, and so I decided to spend some time back-porting block support to iPhoneOS 3.0 and Mac OS X 10.5.</p><p>The result, <a href="http://code.google.com/p/plblocks/">Plausible Blocks</a>, provides a drop-in runtime and Xcode compiler for using blocks in your iPhone and Mac OS X 10.5 applications, based on Apple’s Snow Leopard blocks runtime and compiler support.</p><p>Closures are not a new idea — originally conceived nearly 40 years ago, they’re a staple of many languages, from <a href="http://en.wikipedia.org/wiki/LISP#Lambda_expressions">Lisp</a> to <a href="http://en.wikipedia.org/wiki/JavaScript#Functional">JavaScript</a>. If you’ve used a functional language (or a language that borrowed some ideas from one), chances are very good that you’ve made use of closures:</p><h4><strong>Ruby</strong></h4>
+<pre><code>books.each { |book| puts (library.to_s + &#39;: &#39; + book.title) }
+</code></pre><h4>JavaScript</h4>
+<pre><code>function setClickMessage (button, message) {
+    button.addEventListener(&quot;click&quot;, function() {
+        /* This is a closure */
+        alert(message);
+    }, false);
+}
+</code></pre><h4>Scala</h4>
+<pre><code>def findBooks (title:String): Seq[Book] = books.filter { book =&gt;
+    /* This is a closure */
+    book.title == title
+}
+</code></pre><h4>C and Objective-C Blocks</h4>
+<pre><code>NSArray *result = [values mapConcurrent: ^(id value) {
+    /* Execute closure concurrently on available CPUs, collecting the results */
+    return ExpensiveComputation(value);
+}];
+</code></pre><p>Closures are well suited to modeling a wide variety of higher-level programming constructs, and in doing so, can greatly simplify your code and enable functionality that would simply be too cumbersome to implement any other way. For some additional information on blocks, and why they’re interesting, I’d suggest reading Mike Ash’s great <a href="http://www.mikeash.com/?page=pyblog/friday-qa-2008-12-26.html">Friday Q&amp;A on Blocks</a>, and my own <a href="http://landonf.bikemonkey.org/code/iphone/Using_Blocks_1.20090704.html">Using Blocks</a> post, which includes some sample code to get you started.</p><h3>Download</h3><p>The initial beta of Plausible Blocks is available for Leopard and Snow Leopard:</p>
+<ul>
+  <li>Leopard: <a href="http://plblocks.googlecode.com/files/plblocks-1.0-beta1-leopard.dmg">plblocks-1.0-beta1-leopard.dmg</a></li>
+  <li>Snow Leopard: <a href="http://plblocks.googlecode.com/files/plblocks-1.0-beta1-snowleopard.dmg">plblocks-1.0-beta1-snowleopard.dmg</a></li>
+  <li>Project page: <a href="http://code.google.com/p/plblocks/">http://code.google.com/p/plblocks/</a></li>
+</ul><p>This beta release is provided for <strong>developer testing and experimentation</strong>, and <strong>should not</strong> be used for production software prior to further testing and review. Plausible Blocks supports targeting Mac OS X 10.5 (PPC, i386, x86-64), iPhone OS 3.0 (armv6), and iPhoneSimulator 3.0 (i386). Garbage collection and Mac OS X 10.4 are currently unsupported, and the SDK requires an Intel Mac.</p><p>The Plausible Blocks runtime makes use of custom, prefixed symbol names to avoid any binary conflicts that could occur should Apple add block support to iPhone OS, or when running your binaries on 10.6. The provided compilers are based directly on the Apple standard, stable compiler versions as shipped with the Mac OS X and iPhone SDKs.</p><h3>Installation &amp; Use</h3><p>Plausible Blocks is composed of two pieces:</p>
+<ul>
+  <li>Plausible Blocks SDK: Supplies custom compilers for use in Xcode.</li>
+  <li>PLBlocks Runtime: A runtime library required by all applications making use of Plausible Blocks.</li>
+</ul><p>To install the SDK, simply install the included “Plausible Blocks SDK” package. Once installed, an additional “GCC 4.2 (Plausible Blocks)” compiler will be available for selection in your Xcode project and targets. To build with the new compiler, simply select in either your project’s build settings, or on a per-target basis:</p><p><img src="../../../assets/images/blog/uploads/2009/07/02/blocks-for-iphone-3.0-and-mac-os-x-10.5/plblocks-select-compiler/index.png" alt="Installation" /></p><p>In addition to the SDK, you’ll need to include the PLBlocks runtime framework in your application. It is provided as an embeddable framework for Mac OS X, and as a <a href="http://landonf.bikemonkey.org/code/iphone/iPhone_Framework_Support.20081202.html">static framework</a> for iPhone applications.</p><p>To include in your project:</p>
+<ol>
+  <li>Copy the Mac OS X or iPhone PLBlocks.framework to your project directory</li>
+  <li>Within Xcode, select “Add -&gt; Existing frameworks” and add the copied PLBlocks.framework to your project.</li>
+  <li>Ensure that PLBlocks.framework has been added to your targets “Link Binary With Libraries” section.</li>
+  <li>(Mac OS X Only) Add a new “Copy Files” build phase to copy PLBlocks.framework to your application’s “Framework” directory.</li>
+  <li>Set the project, or a specific target, to use the “GCC 4.2 (Plausible Blocks)” compiler.</li>
+</ol><h3>Development</h3><p>The full PLBlocks source code is available from the <a href="http://code.google.com/p/plblocks/">PLBlocks project page</a>. If you’d like to contribute to the SDK, runtime, or simply discuss programming with blocks, please consider joining the development list at: <a href="http://groups.google.com/group/plblocks-devel">http://groups.google.com/group/plblocks-devel</a></p><p>To build PLBlocks, select one of the following targets:</p>
+<ul>
+  <li>Disk Image: Builds entire project and generates a distribution DMG.</li>
+  <li>Package SDK: Builds SDK package, including all compilers, and Xcode plugins</li>
+  <li>Runtimes: Builds all runtimes</li>
+</ul><p>The project should build on Mac OS X 10.5 and 10.6. In addition to Xcode 3.1.3 or 3.2, the iPhone 3.0 SDK is required.</p><p>Building the full SDK, including compilers, may take an extraordinarily long time. Unless you are experimenting with the compiler toolchain — or you are the type to enjoy watching paint dry — building only the Runtime targets during development is highly recommended.</p>
+                
+                    <h1>
+                        <a href="../../2009/05/20/lingraphica%27s-smalltalk-app-launches-with-pljukebox-library/index.html">Lingraphica’s SmallTalk App Launches with PLJukebox Library</a>
+                    </h1>
+                    <p class="author">May 20, 2009, by Terri Kramer</p>
+                    <p><img src="../../../assets/images/blog/uploads/2009/05/20/lingraphica%27s-smalltalk-app-launches-with-pljukebox-library/smalltalk/index.jpg" alt="SmallTalk iPhone App" /></p><p><a href="http://www.aphasia.com/slp/product_smalltalk.aspx">SmallTalk</a> serves as a portable companion to <a href="http://www.aphasia.com/slp/index.aspx">Lingraphica’s</a> signature speech-generating device for patients with aphasia.</p><p>SmallTalk contains a set of pictures and phrases useful for communicating in everyday situations. Users select an icon from the iPhone’s touchscreen to a play a pre-recorded phrase through the built-in speaker — Plausible Labs’ <a href="../../../code/pljukebox/index/index.html">PLJukebox</a> user interface library is used for browsing and selecting phrases from the iPhone’s landscape view.</p><p>We’re thrilled to have our code included in such a wonderful application. You can download SmallTalk for free through the <a href="http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=310102858&amp;mt=8">iPhone App Store</a>.</p>
+                
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../index-2.html?feed=rss2"><img src="../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+        
+
+<nav class="paging-navigation" role="navigation">
+    <div class="nav-links">
+        
+        
+            <a class="prev page-numbers" href="../10/index.html">Previous</a>
+        
+        
+        
+            
+                <a class="page-numbers" href="../1/index.html">1</a>
+            
+        
+            
+                <a class="page-numbers" href="../2/index.html">2</a>
+            
+        
+            
+                <a class="page-numbers" href="../3/index.html">3</a>
+            
+        
+            
+                <a class="page-numbers" href="../4/index.html">4</a>
+            
+        
+            
+                <a class="page-numbers" href="../5/index.html">5</a>
+            
+        
+            
+                <a class="page-numbers" href="../6/index.html">6</a>
+            
+        
+            
+                <a class="page-numbers" href="../7/index.html">7</a>
+            
+        
+            
+                <a class="page-numbers" href="../8/index.html">8</a>
+            
+        
+            
+                <a class="page-numbers" href="../9/index.html">9</a>
+            
+        
+            
+                <a class="page-numbers" href="../10/index.html">10</a>
+            
+        
+            
+                <span class="page-numbers current">11</span>
+            
+        
+
+        
+        
+    </div>
+</nav>
+
+        
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/page/11 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:10:54 GMT -->
+</html>
+

@@ -1,0 +1,226 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/2017/09/13/best-new-features-in-swift-4 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>The Best New Features in Swift 4</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../../../assets/images/main/favicon/index.ico">
+        <script src="../../../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+    
+    
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../../../index/index.html">
+                    <img src="../../../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../../../index.html">Blog</a></li>
+                <li><a href="../../../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                <h1>
+                    <a href="#">The Best New Features in Swift 4</a>
+                </h1>
+                <p class="author">September 13, 2017, by Mike Ash</p>
+                <p>Swift 4 is here, and it's bringing some nice changes. We're not getting a radical rework of the syntax like we did last year, nor are we getting a breathtaking pile of new features like we did for Swift 2, but there are some nice additions you can use to improve your code. Let's take a look!</p><h3>Multi-Line String Literals</h3><p>Sometimes you want long, multi-line strings in your code. It might be an HTML template, a blob of XML, or a long message for the user. Either way, they're painful to write in Swift 3.</p><p>You can write them out all on one line, which gets ugly fast:</p>
+<pre><code>let message = &quot;Please disable your Frobnitz before proceeding.\n\nTo do this, visit Settings -&gt; Frobnitz, then toggle the switch to \&quot;off\&quot;.\n\nIf you need the Frobnitz to remain enabled, tap \&quot;Proceed Anyway\&quot; below.&quot;
+</code></pre><p>You can split it onto multiple lines by concatenating strings:</p>
+<pre><code>let message =
+    &quot;Please disable your Frobnitz before proceeding.\n\n&quot;
+  + &quot;To do this, visit Settings -&gt; Frobnitz, then toggle the switch to \&quot;off\&quot;.\n\n&quot;
+  + &quot;If you need the Frobnitz to remain enabled, tap \&quot;Proceed Anyway\&quot; below.&quot;
+</code></pre><p>There are other ways to do it too, but none of them are all that good.</p><p>Swift 4 solves this problem with multi-line string literals. To write a multi-line string literal, use three quote marks at the beginning and end:</p>
+<pre><code>let message = &quot;&quot;&quot;
+    Please disable your Frobnitz before proceeding.
+
+    To do this, visit Settings -&gt; Frobnitz, then toggle the switch to &quot;off&quot;.
+
+    If you need the Frobnitz to remain enabled, tap &quot;Proceed Anyway&quot; below.
+    &quot;&quot;&quot;
+</code></pre><p>If you've used Python, then this new syntax will look familiar. However, it's not quite the same. There are some interesting limitations and features of this syntax in Swift.</p><p>This triple-quote syntax cannot be used on a single line. Something like the following will not compile:</p>
+<pre><code>// Will not compile
+label.text = &quot;&quot;&quot;Put your text in &quot;quotes&quot; to make them look quoted.&quot;&quot;&quot;
+</code></pre><p>This could be handy to avoid having to escape quotes, but it's not allowed. The content of the string must be on separate lines between the <code>&quot;&quot;&quot;</code> marks.</p><p>Multi-line strings can be indented in your code without indenting the final result. The multi-line string above indents each line in the code, but the string placed into <code>message</code> has no leading whitespace. This is really nice, but what if you want some indentation? This feature is based on the indentation of the closing <code>&quot;&quot;&quot;</code> mark. Its indentation will be stripped off all of the other lines. If for some reason you needed the contents of <code>message</code> to be indented, you can do so by indenting the text farther than the closing <code>&quot;&quot;&quot;</code> mark:</p>
+<pre><code>let message = &quot;&quot;&quot;
+        Please disable your Frobnitz before proceeding.
+
+        To do this, visit Settings -&gt; Frobnitz, then toggle the switch to &quot;off&quot;.
+
+        If you need the Frobnitz to remain enabled, tap &quot;Proceed Anyway&quot; below.
+    &quot;&quot;&quot;
+</code></pre><p>To avoid confusion, each line of text <em>must</em> be indented at least as much as the closing <code>&quot;&quot;&quot;</code> mark. A line with less indentation will produce an error.</p><p>You may want to split your text onto multiple lines without producing multiple lines in the output. You can remove a line break from the resulting string by adding a <code>\</code> at the end of the line:</p>
+<pre><code>let message = &quot;&quot;&quot;
+    Please disable your Frobnitz before proceeding. \
+    To do this, visit Settings -&gt; Frobnitz, then toggle the switch to &quot;off&quot;. \
+    If you need the Frobnitz to remain enabled, tap &quot;Proceed Anyway&quot; below.
+    &quot;&quot;&quot;
+</code></pre><h3>One-Sided Ranges</h3><p>This is a nice, small change that's mostly self explanatory. Ranges can now be one-sided, and the "empty" side is implied to be the minimum or maximum value that makes sense in context.</p><p>When subscripting a container, this means you can leave off things like <code>string.endIndex</code> or <code>array.count</code>. For example, if you want to split an array into halves:</p>
+<pre><code>let middle = array.count / 2
+let firstHalf = array[..&lt;middle]
+let secondHalf = array[middle...]
+</code></pre><p>Or if you want to get a substring up to a particular index:</p>
+<pre><code>let index = string.index(of: &quot;e&quot;)!
+string[..&lt;index]
+</code></pre><p>It can also be handy in <code>switch</code> statements:</p>
+<pre><code>switch x {
+case ..&lt;0:
+    print(&quot;That&#39;s a negative.&quot;)
+case 0:
+    print(&quot;Nothing!&quot;)
+case 1..&lt;10:
+    print(&quot;Pretty small.&quot;)
+case 10..&lt;100:
+    print(&quot;Bigger.&quot;)
+case 100...:
+    print(&quot;Huge!&quot;)
+default:
+    // Unfortunately, the compiler can&#39;t figure out
+    // that the above cases are exhaustive.
+    break
+}
+</code></pre><p>For one-sided ranges up to a given value, you can use <code>..&lt;</code> for an exclusive range or <code>...</code> for an inclusive range, just like two-sided ranges. For one-sided ranges starting at a given value, only <code>...</code> is allowed, since the distinction between <code>...</code> and <code>..&lt;</code> makes no sense there.</p><h3>Combined Class and Protocol Types</h3><p>Sometimes you need an object which both subclasses a class and conforms to a protocol. For example, you might need a <code>UITableViewController</code> that also implements <code>KittenProvider</code>. Swift 3 had no way to express this idea, requiring various ugly workarounds. Interestingly, Objective-C is able to express this idea:</p>
+<pre><code>UITableViewController&lt;KittenProvider&gt; *object;
+</code></pre><p>Swift 4 can now express this concept as well by using the <code>&amp;</code> symbol. This could already be used to combine multiple protocols into a single type, and now it can also be used to combine protocols with a class:</p>
+<pre><code>let object: UITableViewController &amp; KittenProvider
+</code></pre><p>Note that only one class can be included in any such type, since you can't subclass more than one class at a time anyway.</p><h3>Generic Subscripts</h3><p>Swift has supported generic methods forever, but before Swift 4 it did not support generic subscripts. You could overload subscripts by implementing more than one with different types, but you couldn't use generics. Now you can!</p>
+<pre><code>subscript&lt;T: Hashable&gt;(key: T) -&gt; Value?
+</code></pre><p>Generics are fully supported, so you can use things like <code>where</code> clauses:</p>
+<pre><code>subscript&lt;S: Sequence&gt;(key: S) -&gt; [Value] where S.Element == Key
+</code></pre><p>Just like methods, the generic type can be used as a return value as well:</p>
+<pre><code>subscript&lt;T&gt;(key: Key) -&gt; T?
+</code></pre><p>This could be really handy for dynamically-typed containers, such as when dealing with JSON objects.</p><h3>Codable</h3><p>Speaking of JSON, perhaps the biggest new feature in Swift 4 is the <code>Codable</code> protocol. The compiler will now auto-generate serialization and deserialization code for your types, and all you have to do is declare conformance to <code>Codable</code>.</p><p>Imagine you have a <code>Person</code> type:</p>
+<pre><code>struct Person {
+    var name: String
+    var age: Int
+    var quest: String
+}
+</code></pre><p>If you wanted to read and write <code>Person</code> values to and from JSON, you previously had to write a bunch of annoying repetitive code to do so.</p><p>In Swift 4, you can make this happen by adding half a line:</p>
+<pre><code>struct Person: Codable {
+</code></pre><p>If for some reason you only want to support encoding or decoding, but not both, you can declare conformance to <code>Encodable</code> or <code>Decocable</code> separately:</p>
+<pre><code>struct EncodablePerson: Encodable { ... }
+
+struct DecodablePerson: Decodable { ... }
+</code></pre><p>Conforming to <code>Codable</code> is just a shortcut for conforming to both.</p><p>Using a <code>Codable</code> type requires an encoder or decoder, which determines the serialization format and how Swift values are translated to and from serialized values. Swift provides encoders and decoders for JSON and property lists, and Foundation's archivers also support <code>Codable</code> types.</p><p>To encode something as JSON, create a <code>JSONEncoder</code> and call its <code>encode</code> method:</p>
+<pre><code>let jsonEncoder = JSONEncoder()
+let data = try jsonEncoder.encode(person)
+</code></pre><p>To decode, create a <code>JSONDecoder</code> and call <code>decode</code>, passing it the type you want to decode and the data to decode from:</p>
+<pre><code>let jsonDecoder = JSONDecoder()
+let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
+</code></pre><p>Note that encoding and decoding methods are marked as <code>throws</code> because there are a lot of potential errors that can occur during the process, such as type mismatches or incomplete data, so you'll need to add <code>try</code> to these calls and catch the errors they throw.</p><p>Since JSON doesn't natively support dates or binary data, those values need to be converted to/from some other JSON representation. For example, it's common to use base64 encoding for data. <code>JSONEncoder</code> and <code>JSONDecoder</code> can be customized with different strategies for handling these values. For example, if you want to encode dates as ISO-8601 and data as base64:</p>
+<pre><code>let jsonEncoder = JSONEncoder()
+jsonEncoder.dateEncodingStrategy = .iso8601
+jsonEncoder.dataEncodingStrategy = .base64
+let data = try jsonEncoder.encode(person)
+</code></pre><p>And on the decode side:</p>
+<pre><code>let jsonDecoder = JSONDecoder()
+jsonDecoder.dateDecodingStrategy = .iso8601
+jsonDecoder.dataDecodingStrategy = .base64
+let decodedPerson = try jsonDecoder.decode(Person.self, from: data)
+</code></pre><p>They also provide the option for providing a totally custom strategy by writing your own code.</p><p>Property list coding is similar. Use <code>PropertyListEncoder</code> and <code>PropertyListDecoder</code> instead of the JSON coders. Since property lists can natively represent dates and binary data, the property list coders don't provide those options.</p><p>If you're already using <code>NSCoding</code> then you can mix and match it with <code>Codable</code> so that you don't have to change everything at once. <code>NSKeyedArchiver</code> provides a new <code>encodeEncodable</code> method which takes any <code>Encodable</code> type and encodes it under the given key. <code>NSKeyedUnarchiver</code> provides a corresponding <code>decodeDecodable</code> which can decode any <code>Decodable</code> type.</p><p><code>Codable</code> is a flexible protocol with lots of room for custom behavior. The compiler provides a default implementation, but you can provide your own if you need different behavior. This makes it straightforward to write implementations that migrate old data into new types, use different names in the serialized representation than in the source code, or make other customizations.</p><p>A full discussion of all the possibilities of <code>Codable</code> is beyond the scope of this article, but you can read more about it in <a href="https://mikeash.com/pyblog/friday-qa-2017-07-14-swiftcodable.html">my Friday Q&amp;A post about <code>Swift.Codable</code></a>.</p><h3>Wrapping Up</h3><p>Swift 4 hasn't brought us the dramatic changes we've seen in earlier years, but it's a solid improvement. <code>Codable</code> will make some really common tasks a lot easier, and it's probably my favorite feature out of the bunch. Other features like multi-line string literals and generic subscripts won't have the same impact, but put together they should make for nice improvement in the code we write.</p>
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../../../index-2.html?feed=rss2"><img src="../../../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../../12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/2017/09/13/best-new-features-in-swift-4 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:04 GMT -->
+</html>

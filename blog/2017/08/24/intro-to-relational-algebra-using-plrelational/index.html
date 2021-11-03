@@ -1,0 +1,257 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/2017/08/24/intro-to-relational-algebra-using-plrelational by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:08:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>An Introduction to Relational Algebra Using PLRelational</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../../../assets/images/main/favicon/index.ico">
+        <script src="../../../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+    
+    
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../../../index/index.html">
+                    <img src="../../../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../../../index.html">Blog</a></li>
+                <li><a href="../../../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                <h1>
+                    <a href="#">An Introduction to Relational Algebra Using PLRelational</a>
+                </h1>
+                <p class="author">August 24, 2017, by Mike Ash</p>
+                <p>We recently <a href="../../10/reactive-relational-programming-with-plrelational/index.html">announced PLRelational</a>, our framework for storing and working with data that is based on relational algebra. This raises the question: what exactly is relational algebra? Most of the material out there is either highly academic, or focused on SQL databases. This article will give an overview of the basics of relational algebra in a way that programmers can easily understand, aimed at explaining the foundations that PLRelational is built on. Terminology will match what PLRelational uses.</p><p>Relational algebra looks a lot like set theory, with some extra constraints and specialized operations. If "set theory" scares you, not to worry: for our purposes, just think of Swift's <code>Set</code> type. We'll be dealing with the same things here: an unordered collection of unique items which you can iterate over, ask about membership, and combine in various ways. PLRelational even uses <code>Set</code> to represent certain relations.</p><h3>Terminology</h3><p>Let's build up terminology from the simplest elements. The most basic component is a value, which PLRelational represents using the <code>RelationValue</code> type. Values represent your data, such as a username, a timestamp, or a boolean flag. Conceptually a value can be anything that can be checked for equality, but practically we need some limits on what they can be. PLRelational mimics SQLite's value types, and allows values to be 64-bit integers, double-precision floating-point numbers, strings, blobs (raw data expressed as a byte array), and null.</p><p>Another basic component is an attribute, which PLRelational represents with the <code>Attribute</code> type. This acts like a dictionary key and is essentially a string. Each value is stored under an attribute.</p><p>Values and attributes are combined into rows. Rows are essentially dictionaries, with attributes as the keys and values as the values. In fact, PLRelational's <code>Row</code> type originally stored its contents as <code>[Attribute: RelationValue]</code>. The current implementation is more sophisticated, but the functionality is the same.</p><p>A relation, represented with the <code>Relation</code> type, is conceptually a set of rows. All rows within a given relation have the same set of attributes, which is called a scheme.</p><p>To summarize:</p>
+<ul>
+  <li>Relation: a set of unique rows, all of which have the same scheme.</li>
+  <li>Row: a bunch of values, each associated with a unique attribute.</li>
+  <li>Scheme: the set of attributes in a row.</li>
+  <li>Attribute: a string describing the meaning or purpose of a value.</li>
+  <li>Value: a primitive chunk of data, holding a string, integer, or similar.</li>
+</ul><h3>Example</h3><p>Let's quickly look at a concrete example. We'll track a list of employees, where each employee has a name and an ID. We can set this up in PLRelational with a little bit of code:</p>
+<pre><code>let employees = MemoryTableRelation(scheme: [&quot;name&quot;, &quot;id&quot;])
+employees.asyncAdd([&quot;name&quot;: &quot;Jane Doe&quot;, &quot;id&quot;: 1])
+employees.asyncAdd([&quot;name&quot;: &quot;John Smith&quot;, &quot;id&quot;: 2])
+</code></pre><p>This example uses <code>MemoryTableRelation</code>, which as the name indicates stores the data directly in memory. This same code could easily use a different backing store, such as an SQLite database or a property list file, just by changing <code>MemoryTableRelation</code> to the appropriate type. We can also use the <code>MakeRelation</code> function as a convenient shorthand for creating a <code>MemoryTableRelation</code> without having to type attribute names over and over:</p>
+<pre><code>let employees = MakeRelation(
+    [&quot;name&quot;,       &quot;id&quot;],
+    [&quot;Jane Doe&quot;,   1],
+    [&quot;John Smith&quot;, 2])
+</code></pre><p>When pretty-printed, it looks like this:</p>
+<pre><code>id  name      
+1   Jane Doe  
+2   John Smith
+</code></pre><p>The <code>employees</code> variable holds a relation. Its scheme consists of the attributes <code>&quot;name&quot;</code> and <code>&quot;id&quot;</code>. It holds two rows, both of which have those attributes. The row values hold the employees' names and IDs.</p><h3>Basic Set Operations</h3><p>Relations are sets of rows. What sorts of operations can you do on them? To start with, you can do the same things you can do to sets.</p><p>To start with something really simple, you can union two relations. The result contains everything that was in either original relation. In PLRelational, you can create a new relation that represents this operation by using the <code>union</code> method:</p>
+<pre><code>let allEmployees = oldEmployees.union(newEmployees)
+</code></pre><p>This can also be done using the <code>+</code> operator:</p>
+<pre><code>let allEmployees = oldEmployees + newEmployees
+</code></pre><p>If <code>oldEmployees</code> contains this:</p>
+<pre><code>id  name      
+2   John Smith
+1   Jane Doe  
+</code></pre><p>And <code>newEmployees</code> contains this:</p>
+<pre><code>id  name         
+3   Tim S        
+4   Susan Johnson
+</code></pre><p>Then <code>allEmployees</code> contains all entries from both:</p>
+<pre><code>id  name         
+2   John Smith   
+1   Jane Doe     
+3   Tim S        
+4   Susan Johnson
+</code></pre><p>When it comes to PLRelational, it's important to note that creating <code>allEmployees</code> like this does not actually perform any work on the data! It just creates a new relation object which represents the union of the others. The actual work of gathering the data and unioning it together only happens when you ask <code>allEmployees</code> (or some other relation derived from it) for its contents. This is true for all relation operators: you build up new relation objects representing the operations applied to the given operands, and work only happens when you request data.</p><p>The difference operation works in much the same way. It produces only the rows contained in the first operand, but not rows also contained in the second. Similar to <code>union</code>, you can use the <code>difference</code> method to make a new relation representing the operation:</p>
+<pre><code>let managementEmployees = allEmployees.difference(frontlineEmployees)
+</code></pre><p>As with union, you can also use an operator:</p>
+<pre><code>let managementEmployees = allEmployees - frontlineEmployees
+</code></pre><p>As an example, if these are the <code>frontlineEmployees</code>:</p>
+<pre><code>id  name         
+2   John Smith   
+4   Susan Johnson
+</code></pre><p>And <code>allEmployees</code> is as shown above, then <code>managementEmployees</code> contains this:</p>
+<pre><code>id  name    
+1   Jane Doe
+3   Tim S   
+</code></pre><p>There's also an intersection operation, which produces only the rows contained in both operands. The <code>intersection</code> method produces a relation representing an intersection:</p>
+<pre><code>let nightManagers = nightEmployees.intersection(managementEmployees)
+</code></pre><p>And there's also an operator, although this one is difficult to type:</p>
+<pre><code>let nightManagers = nightEmployees ∩ managementEmployees
+</code></pre><p>For an example here, if <code>nightEmployees</code> contains this:</p>
+<pre><code>id  name         
+1   Jane Doe     
+4   Susan Johnson
+</code></pre><p>Then <code>nightManagers</code> contains this:</p>
+<pre><code>id  name    
+1   Jane Doe
+</code></pre><h3>Select</h3><p>A select is a filter operation on a relation. It takes a relation and a predicate and produces a relation containing only the rows where the predicate is true.</p><p>In PLRelational, predicates are values which conform to the <code>SelectExpression</code> protocol. A <code>SelectExpression</code> is something that can take a row and produce a <code>RelationValue</code>. If the result of a <code>SelectExpression</code> is an integer zero, it's considered to be false. All other values are considered to be true.</p><p>PLRelational provides a bunch of built-in <code>SelectExpression</code> types. Simple values like <code>String</code> and <code>Int64</code> conform, and they're implemented to ignore the passed-in row and produce their value as a <code>RelationValue</code>. <code>Attribute</code> also conforms, and it produces the row's value for that attribute.</p><p>It also provides a bunch of operators such as equality, comparison, and logical AND/OR. Because these operators build expressions rather than producing results immediately, they are prefixed with a <code>*</code> to distinguish them from the standard operators like <code>==</code> or <code>&lt;</code>.</p><p>To filter a relation in PLRelational, call the <code>select</code> method with a select expression:</p>
+<pre><code>let employeeFour = employees.select(Attribute(&quot;id&quot;) *== 4)
+let earlyEmployees = employees.select(Attribute(&quot;id&quot;) *&lt;= 10)
+</code></pre><p>As before, this creates a relation which will perform the given operation on demand, but doesn't do any filtering work until then.</p><h3>Project and Rename</h3><p>Sometimes it's useful to manipulate the attributes in a relation without manipulating the underlying data.</p><p>Rename is a really simple operation: it takes a list of attribute pairs, and produces a new relation where the first attribute in each pair is renamed to the second one. For example, imagine that for some reason we need our employees to have <code>&quot;employee_name&quot;</code> and <code>&quot;employee_id&quot;</code> instead of just <code>&quot;name&quot;</code> and <code>&quot;id&quot;</code>. In PLRelational, you can call the <code>renameAttributes</code> method and tell it to make those changes:</p>
+<pre><code>let renamedEmployees = employees.renameAttributes([&quot;name&quot;: &quot;employee_name&quot;,
+                                                   &quot;id&quot;: &quot;employee_id&quot;])
+</code></pre><p>The result looks like this:</p>
+<pre><code>employee_id  employee_name
+1            Jane Doe     
+2            John Smith   
+</code></pre><p>A project lets you remove unneeded attributes. For example, if you just wanted a list of employee IDs but not their names, you can eliminate the names by projecting onto the <code>&quot;id&quot;</code> attribute:</p>
+<pre><code>let employeeIDs = employees.project(&quot;id&quot;)
+
+id
+1 
+2 
+</code></pre><p>Note that relations are always sets, and each row is unique. If a projection creates multiple identical rows due to eliminating the attribute that makes them unique (in this example, that would be two employees who somehow have the same ID but different names) then those rows are coalesced.</p><h3>Joins</h3><p>A join combines two relations with different schemes, and produces a new relation whose scheme is the combination of the two. The contents of the relation come from matching up values within the rows on each side.</p><p>The fundamental operation is called an equijoin. An equijoin takes two relations and a list of attributes to match. It then produces rows by gluing together rows from the operands where the values of those attributes are the same on both sides.</p><p>Let's look at a quick example. Here's a relation containing equipment registered to our employees:</p>
+<pre><code>let equipment = MakeRelation(
+    [&quot;owner_id&quot;, &quot;serial_number&quot;, &quot;comment&quot;],
+    [1,          &quot;88842&quot;,         &quot;Computer&quot;],
+    [1,          &quot;123&quot;,           &quot;Mouse&quot;],
+    [2,          &quot;X427A&quot;,         &quot;Car&quot;],
+    [2,          &quot;FFG77&quot;,         &quot;Cordless drill&quot;],
+    [2,          &quot;7&quot;,             &quot;Seven&quot;])
+</code></pre><p>We have each owner's ID, but not their name. We can include the name by using the <code>equijoin</code> method and telling it to match <code>id</code> in <code>employees</code> to <code>owner_id</code> in <code>equipment</code>:</p>
+<pre><code>let employeeEquipment = employees
+    .equijoin(equipment, matching: [&quot;id&quot;: &quot;owner_id&quot;])
+</code></pre><p>Pretty-printing this, we get:</p>
+<pre><code>comment         id  name        owner_id  serial_number
+Cordless drill  2   John Smith  2         FFG77        
+Seven           2   John Smith  2         7            
+Car             2   John Smith  2         X427A        
+Mouse           1   Jane Doe    1         123          
+Computer        1   Jane Doe    1         88842        
+</code></pre><p>Note that the values in <code>id</code> and <code>owner_id</code> will always be identical here. We can eliminate this redundancy with a project:</p>
+<pre><code>let employeeEquipment = employees
+    .equijoin(equipment, matching: [&quot;id&quot;: &quot;owner_id&quot;])
+    .project(dropping: [&quot;owner_id&quot;])
+
+comment         id  name        serial_number
+Seven           2   John Smith  7            
+Cordless drill  2   John Smith  FFG77        
+Computer        1   Jane Doe    88842        
+Car             2   John Smith  X427A        
+Mouse           1   Jane Doe    123          
+</code></pre><p>A join is a special case of an equijoin, where the matching attributes are those attributes that both sides have in common. For example, we could replicate the above result by renaming <code>&quot;owner_id&quot;</code> to <code>&quot;id&quot;</code> and then doing a join:</p>
+<pre><code>let employeeEquipment = employees
+    .join(equipment.renameAttributes([&quot;owner_id&quot;: &quot;id&quot;]))
+
+comment         id  name        serial_number
+Seven           2   John Smith  7            
+Cordless drill  2   John Smith  FFG77        
+Computer        1   Jane Doe    88842        
+Car             2   John Smith  X427A        
+Mouse           1   Jane Doe    123          
+</code></pre><p>Joins act a lot like a select, where the predicate involves matching values between two relations rather than a constant value in the predicate expression. Joins can be really useful for tracking a selection. For example, let's say you have a relation which contains the ID of the employee currently selected in your app's UI:</p>
+<pre><code>let selectedEmployeeID = MakeRelation([&quot;id&quot;], [1])
+</code></pre><p>You can get all information about the selected employee by joining this relation with <code>employees</code>:</p>
+<pre><code>let selectedEmployee = selectedEmployeeID.join(employees)
+</code></pre><p>You can then project that relation down to just the name so that you can bind it to a UI control that will show the currently selected employee's name:</p>
+<pre><code>let selectedEmployeeName = selectedEmployee.project(&quot;name&quot;)
+</code></pre><p>Pretty-printing this on our test data produces:</p>
+<pre><code>name    
+Jane Doe
+</code></pre><h3>Wrapping Up</h3><p>A relation is a set of rows. A row is effectively a string-to-value dictionary, where the keys are attributes. All rows in a given relation have the same attributes. That set of attributes is called the relation's scheme.</p><p>Since relations are sets, they support basic set operations like union, intersection, and difference. They also support filtering in the form of the select operation.</p><p>Relation attributes can be manipulated by renaming them, and attributes can be removed by projecting the relation. This is useful to get different forms of a relation into different parts of your program.</p><p>Joins allow combining two relations with different schemes. They produce new rows by gluing together rows from the relations where those rows have matching values. The equijoin operation allows matching arbitrary pairs of attributes, while the join operation handles the common case of matching the attributes that exist in both relations.</p><p>PLRelational provides all of these operations, and more, as methods on the <code>Relation</code> type. These methods don't perform the work immediately, but rather produce a new <code>Relation</code> that represents the operation. The work is performed only when data is requested. To see it in action, check out PLRelational's tests, in particular the <code>RelationTests.swift</code> file, which has extensive examples of the various operations.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio/index.html">consulting</a> page.</em></p>
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../../../index-2.html?feed=rss2"><img src="../../../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../../12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/2017/08/24/intro-to-relational-algebra-using-plrelational by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:08:00 GMT -->
+</html>

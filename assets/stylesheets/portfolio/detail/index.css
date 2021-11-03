@@ -1,0 +1,430 @@
+/*
+ * Fonts
+ */
+/*
+ * Colors
+ */
+/*
+ * Constructors
+ */
+/* (Retina) apply high-resolution background images */
+/* Create a cross-browser compatible box-shadow */
+/* Create a cross-browser compatible border-radius */
+/* Create a cross-browser compatible linear gradient */
+/* Create a button in the standard site style */
+/*
+ * Base Styles
+ */
+* {
+  padding: 0;
+  margin: 0;
+  outline-style: none;
+}
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #0d2f3c;
+  background-color: #fafbfc;
+}
+div.inner {
+  width: 1000px;
+  margin: 0 20px;
+}
+br.clearFloats {
+  height: 0;
+  clear: both;
+}
+.wrapper {
+  width: 1040px;
+  margin: 0 auto;
+}
+/* Primary Header */
+header {
+  background-color: rgba(250, 251, 252, 0.95);
+  height: 34px;
+  min-width: 1000px;
+  width: 100%;
+  padding: 8px 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1;
+  -moz-box-shadow: 0px 1px 1px 0px rgba(11, 38, 48, 0.32);
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(11, 38, 48, 0.32);
+  box-shadow: 0px 1px 1px 0px rgba(11, 38, 48, 0.32);
+  position: fixed;
+  z-index: 1;
+}
+header a {
+  color: #0d2f3c;
+  text-decoration: none;
+}
+header a:hover {
+  color: #24aadf;
+}
+header h3 {
+  /* normal */
+  background-image: url("../../../images/main/pl-logo-min/index.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* retina */
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 20px;
+  border-right: 1px solid #dde0e1;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+  header h3 {
+    background-image: url(../../../images/main/pl-logo-min_2x/index.png);
+    background-size: 34px 34px;
+  }
+}
+header ul {
+  float: right;
+  height: 34px;
+  margin-left: auto;
+}
+header ul li {
+  display: inline-block;
+  line-height: 34px;
+  padding: 0 20px;
+  border-right: 1px solid #dde0e1;
+}
+header ul li:last-child {
+  border: none;
+}
+/* Position 'main' content below fixed header */
+div#main {
+  padding-top: 50px;
+}
+/* Primary Footer */
+footer {
+  width: 1040px;
+  margin: 0 auto;
+}
+footer .inner {
+  margin: 64px 20px 32px 20px;
+  border-top: 1px solid #dde0e1;
+  padding-top: 70px;
+  /* normal */
+  background-image: url("../../../images/main/flask/index.png");
+  background-position: center 16px;
+  background-repeat: no-repeat;
+  /* retina */
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1;
+  color: #677073;
+  text-align: center;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+  footer .inner {
+    background-image: url(../../../images/main/flask_2x/index.png);
+    background-size: 28px 38px;
+  }
+}
+/* Banner */
+#project_banner {
+  width: 960px;
+  height: 415px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+/* Screenshots */
+.screenshots {
+  background: url("../../../images/portfolio/box_shadow/index.png") 0 0 no-repeat;
+  min-height: 405px;
+  /* plus padding = 415px */
+  padding: 5px;
+  margin: 50px 0 45px 0;
+}
+.viewport {
+  width: 948px;
+  height: 386px;
+  border: 1px solid #d0d0d0;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+.product_slides_container {
+  z-index: 0;
+}
+ul.paginate {
+  width: 138px;
+  /* TODO: this is hardcoded for Comics slideshow (6 items * (5px + 13px + 5px)) */
+  height: 13px;
+  margin: 0 auto;
+}
+ul.paginate li {
+  display: inline;
+  height: 13px;
+  width: 13px;
+  margin: 0 5px;
+  float: left;
+}
+ul.paginate li a {
+  background: url("../../../images/portfolio/paginate_dots/index.png") 0 0 no-repeat;
+  display: block;
+  height: 13px;
+  width: 13px;
+  overflow: hidden;
+  text-indent: -10000px;
+  /* hide text */
+}
+ul.paginate li:hover a,
+ul.paginate li.paginate_visible a {
+  background-position: 0 -13px;
+}
+/* Main */
+.portfolio {
+  width: 960px;
+  margin: 0 auto;
+}
+#project_main {
+  width: 630px;
+  float: right;
+}
+.projectDescription {
+  width: 540px;
+}
+.projectDescription p {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+.projectDescription h1 {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 32px;
+  line-height: 1.2;
+  color: #24aadf;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.projectDescription h2 {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #24aadf;
+  text-transform: uppercase;
+  margin: 30px 0 10px 0;
+}
+.projectDescription h3 {
+  font: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  color: inherit;
+  margin-bottom: 4px;
+}
+.projectDescription blockquote {
+  font-size: 15px;
+  color: #555;
+  border-top: 1px dashed #c0bfbf;
+  border-bottom: 1px dashed #c0bfbf;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  margin-top: 20px;
+}
+.projectDescription blockquote p {
+  margin-bottom: 2px;
+}
+.projectDescription .bqstart,
+.projectDescription .bqend {
+  color: #AAA;
+  font-size: 100%;
+  display: inline-block;
+}
+.projectDescription .bqend {
+  margin-left: 3px;
+}
+.projectDescription blockquote p.author {
+  color: black;
+  text-align: right;
+  margin-right: 4px;
+}
+.projectDescription ul {
+  list-style: none inside;
+}
+.projectDescription ul li {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.projectDescription ul li.nested {
+  background: transparent;
+}
+.downloadSection {
+  margin: 30px 0;
+  border: 1px solid #D5D5D5;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+.downloadSection p {
+  font-size: 11px;
+}
+.downloadSection #demo_buttons {
+  float: left;
+  width: 200px;
+  margin: 32px 0 0 20px;
+}
+.downloadSection #demo_notes {
+  float: right;
+  width: 230px;
+  margin: 20px;
+}
+.downloadSection #arrow_right {
+  width: 0;
+  height: 0;
+  border-bottom: 5px solid transparent;
+  /* left arrow slant */
+  border-top: 5px solid transparent;
+  /* right arrow slant */
+  border-left: 5px solid #0e76bc;
+  /* bottom, add background color here */
+  font-size: 0;
+  line-height: 0;
+}
+.projectHighlights {
+  margin-top: 30px;
+  width: 600px;
+}
+.projectHighlights div.keyword {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  margin: 0 60px 50px 0;
+  padding-left: 125px;
+  width: 115px;
+  /* plus padding = 240px */
+  min-height: 89px;
+  float: left;
+}
+.projectHighlights .keyword h3 {
+  font-size: 14px;
+  margin-top: -4px;
+}
+.projectHighlights .keyword p {
+  font-size: 12px;
+}
+#simple.keyword {
+  background-image: url("../../../images/portfolio/comics/simple/index.png");
+}
+#organized.keyword {
+  background-image: url("../../../images/portfolio/comics/organized/index.png");
+}
+#groundbreaking.keyword {
+  background-image: url("../../../images/portfolio/comics/groundbreaking/index.png");
+}
+#thick.keyword {
+  background-image: url("../../../images/portfolio/comics/thick/index.png");
+}
+#wordnik_detail {
+  width: 460px;
+  height: 426px;
+  overflow: visible;
+  margin-bottom: 24px;
+}
+#detail_text {
+  float: left;
+  width: 260px;
+  margin-top: -10px;
+}
+#detail_background {
+  float: left;
+  width: 200px;
+  margin: 44px 0 0 -300px;
+}
+/* Project Notes */
+.projectSidebar {
+  width: 170px;
+  margin: 0 0 0 90px;
+  float: left;
+}
+.projectSidebar h2 {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #0d2f3c;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.projectSidebar h3 {
+  font-size: 12px;
+  color: black;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+.projectSidebar h4 {
+  font-size: 11px;
+  color: #0e76bc;
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+.projectSidebar p {
+  font-size: 12px;
+  margin-top: 4px;
+}
+.projectSidebar ul {
+  list-style: none inside;
+}
+.projectSidebar li {
+  font-size: 12px;
+  margin-top: 4px;
+}
+.projectSidebar li:before {
+  content: "•";
+  font-size: 6px;
+  padding-right: 5px;
+  vertical-align: middle;
+}
+.projectSidebar img.projectIcon {
+  margin: 0 0 12px -4px;
+}
+.projectSidebar img.clientLogo {
+  margin-top: 7px;
+}
+.projectSidebar img.platformLogo {
+  margin: 5px 10px 0 0;
+}
+.projectSidebar #android_logo {
+  margin-left: 2px;
+}
+.projectSidebar #amazon_logo {
+  margin-bottom: -3px;
+}
+.projectSidebar #app_store_button {
+  margin-top: 20px;
+}
+/* Purchase License */
+.licenseForm {
+  border: 0;
+}
+.licenseSelect {
+  margin: 6px 0 24px 0;
+}
+.licenseInput {
+  margin: 2px 0 8px 0;
+}
+.licensePrice {
+  color: #0e76bc;
+}
+.licenseBuyButton {
+  margin: 10px 0 32px 0;
+}
+/*# sourceMappingURL=detail.css.map */

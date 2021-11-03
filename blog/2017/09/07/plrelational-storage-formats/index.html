@@ -1,0 +1,264 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/2017/09/07/plrelational-storage-formats by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:08:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>PLRelational: Storage Formats</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../../../assets/images/main/favicon/index.ico">
+        <script src="../../../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+    
+    
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../../../index/index.html">
+                    <img src="../../../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../../../index.html">Blog</a></li>
+                <li><a href="../../../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                <h1>
+                    <a href="#">PLRelational: Storage Formats</a>
+                </h1>
+                <p class="author">September 7, 2017, by Mike Ash</p>
+                <p><em>This is our latest entry in a series of articles on <a href="https://github.com/plausiblelabs/plrelational">PLRelational</a>. For more background, check out these other articles in the series:</em></p>
+<ul>
+  <li><em><a href="../../../08/10/reactive-relational-programming-with-plrelational/index.html">Reactive Relational Programming with PLRelational</a></em></li>
+  <li><em><a href="../../../08/24/intro-to-relational-algebra-using-plrelational/index.html">Introduction to Relational Algebra using PLRelational</a></em></li>
+  <li><em><a href="../../../08/29/plrelational-observing-change/index.html">PLRelational: Observing Change</a></em></li>
+</ul><p>We've been talking a lot lately about PLRelational and all the fancy stuff it does. However, we've been glossing over a fundamental part of it: how it actually stores data. After all, PLRelational is a data persistence framework at its core.</p><p>PLRelational's relations break down into two categories. There are relations which store rows, and there are relations which derive their contents by performing some operation on other relations. Many of the relations which store rows do so by persisting them to disk.</p><h3>Memory Relations</h3><p>Let's start with one that <em>doesn't</em> persist its contents, just for simplicity. The basic interface is the same, so it provides a good foundation.</p><p>The <code>MemoryTableRelation</code> class is a relation which, as the name indicates, stores its data in memory. You create one with a scheme:</p>
+<pre><code>let people = MemoryTableRelation(scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;])
+</code></pre><p>Once you have that, you can add, update, and delete rows:</p>
+<pre><code>people.asyncAdd([&quot;id&quot;: 1, &quot;name&quot;: &quot;Lancelot&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncAdd([&quot;id&quot;: 2, &quot;name&quot;: &quot;Galahad&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncUpdate(Attribute(&quot;id&quot;) *== 2, newValues: [&quot;favorite-color&quot;: &quot;yellow&quot;])
+people.asyncDelete(Attribute(&quot;id&quot;) *== 2)
+</code></pre><p>Of course, this is purely in memory, and the data is lost once the <code>people</code> relation is destroyed. It can still be useful to represent transient data, but doesn't persist anything.</p><h3>Property List Files</h3><p>We might imagine taking this and building our own persistence on top of it by saving data to a property list file. We'd define a simple way to turn rows into property list objects. To save, we'd fetch the rows in the relation, convert them to property list objects, and save the whole thing into a file. To load, we'd load the property list file, convert it to rows, and add them to the relation.</p><p>This is essentially what <code>PlistFileRelation</code> is. It's an in-memory relation that's backed by a property list file. We can change <code>people</code> to use <code>PlistFileRelation</code> by changing the initialization:</p>
+<pre><code>let people = try PlistFileRelation.withFile(plisturl,
+    scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;],
+    primaryKeys: [&quot;id&quot;], create: false
+).orThrow()
+</code></pre><p>It can then be used just like the in-memory version of <code>people</code>. It will automatically load data from the property list file, and when you want to save changes back to that file, call <code>save</code>:</p>
+<pre><code>let result = people.save()
+if let error = result.err {
+    // handle error
+}
+</code></pre><p>You may have noticed the <code>primaryKeys</code> parameter in the code that creates the relation. Specifying primary keys allows PLRelational to optimize queries involving those attributes, at the expense of some overhead when adding, removing, or changing rows. <code>MemoryTableRelation</code> is assumed to always contain relatively small amounts of data and doesn't have this option.</p><h3>Property List Directories</h3><p>A single property list file works well for moderate amounts of data, but it requires reading the entire file at once, and rewriting the entire file on save. This overhead can become significant once you start working with large amounts of data.</p><p><code>PlistDirectoryRelation</code> solves this problem by storing the rows in individual files within a directory. This allows reading and writing individual rows separately.</p><p>We can use this by once again changing the initializer for <code>people</code>:</p>
+<pre><code>let people = try PlistDirectoryRelation.withDirectory(dirurl,
+    scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;],
+    primaryKey: &quot;id&quot;, create: true
+).orThrow()
+</code></pre><p>As with <code>PlistFileRelation</code>, changes are not saved automatically. Instead, a delta is kept in memory, and then changes can be flushed to disk by calling <code>save</code>:</p>
+<pre><code>let result = people.save()
+if let error = result.err {
+    // handle error
+}
+</code></pre><p>When creating a <code>PlistDirectoryRelation</code>, it takes a <code>primaryKey</code> parameter, singular. Unlike <code>PlistFileRelation</code>, <code>PlistDirectoryRelation</code> can only have a single primary key. This is due to how it efficiently locates the files for each row.</p><p>The filename for a row's plist is determined from the value for the primary key in that row. The filename is derived from that value by converting it to a canonical representation in raw bytes and then taking the SHA-256 hash of that representation. The result is something like:</p>
+<pre><code>4cd9b7672d7fbee8fb51fb1e049f690342035f543a8efe734b7b5ffb0c154a45.rowplist
+</code></pre><p>Because the mapping is deterministic and based only on the value of the primary key, equality queries for the primary key can be done quickly. In this example, the deletion at the end will compute the filename for the ID of <code>2</code> and then mark that file for deletion. Joins or selects involving the primary key will efficiently look up only the data they need.</p><h3>Property List Databases</h3><p>Your app will probably use multiple stored relations for different kinds of data. This may be a mix of property list files and directories. For example, you might place metadata that's needed everywhere in property list files, while large data that should only be loaded on demand is in a directory.</p><p>The <code>PlistDatabase</code> class handles this. You create it with a list of relation specs, which describe each relation's scheme, primary keys, path, and name. It then handles creating, loading, and saving all of those relations for you, and bundles them all into a single directory structure. This example creates a <code>people</code> relation stored in a file and a <code>people-images</code> relation stored in a directory, since images are probably large:</p>
+<pre><code>let db = try PlistDatabase.create(rootURL, [
+    .file(
+        name: &quot;people&quot;, path: &quot;people.plist&quot;,
+        scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;],
+        primaryKeys: [&quot;id&quot;]
+    ),
+    .directory(
+        name: &quot;people-images&quot;, path: &quot;people-images&quot;,
+        scheme: [&quot;id&quot;, &quot;image-data&quot;],
+        primaryKey: &quot;id&quot;
+    )
+]).orThrow()
+
+let people = db[&quot;people&quot;]!
+let images = db[&quot;people-images&quot;]!
+</code></pre><p><code>people</code> and <code>images</code> will contain whatever data currently exists there, and can be manipulated with the standard <code>Relation</code> methods:</p>
+<pre><code>people.asyncAdd([&quot;id&quot;: 1, &quot;name&quot;: &quot;Lancelot&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncAdd([&quot;id&quot;: 2, &quot;name&quot;: &quot;Galahad&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncUpdate(Attribute(&quot;id&quot;) *== 2, newValues: [&quot;favorite-color&quot;: &quot;yellow&quot;])
+people.asyncDelete(Attribute(&quot;id&quot;) *== 2)
+
+images.asyncAdd([&quot;id&quot;: 1, &quot;image-data&quot;: imageData])
+</code></pre><p>To save changes back to disk, call <code>saveRelations</code>:</p>
+<pre><code>let result = db.saveRelations()
+if let error = result.err {
+    // handle error
+}
+</code></pre><p>This will save all of the individual relations.</p><h3>Dropbox/Cloud Sync</h3><p>Property list storage works well for syncing to Dropbox and other cloud storage, which tend to work with file granularity. Placing a file relation in cloud storage allows the whole relation to be synced as a single unit, and using a directory relation allows individual rows to be added, updated, and deleted independently.</p><p>PLRelational doesn't directly talk to cloud storage, but it does have some special facilities to accommodate it. Ultimately there are two kinds of actions that need to be handled: local changes to files which need to be synced to the server, and remote changes to files which need to be synced locally.</p><p>Local changes are handled using <code>PlistDatabase</code>'s <code>addSaveObserver</code> method. Pass it a function which will be invoked any time any of the relations in the database change a file on disk. It receives the <code>URL</code> of the file that was changed. It can then take whatever action is needed, like making an API call, to sync that file:</p>
+<pre><code>db.addSaveObserver({ url in
+    cloudAPI.syncLocalFile(url)
+})
+</code></pre><p>Local changes are handled by asking the <code>PlistDatabase</code> to make a change to a local <code>URL</code>. To replace a local file with a new version, call <code>replaceLocalFile</code>. This can also be used to add a new file, by giving it the <code>URL</code> to where the new file should go:</p>
+<pre><code>func gotNewFile(tmpURL: URL, localFileURL: URL) {
+    db.replaceLocalFile(url: localFileURL, movingURL: tmpURL)
+}
+
+func gotNewFileVersion(tmpURL: URL, localFileURL: URL) {
+    db.replaceLocalFile(url: localFileURL, movingURL: tmpURL)
+}
+</code></pre><p>Note that the new file must first be saved to a temporary location, and the <code>PlistDatabase</code> takes care of moving it to its final location. This allows <code>PlistDatabase</code> to read any old data that was in the file previously, which is necessary to generate proper change notifications.</p><p>To delete a local file, call <code>deleteLocalFile</code>:</p>
+<pre><code>func deleteFile(url: URL) {
+    db.deleteLocalFile(url: url)
+}
+</code></pre><p>These methods understand the layout of the database's files on disk and will look up the appropriate <code>Relation</code> for any given local URL. When applying the changes, the <code>Relation</code> in question will generate the appropriate change notifications, meaning that your UI remains automatically in sync with any changes generated by cloud sync activity. It's also smart enough to know which files are <em>not</em> part of the database, and will refuse to perform the operation if asked to operate on a URL that doesn't belong to the database. The return value of these methods will tell you whether the action was performed or not, making it easy to sync files outside the <code>PlistDatabase</code> too.</p><h3>SQLite Databases</h3><p>SQLite and PLRelational fit together well. SQLite was our first target for persistent storage, and PLRelational's data types match what SQLite provides.</p><p>PLRelational's SQLite support starts with the <code>SQLiteDatabase</code> class. As the name indicates, this represents an SQLite database, and it provides the individual tables in the database as <code>Relation</code> objects.</p><p>To create an <code>SQLiteDatabase</code> instance, initialize it with a path to the database file:</p>
+<pre><code>let db = try SQLiteDatabase(path)
+</code></pre><p>If a database already exists at that location, it will open the existing database. Otherwise it will create a new one.</p><p>To create a new table, use the <code>createRelation</code> method:</p>
+<pre><code>let people = try db.createRelation(
+    &quot;people&quot;,
+    scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;]).orThrow()
+</code></pre><p>To fetch an existing table, use subscripting with the table name:</p>
+<pre><code>let images = db[&quot;people-images&quot;]
+</code></pre><p>For the common case where you want to create the table if it doesn't exist and fetch it if it does, use the <code>getOrCreateRelation</code> method:</p>
+<pre><code>let people = try db.getOrCreateRelation(
+    &quot;people&quot;,
+    scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;]).orThrow()
+let images = try db.getOrCreateRelation(
+    &quot;people-images&quot;,
+    scheme: [&quot;id&quot;, &quot;image-data&quot;]).orThrow()
+</code></pre><p>As before, once you have the <code>Relation</code>s, you can manipulate them with the usual calls:</p>
+<pre><code>people.asyncAdd([&quot;id&quot;: 1, &quot;name&quot;: &quot;Lancelot&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncAdd([&quot;id&quot;: 2, &quot;name&quot;: &quot;Galahad&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncUpdate(Attribute(&quot;id&quot;) *== 2, newValues: [&quot;favorite-color&quot;: &quot;yellow&quot;])
+people.asyncDelete(Attribute(&quot;id&quot;) *== 2)
+
+images.asyncAdd([&quot;id&quot;: 1, &quot;image-data&quot;: Data(imageData)])
+</code></pre><p>Unlike property list storage, the SQLite storage saves changes immediately. The <code>asyncAdd</code> call translates directly to an SQLite <code>INSERT</code> statement, for example. If you want to buffer changes in memory and only flush them to disk with an explicit save, you can accomplish this by wrapping the <code>SQLiteDatabase</code> in a <code>ChangeLoggingDatabase</code>:</p>
+<pre><code>let sqliteDB = try SQLiteDatabase(path)
+_ = try sqliteDB.getOrCreateRelation(
+    &quot;people&quot;,
+    scheme: [&quot;id&quot;, &quot;name&quot;, &quot;quest&quot;, &quot;favorite-color&quot;]).orThrow()
+_ = try sqliteDB.getOrCreateRelation(
+    &quot;people-images&quot;,
+    scheme: [&quot;id&quot;, &quot;image-data&quot;]).orThrow()
+
+let db = ChangeLoggingDatabase(sqliteDB)
+let people = db[&quot;people&quot;]
+let images = db[&quot;people-images&quot;]
+
+people.asyncAdd([&quot;id&quot;: 1, &quot;name&quot;: &quot;Lancelot&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncAdd([&quot;id&quot;: 2, &quot;name&quot;: &quot;Galahad&quot;,
+                 &quot;quest&quot;: &quot;to find the holy grail&quot;, &quot;favorite-color&quot;: &quot;blue&quot;])
+people.asyncUpdate(Attribute(&quot;id&quot;) *== 2, newValues: [&quot;favorite-color&quot;: &quot;yellow&quot;])
+people.asyncDelete(Attribute(&quot;id&quot;) *== 2)
+
+images.asyncAdd([&quot;id&quot;: 1, &quot;image-data&quot;: Data(imageData)])
+</code></pre><p><code>ChangeLoggingDatabase</code> will record all changes made to its relations rather than passing them directly to the SQLite layer. When you want to persist all changes, call <code>save</code>:</p>
+<pre><code>let result = db.save()
+if let error = result.err {
+    // handle error
+}
+</code></pre><p>This passes all of the changes to the SQLite layer, which writes them out all at once.</p><h3>Advanced: Raw SQL in SQLite</h3><p>For advanced uses, it's also possible to execute SQL queries directly against the database using the <code>executeQuery</code> method. This takes an SQL string and an optional array of <code>RelationValue</code> parameters and returns <code>Row</code>s for the results. PLRelational uses this to implement <code>RelationTextIndex</code>, which is a full text search API backed by SQLite's <code>fts4</code> module.</p><p>If you use this, it's important to note that there is not a perfect mapping between <code>RelationValue</code> types and SQLite data types. The standard SQL <code>NULL</code> <a href="https://sqlite.org/nulls.html">has a lot of weird behaviors</a>. For example, comparing <code>NULL</code> for equality or inequality always produces <code>NULL</code>, which is evaluated as false. That means that, for example, a <code>SELECT</code> statement checking for <code>== NULL</code> or <code>!= NULL</code> will always produce zero results regardless of the contents of the table.</p><p>SQLite matches this weird behavior in order to be compatible with other SQL databases. PLRelational doesn't have that constraint and so we decided to make <code>NULL</code> behave more consistently, and act like any other value. PLRelational's <code>RelationValue.null</code> is equal to itself, not equal to other values, gets sorted consistently, etc. However, this means that we can't use SQLite's <code>NULL</code> while still translating PLRelational <code>select</code> operations into SQLite <code>SELECT</code> statements. To work around this, we decided not to use SQLite's <code>NULL</code> at all, and instead translate <code>RelationValue.null</code> differently.</p><p>Instead, <code>RelationValue.null</code> is translated into an SQLITE blob containing the ASCII bytes <code>&quot;NULL&quot;</code>. In order to ensure that actual blobs are never mistakenly interpreted as <code>null</code>, all blobs are prefixed with the ASCII bytes <code>&quot;BLOB&quot;</code>. This works fine for normal PLRelational use and this translation step is invisible unless you go digging through the database by hand. However, if you're submitting raw SQL with <code>executeQuery</code>, it might get in the way. The optional <code>bindBlobsRaw</code> parameter allows you to control whether blobs are translated like this while going into and out of SQLite. It's <code>false</code> by default, meaning that translation is performed. By setting it to <code>true</code>, blobs will be passed in and out as-is. Note that this parameter does not influence how <code>NULL</code> is translated.</p><h3>Try It Out</h3><p>If you'd like to try out these code snippets or otherwise explore the available options, grab a copy of the official <a href="https://github.com/plausiblelabs/plrelational">PLRelational repository</a>. The project includes example apps which you can examine and modify, and adding PLRelational to your own project is as easy as dropping the framework in and writing <code>import PLRelational</code> in your code.</p><p><br/> <em><strong>Need help?</strong> Plausible Labs offers consulting services for software engineering. If you'd like some professional assistance, whether with PLRelational or for something entirely different, consider us. More information can be found on our <a href="../../../../../portfolio/index.html">consulting</a> page.</em></p>
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../../../index-2.html?feed=rss2"><img src="../../../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../../12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/2017/09/07/plrelational-storage-formats by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:08:06 GMT -->
+</html>

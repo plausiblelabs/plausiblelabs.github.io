@@ -1,0 +1,151 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/2014/04/02/implementing-plausible-crash-recovery by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Implementing Plausible Crash Recovery</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../../../assets/images/main/favicon/index.ico">
+        <script src="../../../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+    
+    
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../../../index/index.html">
+                    <img src="../../../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../../../index.html">Blog</a></li>
+                <li><a href="../../../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                <h1>
+                    <a href="#">Implementing Plausible Crash Recovery</a>
+                </h1>
+                <p class="author">April 2, 2014, by Landon Fuller</p>
+                <p>Yesterday we announced <a href="https://www.plausible.coop/blog/?p=204">Plausible Crash Recovery</a>, a working crash recovery system built on top of <a href="https://www.plcrashreporter.org/">PLCrashReporter</a>. Upon a crash, the recovery implementation steps backwards from the crashing function, restoring non-volatile register state and returning nil to the original caller.</p><p>Despite the fact that it was released on April 1st and indeed, was a prank, it <em>does actually work</em>. That doesn’t mean that using it is a good idea, though, and today I figured I’d explain how it works, why you don’t want to use it as-is, and where the underlying technology might actually be applicable.</p><p>If you haven’t already checked out the source and played with it yourself, <a href="https://www.plausible.coop/blog/?p=204">give it a go</a>. You can try plugging in some different crashing bugs of your own, and see how it behaves.</p><p>As a fair warning, I’m going to sacrifice some precision in my explanations below for the sake of overall clarity; there are a lot of details and edge cases that must be accounted for when implementing a crash reporter (or in this case, a crash recovery system), and if you’re interested in a digging in further, feel free to stop by and chat with us on the freenode #plcrashreporter IRC channel.</p><h2>April Fools</h2><p>I know a number of folks assumed — like many of the other April Fools absurdities — that Plausible Crash Recovery didn’t actually work. Despite the fact that we bolted on a goofy UI, <strong>the code works as advertised, as befits a proper hack</strong>. The “restoration” UI, despite being totally unnecessary, even shows the <em>actual</em> steps taken to restore thread state; the only exception being the “<a href="http://en.wikipedia.org/wiki/SimCity_2000">Reticulating Splines</a>” step – that part I made up.</p><p><img src="../../../../../assets/images/blog/uploads/2014/04/02/implementing-plausible-crash-recovery/disaster_averted/index.png" alt="Disaster Averted" /></p><p>The last time I was privy to a fun April Fools Day prank was back in the 90s, when some co-workers implemented a local <a href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attack</a> on common stock ticker sites, proxying and adjusting the returned data for our .com to show a precipitous fall (or rise, I don’t recall which). What was fun about the prank wasn’t the actual effect it had on people — as I recall, nobody was seriously fooled, which was probably a good thing for all involved.</p><p>Rather, what made my coworker’s prank fun (for me, anyway) was that it was a good <em>hack</em>. It was the kind of wacky technical implementation that you can do when you decide that it’s OK to break the rules and see what neat ideas come of it. It reminded me of the ethos that drove the fabled <a href="http://en.wikipedia.org/wiki/MacHack">MacHack</a> conferences, the source of gems such as Quinn <a href="https://devforums.apple.com/people/eskimo1">“The Eskimo!”</a>‘s 2002 “Best Hack” winner, <a href="http://www.quinn.echidna.id.au/Quinn/WWW/Hacks.html">Firestarter</a>, which demonstrated that just <em>plugging in</em> a firewire cable was enough to allow DMA writes to the target computer’s video buffer (in this case, displaying flames at the bottom of the screen).</p><p>So when it struck me that PLCrashReporter actually had the tooling necessary to implement a bad clone of a <a href="http://msdn.microsoft.com/en-us/library/aa266173(v=vs.60).aspx">bad Visual Basic feature</a>, actually <strong>implementing</strong> Crash Recovery seemed like a good April 1st hack — in the classic meaning of a hack.</p><p>Of course, like most hacks, the fact that it mostly works doesn’t mean you should actually use it.</p><h2>Rolling Back Time</h2><p>I often think of PLCrashReporter itself as a “time machine debugger” — it ideally provides a view into the past that can be used to reconstruct the state of the process and debug a long-past failure. Crash <em>Recovery</em> takes this time machine metaphor much further — using PLCrashReporter’s async-safe stack unwinding to step backwards from the crashing function, restoring non-volatile register state and returning nil to the original caller.</p><p>To understand how this works, we first need to understand the state that represents a thread of execution, and what parts of it must be rewound to return to the original caller — as well as what <em>can’t</em> be rewound, but really should be.</p><p>For a any given process, if you were to pause it at a moment in time — say, when a crash occurs — the crashed function’s execution state would be fully encapsulated in:</p>
+<ul>
+  <li>Global State (including the heap, file descriptors, memory mappings, etc …)</li>
+  <li>Thread Stack</li>
+  <li>CPU Register State</li>
+</ul><p>If we want to restart execution in the crashed function’s <em>caller</em>, we need to work backwards from the <em>current</em> process state to restore as much of the caller’s previous state as we can.</p><h3>Global State</h3><p>Global state includes (but certainly isn’t limited to) the heap, file descriptors, shared data structures, and even the process’ <a href="http://pubs.opengroup.org/onlinepubs/009696799/functions/chdir.html">current working directory</a>. Any part of global state that is changed during execution of the crashing function represents modified state that must be rolled back if we wish to perfectly restore the thread to its pre-crashed state.</p><p>Unfortunately, restoring global state is a non-starter — there’s no way for us to know what was changed. For example, if the crashed thread has has corrupted the heap (or it was already corrupt), we can’t restore the heap to a non-corrupted state, and the application will likely just crash again. However, there are plenty of crashes that don’t involve corruption or mutation of global state, in which case we don’t <em>need</em> to restore any global state to allow execution to continue in the caller.</p><p>In other words, despite this limitation, we can actually recover from a large number of common crashes despite not having the facility to roll back global state. Of course, the less mutable shared state you use, the more recoverable your crashes are — funny as that might sound in the context of an April Fool’s hack, that’s actually the principal behind “fail fast” semantics often supported in functional programming languages. A failed thread can simply be discarded if there’s no chance it will leave behind partially modfied shared state, and the process state will remain fully consistent.</p><h3>Thread Stack</h3><p>The thread’s stack maintains state for each called subroutine via a series of <a href="http://en.wikipedia.org/wiki/Call_stack#Structure">stack frames</a>. At the time of the crash, the current stack frame is represented via the following state:</p>
+<ul>
+  <li>The <em>stack pointer</em> points to the current top of the stack. Any new stack allocations will likewise adjust the stack pointer.</li>
+  <li>The <em>frame pointer</em> <em>usually</em> – depending on the architecture, calling conventions, and emitted code — points to a fixed stack allocation that is at a fixed offset from the caller’s original <em>stack pointer</em>, and is used to store the caller’s <em>return address</em> and original <em>frame pointer</em>.</li>
+  <li>The <em>return address</em> is the address to which the called function should return upon completion. Depending on the architecture and calling conventions, this may be stored in a register (as it is on ARM), or may be stored on the stack via the frame pointer (x86).</li>
+</ul><p>To restore the caller’s original stack, as well as to determine the code address at which we should restart execution to simulate a <code>return</code>, we need to derive the caller’s <em>stack pointer</em>, <em>frame pointer</em>, and *return address *from the current thread’s stack state. If we’re able to successfully determine those original values, then we’ll have successfully restored the stack, as well as the execution address.</p><p>Of course, if the crashed function smashes any of this data, or the caller’s stack frame, or some other critical data on the stack, we can’t actually recover reliably; should we try, we’ll likely just trigger a secondary crash.</p><p>While that’s the basic premise, the actual <em>process</em> of performing the stack unwinding is a bit tricky. On some architectures (including 32-bit iOS and 32-bit Mac OS X), the <em>frame pointer</em> is almost always stored in a fixed register, and can be easily fetched from the crashed thread’s register state. The caller’s original stack state can simply be directly fetched or computed from the frame pointer register.</p><p>On other architectures, however, things aren’t so simple. On Mac OS X x86-64, for example, there is no requirement that the frame pointer be saved in a machine register. Instead, additional <em>unwind data</em> is provided by the compiler; this data defines how the caller’s state may be restored from the current thread state: values may be computed from existing registers, existing stack values, as fixed offsets, or through a variety of other mechanisms. This relates to how we restore <em>register state</em>, and we’ll cover how this works in more detail below.</p><h3>Register State</h3><p>The crashed thread’s register state represents the processor’s execution state at the time of the crash. During execution, the crashed function may have overwritten some of the caller’s register values; since the crashed function will never have the opportunity to <em>restore</em> those overwritten values, restoring the caller’s state will require that we somehow determine:</p>
+<ul>
+  <li>Which registers are expected by the caller to have been preserved (ie, <em>caller-preserved</em> registers).</li>
+  <li>Which of those registers have been modified and require restoration.</li>
+  <li><em>How</em> to actually restore the original values for those registers.</li>
+</ul><p>To answer the first question, we simply need to look at the platform’s defined <em>calling conventions</em>. For Apple’s platform, these are defined in the <a href="https://developer.apple.com/library/ios/documentation/Xcode/Conceptual/iPhoneOSABIReference">iOS ABI Function Call Guide</a> and <a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/LowLevelABI/000-Introduction/introduction.html">Mac OS X ABI Function Call Guide</a>. The calling conventions define <em>callee-preserved</em> and <em>caller-preserved</em> registers:</p>
+<ul>
+  <li><strong>Callee</strong>-preserved registers (or, <em>non-volatile</em> registers) must be preserved by the <em>called</em> function, <em>if</em> it overwrites the <em>caller’s</em> original register value(s). These are the registers that we must restore, <em>if</em> they’ve been overwritten.</li>
+  <li><strong>Caller</strong>-preserved registers (or, <em>volatile</em> registers) must be preserved by the <em>calling</em> function, if it requires later access to those values. These registers may be freely overwritten, and do not need to be restored prior to returning to the caller.</li>
+</ul><p>This answers the first question, but we’re left with a connondrum — when execution stops in the middle of a crashing function, how do we know which non-volatile registers have been modified, and how do we know how to restore their original values?</p><p>Unfortunately, on Apple’s 32-bit platforms (ARM and i386), the answer is that we don’t. This information is not available, and we simply have to restore the stack state we can and hope that’s enough. Surprisingly, this actually works fairly often. It is, of course, a terrible idea, and one of <em>many</em> good reasons why “crash recovery” ought to be considered a hack, and not an actually useable product.</p><p>On Apple’s 64-bit platforms (x86-64 and ARM64), however, this information is provided via the same *unwind data *that allow us to pop the thread’s stack frame; we can interpret the unwind data at crash time to perform non-volatile register restoration.</p><h2>Leveraging Unwind Data</h2><h3>Background: Exception Unwinding</h3><p>We’ve already established that on 32-bit Apple platforms, our ability to unwind the stack is limited due to the lack of unwinding data. The reason for this actually has to do with how exceptions are handled on the platform. On 32-bit Apple systems, when a try/catch/finally block is declared, the current thread’s state is actually saved via <a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/setjmp.html">setjmp()</a> (or equivalent functionality), and pushed onto a per-thread stack of exception handlers; when it comes time to find an exception handler, the stack is popped until a matching handler is reached, and the equivalent of <a href="http://pubs.opengroup.org/onlinepubs/009604599/functions/longjmp.html">longjmp()</a> is used to re-load that thread state, resuming execution.</p><p>This approach has two downsides; first of all, there’s no way for a debugger or crash reporter to use the exception unwinding information to unwind arbitrary intermediate frames. The only time exception unwinding information is available is when a <code>catch</code> block is executed, and in that case, it’s only possible to restore the specifically saved thread state. Secondly, there is the issue of runtime cost. At each <code>catch</code> or <code>finally</code> statement, the thread state must be saved and pushed onto a stack, even if it’s never used.</p><p>The alternative approach, and what is used on Apple’s 64-bit platforms, is the use of so-called <em>zero-cost exceptions</em>. Rather than recording thread state at runtime, the <em>compiler</em> builds a lookup table that covers *all code*in an executable. This table defines how to accurately unwind a single frame from <em>any valid instruction address</em>, as well as providing language/runtime-specific definitions of where try/catch/finally blocks are defined, and how to handle them.</p><p>As a result, it’s not necessary to do <em>any</em> work at runtime if an exception is not thrown; hence the name “zero-cost exceptions”. If an exception <em>is</em> thrown, the language/exception runtime must consult the lookup table to correctly unwind the stack.</p><p>As it turns out, this is exactly the same information that debuggers, crash reporters, and evil crash recovery hacks need to perform their own stack unwinding.</p><h3>Interpreting the Unwind Data</h3><p>To correctly unwind a frame in our crash recovery system, we need to actually interpret the unwind data, and extract the rules necessary to calculate, load, or otherwise restore the caller’s original register and stack state.</p><p>Conceptually, it helps to think of the unwind data as being stored as two-column table; each row in the table represents an instruction address within the binary (the first column), and (in the second column) are the unwind instructions necessary to restore the caller’s state. To perform the unwind operation, we first need to find the row that represents the instruction at which the crash occured, and then apply any restoration rules defined at that row.</p><p>In reality, such a direct encoding of the unwind table would be prohibitively <em>enormous</em>. To solve that, complex encoding schemes are used to minimize duplication and maximize data re-use; on Apple platforms, these are <a href="http://dwarfstd.org/">DWARF</a> and Apple’s own <a href="https://www.opensource.apple.com/source/libunwind/libunwind-35.3/include/mach-o/compact_unwind_encoding.h">Compact Unwind</a>.</p><h4>DWARF</h4><p>DWARF is a (mostly) platform architecture-neutral standard for defining debugging information, including unwind data. To add support for a new architecture in PLCrashReporter’s DWARF implementation, it’s generally sufficient to simply add a mapping between DWARF register numbers defined by the platform vendor, and the actual registers they represent; interpreting the format operates entirely in terms of these abstract register numbers.</p><p>The encoding is capable of representing almost <em>any</em> possible set of unwind rules; the lookup tables and restoration rules are implemented as an versatile interpreted bytecode, including a <em>turing complete</em> set of DWARF expression opcodes. Amusingly, this aspect of DWARF has been used to implement in-process arbitrary code execution <a href="http://www.cs.dartmouth.edu/~sergey/battleaxe/tr2011-680.pdf"><em>without native code</em></a>. If you’re curious, you can peruse PLCrashReporter’s DWARF expression interpreter source <a href="https://github.com/plausiblelabs/plcrashreporter/blob/1.2-rc4/Source/PLCrashAsyncDwarfExpression.cpp#L167">here</a>.</p><p>While enormously useful (and necessary!), the versatility of DWARF comes at the cost of the encoding’s <em>conciseness</em>; this is what Apple set out to address with their non-standard Compact Unwind encoding.</p><h5>Compact Unwind</h5><p>Apple’s Compact Unwind encoding is architecture-specific, non-portable, and is unique to Apple. Whereas DWARF can represent almost <em>any</em> set of rules necessary to perform unwinding, Apple took a different approach with the compact unwind encoding — it’s only capable of representing a limited set of unwinding rules, but these rules cover all (or just about all) of the code constructs actually emitted by the compiler. In exchange for these limitations, the compact unwind encoding is, well, compact; it’s much smaller than the corresponding DWARF representation, which means appreciably smaller binaries.</p><p>The Compact Unwind encoding can’t represent the full range of unwinding rules that may be required, and as such, it’s used in <em>concert</em> with DWARF. At link time, any DWARF rules that can be represented using the compact unwind encoding will be converted by <code>ld</code>, and the DWARF data will be discarded.</p><p>Since the original DWARF data is discarded, this means that correct crash reporting (and, in the case of Crash Recovery, <em>frame unwinding</em>) requires <em>both</em> DWARF and Compact Unwind support. You can find you can find PLCrashReporter’s Compact Unwind implementation (for x86-64 and ARM64) <a href="https://github.com/plausiblelabs/plcrashreporter/blob/1.2-rc4/Source/PLCrashAsyncCompactUnwindEncoding.c">here</a>.</p><h3>Applying the Unwind Changes</h3><p>As part of our work to support crash reporting on 64-bit platforms, we already had implemented full DWARF and Compact Unwind support in PLCrashReporter, including the APIs necessary to represent register modifications across stack frames; we implemented this with the eventual goal of including non-volatile register state for *all *frames in <em>all</em> threads in the crash report.</p><p>We had to do very little to implement the <em>Crash Recovery</em> system — it was a simple matter of calling directly into our unwinding APIs from our signal handler, and applying the computed register results to the <code>ucontext_t</code> containing the signal thread state. If you return directly from a signal handler, any changes made to <code>ucontext_t</code> within the signal handler will be applied to the target thread — by modifying the <code>ucontext_t</code>, we’re able to update the <em>stack pointer</em>, <em>frame pointer</em>, as well as any non-volatile registers. In addition, by setting the <em>instruction pointer</em>, we actually cause the thread to resume in the crashed function’s <em>caller</em> upon return from the signal handler.</p><p>Since it’s just a little bit of glue on top of PLCrashReporter’s existing async-safe APIs, the Crash Recovery code only took about a day to write; if you’d like to take a look, the signal handler additions can be found <a href="https://github.com/plausiblelabs/plcrashreporter/blob/feature/PLCR-534-on-error-resume/Source/PLCrashReporter.m#L265">here</a>.</p><h3>Returning Nil to the Caller</h3><p>Having implemented unwinding, the last thing we needed to do was set the return value to <em>nil</em>. I have to admit we cheated a bit here; we ignored floating point and structure return types.</p><p>To handle pointer return types (including Objective-C objects), we simply <a href="https://github.com/plausiblelabs/plcrashreporter/blob/feature/PLCR-534-on-error-resume/Source/PLCrashReporter.m#L414">set the return address register to <code>0x0</code></a>. This handles most return values, but in the case where structures are returned on the stack, or a special handling is required for floating point, you’ll see unexpected results.</p><h2>Conclusion</h2><p>While the Crash Recovery implementation is an interesting technical exploration of what’s possible, it would be a terrible idea to actually use it as a blanket “fix” for crashes, <em>even if it worked absolutely perfectly.</em> The nature of crash is such that the current process state is, by default, undefined; if it was defined, it wouldn’t have crashed. Blindly attempting to proceed can do worse than crash; data corruption and deadlocks are entirely likely.</p><p>That doesn’t mean that this avenue of exploration is bereft of value, however. For example, if we extended the PLCrashReporter APIs to directly support the idea of “patch and continue”, we could support some pretty common operations that currently require custom per-architecture+platform implementations in runtime VMs, such as trapping “optimistic” error handling cases – managed code could use this mechanism to exclude NULL or divide-by-zero checks in generated machine code, instead trapping the signals, verifying that the failure occurs within managed code, and converting the signal into a language-level stack-unwinding NullPointerException or DivideByZero exception.</p><p>A more aggressive avenue of exploration is the idea of emergency “hot patches” deployable directly from a crash reporting service. If your shipped application is unexpectedly crashing across your entire user-base with a call to <code>CFRelease(NULL)</code>, and you know it’s safe to work around the issue, a crash reporting service could support feeding a PLCrashReporter-based hotpatch to your application, working around the issue until you could actually ship a release.</p><p>After all, there’s no upside to having customers being frustrated and continuing to submit crash reports for a known issue.</p><p>It’s not clear that we’ll see any of these ideas — or any of the others floating around our heads — in an actual shipping product, but it’s mighty fun to hack something out and see what they might look like.</p>
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../../../index-2.html?feed=rss2"><img src="../../../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/2014/04/02/implementing-plausible-crash-recovery by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:11:04 GMT -->
+</html>

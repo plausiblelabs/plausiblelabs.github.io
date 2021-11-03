@@ -1,0 +1,276 @@
+/*
+ * Fonts
+ */
+/*
+ * Colors
+ */
+/*
+ * Constructors
+ */
+/* (Retina) apply high-resolution background images */
+/* Create a cross-browser compatible box-shadow */
+/* Create a cross-browser compatible border-radius */
+/* Create a cross-browser compatible linear gradient */
+/* Create a button in the standard site style */
+/*
+ * Base Styles
+ */
+* {
+  padding: 0;
+  margin: 0;
+  outline-style: none;
+}
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #0d2f3c;
+  background-color: #fafbfc;
+}
+div.inner {
+  width: 1000px;
+  margin: 0 20px;
+}
+br.clearFloats {
+  height: 0;
+  clear: both;
+}
+.wrapper {
+  width: 1040px;
+  margin: 0 auto;
+}
+/* Primary Header */
+header {
+  background-color: rgba(250, 251, 252, 0.95);
+  height: 34px;
+  min-width: 1000px;
+  width: 100%;
+  padding: 8px 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1;
+  -moz-box-shadow: 0px 1px 1px 0px rgba(11, 38, 48, 0.32);
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(11, 38, 48, 0.32);
+  box-shadow: 0px 1px 1px 0px rgba(11, 38, 48, 0.32);
+  position: fixed;
+  z-index: 1;
+}
+header a {
+  color: #0d2f3c;
+  text-decoration: none;
+}
+header a:hover {
+  color: #24aadf;
+}
+header h3 {
+  /* normal */
+  background-image: url("../../images/main/pl-logo-min/index.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* retina */
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 20px;
+  border-right: 1px solid #dde0e1;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+  header h3 {
+    background-image: url(../../images/main/pl-logo-min_2x/index.png);
+    background-size: 34px 34px;
+  }
+}
+header ul {
+  float: right;
+  height: 34px;
+  margin-left: auto;
+}
+header ul li {
+  display: inline-block;
+  line-height: 34px;
+  padding: 0 20px;
+  border-right: 1px solid #dde0e1;
+}
+header ul li:last-child {
+  border: none;
+}
+/* Position 'main' content below fixed header */
+div#main {
+  padding-top: 50px;
+}
+/* Primary Footer */
+footer {
+  width: 1040px;
+  margin: 0 auto;
+}
+footer .inner {
+  margin: 64px 20px 32px 20px;
+  border-top: 1px solid #dde0e1;
+  padding-top: 70px;
+  /* normal */
+  background-image: url("../../images/main/flask/index.png");
+  background-position: center 16px;
+  background-repeat: no-repeat;
+  /* retina */
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1;
+  color: #677073;
+  text-align: center;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+  footer .inner {
+    background-image: url(../../images/main/flask_2x/index.png);
+    background-size: 28px 38px;
+  }
+}
+.index {
+  width: 960px;
+  margin: 0 auto;
+}
+.index #portfolio-button {
+  background-color: #24aadf;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -moz-box-shadow: 0px 2px 0px 0px #087ba8;
+  -webkit-box-shadow: 0px 2px 0px 0px #087ba8;
+  box-shadow: 0px 2px 0px 0px #087ba8;
+  width: 164px;
+  color: #fafbfc;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 32px;
+  margin-top: 7px;
+}
+.index #homeIntro {
+  background: url("../../images/home/plausible_terrain/index.png") 0 0 no-repeat;
+  padding-top: 73px;
+  padding-bottom: 80px;
+  width: 960px;
+  min-height: 381px;
+  /* plus padding, 454px */
+  margin: 44px 0 -44px 0;
+}
+.index #homeIntro h1 {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #24aadf;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  margin-left: 42px;
+  width: 360px;
+}
+.index #homeIntro p {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.4;
+  margin-top: 16px;
+  margin-left: 42px;
+  width: 300px;
+}
+.index #training {
+  margin: 40px 44px 0px 44px;
+}
+.index #training h2 {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+  line-height: 1.2;
+  color: #24aadf;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.index #training h2 a {
+  color: #24aadf;
+  text-decoration: none;
+}
+.index #training h3 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 19px;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.index #training ul {
+  margin: 0 16px;
+}
+.index #training ul li {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0 12px 16px 12px;
+}
+.index #training #subtitle {
+  margin: 0 0 8px 0;
+}
+.index #training .logos .logo {
+  width: 110px;
+  margin: 0 16px;
+  float: left;
+}
+.index #training .logos #skype {
+  margin-top: 9px;
+}
+.index #training .logos #amazon {
+  margin-top: 21px;
+}
+.index #training .logos #dropbox {
+  margin-top: 17px;
+}
+.index #training .logos #hbonow {
+  margin-top: 18px;
+}
+.index #training .logos #chase {
+  margin-top: 19px;
+}
+.index #training #summary {
+  padding-top: 16px;
+}
+.index #training #training-footer {
+  text-align: center;
+}
+.index #training #training-footer #training-button {
+  background-color: #24aadf;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -moz-box-shadow: 0px 2px 0px 0px #087ba8;
+  -webkit-box-shadow: 0px 2px 0px 0px #087ba8;
+  box-shadow: 0px 2px 0px 0px #087ba8;
+  width: 134px;
+  color: #fafbfc;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 32px;
+  margin-top: 8px;
+}
+/*# sourceMappingURL=index.css.map */

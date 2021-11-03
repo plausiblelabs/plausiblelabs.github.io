@@ -1,0 +1,227 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+    
+<!-- Mirrored from plausible.coop/blog/page/6 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:09:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+        <title>Blog</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans+Condensed:400|IBM+Plex+Sans:300,400,400i,500,700&amp;display=swap">
+        <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/main/index.css">
+        
+    <link rel="stylesheet" media="screen" href="../../../assets/stylesheets/blog/index.css">
+
+        <link rel="shortcut icon" type="image/ico" href="../../../assets/images/main/favicon/index.ico">
+        <script src="../../../assets/javascripts/jquery-1.9.0.min/index.js" type="text/javascript"></script>
+        <script src="../../../assets/javascripts/retina/index.js" type="text/javascript"></script>
+        
+    <script type='text/javascript' src='../../../assets/javascripts/blog/jquery.gifplayer/index.js'></script>
+    
+    <script>
+		$(document).ready( function(){
+			$('.gifplayer').gifplayer();
+		});
+    </script>
+
+    </head>
+    <body>
+        <header>
+            <h3>
+                <a href="../../../index/index.html">
+                    <img src="../../../assets/images/main/clickable-logo-space/index.png" width="34px" height="34px" alt="PL" />
+                </a>
+            </h3>
+            <ul>
+                <li><a href="../../../software/index.html">Open Source</a></li>
+                <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+                <li><a href="../../index.html">Blog</a></li>
+                <li><a href="../../../about/index.html">About</a></li>
+            </ul>
+        </header>
+            <div id="main">
+                
+    <div class="blog">
+
+        <div class="main">
+
+            <div class="articles">
+                
+                    <h1>
+                        <a href="../../2014/01/22/crittercism-joins-the-plcrashreporter-consortium/index.html">Crittercism Joins the PLCrashReporter Consortium!</a>
+                    </h1>
+                    <p class="author">January 22, 2014, by Landon Fuller</p>
+                    <p>Plausible Labs is extremely pleased to announce that <a href="http://www.crittercism.com/">Crittercism</a> has joined the <a href="http://plcrashreporter.org/#home_sponsors">PLCrashReporter Consortium</a>, providing significant support for the ongoing open-source development of <a href="https://www.plcrashreporter.org/">PLCrashReporter</a>.</p><p>Plausible CrashReporter provides an open source in-process crash reporting framework for use on both the iPhone and Mac OS X, used by first-tier commercial crash reporting services like Crittercism.</p><p>Ongoing open source development work is sponsored directly by the members of the PLCrashReporter Consortium, as well as by individual application developers through our application developer <a href="https://www.plcrashreporter.org/support/professional">support services</a>.</p><p>Here at Plausible Labs, we’re big believers in the idea that complex development tools — such as compilers, debuggers, and crash reporters — benefit from being developed openly and under a liberal license, as to allow for wide adoption, peer review, and technical validation of the implementation across the widest possible user base. This development model has made PLCrashReporter one of the most reliable, well-architected, and feature-complete crash reporters available for iOS and Mac OS X.</p><p>We’ve laid out an ambitious <a href="https://opensource.plausible.coop/wiki/display/PLCR/Project+Roadmap">project roadmap</a> for this new year, starting with a few goals that we believe are imperative to growing PLCrashReporter’s utility and value:</p>
+<ul>
+  <li>Increase the scope and depth of useful data gathered in our crash reports, while maintaining our strict <a href="https://opensource.plausible.coop/wiki/display/PLCR/Development+Standards#DevelopmentStandards-UserPrivacyUserPrivacy">user privacy requirements</a>.</li>
+  <li>Expand the user base of the library to ensure the continued health of the project.</li>
+  <li>Work with implementors of managed runtimes (such as Xamarin, Unity3d, RubyMotion, and RoboVM) to improve compatibility between PLCrashReporter and their managed runtime (some of which already use PLCrashReporter).</li>
+  <li>Maintain our focus on reliability by introducing technical solutions to provide even stronger reliability guarantees as the scope and complexity of the library continues to grow.</li>
+  <li>Improve usage and integration documentation, targeted at both 3rd party integrators, and application developers, to help encourage a healthy development ecosystem.</li>
+</ul><p>If your platform or application relies on PLCrashReporter, we’re always interested in hearing about your priorities, and your feedback on our <a href="https://opensource.plausible.coop/wiki/display/PLCR/Project+Roadmap">roadmap</a>. The support of existing and new sponsors makes an enormous difference in both the scope and scale of what we can produce, and the sponsorship of companies like <a href="http://www.crittercism.com/">Crittercism</a> is imperative to the success of the project.</p>
+                
+                    <h1>
+                        <a href="../../2013/12/23/plausible%27s-voodoopad-for-ios-is-out-or-how-to-migrate/index.html">Plausible’s VoodooPad for iOS is out! Or: how to migrate.</a>
+                    </h1>
+                    <p class="author">December 23, 2013, by Mike Ash</p>
+                    <p>A new version of VoodooPad for iOS is out, the first one from Plausible Labs. Version 2.0.7 brings very few changes over 2.0.6: a couple of bug fixes and an updated Dropbox SDK. The big change is that it’s now our build, and with our build comes a new app on the App Store that customers need to grab.</p><h3>Background</h3><p>The App Store originally had no way to transfer apps from one developer to another. If an app was ever purchased by a new company, as we’ve done with VoodooPad, there were only two choices:</p>
+<ol>
+  <li>Give the selling company’s entire iTunes Connect account to the new company.</li>
+  <li>Take the app down from the selling company’s account, then post it as a new app under the new company’s account, and somehow migrate all the users.</li>
+</ol><p>Neither option was great, but they were the only choices. The first one only works if it’s the seller’s only product, and the second one is tough on users.</p><p>This year, Apple added the ability to transfer individual apps between developers. Hooray! We used this with the Mac version of VoodooPad and it worked great.</p><p>Unfortunately, this functionality comes with a huge gotcha: if an app has ever so much as gazed upon iCloud, it cannot be transferred. I’m not clear on exactly why this is, but there is apparently some inherent technical limitation in Apple’s backend code that makes this impossible. Presumably it’s the same sort of technical limitation which prevented app transfers altogether for so many years.</p><p>While VoodooPad for iOS has never used iCloud, it did have iCloud enabled as part of an experiment, and that was enough to make it ineligible for transfer. That means we’re stuck with the two bad choices above. The first is out of the question, as Flying Meat also has Acorn on the App Store and so can’t just give us the entire account. That leaves us with the second choice: take down Flying Meat’s VoodooPad for iOS, and post our own.</p><h3>What To Do</h3><p>Flying Meat has posted 2.0.7 on their account, but that will be the last version there. For future updates, you must switch to our version. Since it’s considered a separate app in the App Store, you need to obtain it manually. You can do so here:</p><p><a href="https://itunes.apple.com/us/app/voodoopad/id777792045?ls=1&amp;mt=8">https://itunes.apple.com/us/app/voodoopad/id777792045?ls=1&mt=8</a> </p><p>If you’re like me, you may be thinking, “But wait, won’t I have to buy it again?” Normally that would be the case, since Apple doesn’t see the two apps as being related in any way, and so your previous purchase doesn’t count for the new version. To mitigate this, we’ve made the new version free through January 21st, to give everyone time to move over to the new version. Please make sure you grab the new version now, while it’s free. Once you do this, you’ll need to transfer your documents across, since it acts like a completely new app and doesn’t share any data with the old one. </p><h3>Document Transfer</h3><p>If you’re syncing with Dropbox then the transfer process is extremely easy. Just set up Dropbox in the new copy of VoodooPad and all of your documents will automatically sync to it. </p><p>If you’re not syncing with Dropbox, then I definitely recommend setting it up. It’s free, it’s easy to use, and it works great. You’ll need to set up both the old and new copies of VoodooPad with Dropbox, and then the new copy will sync the documents from the old copy. </p><p>If you’re not syncing with Dropbox and don’t want to, then you can either use WiFi sync with a Mac to transfer your documents, or you can use iTunes. Check out the documentation on syncing and transferring for more information: </p><p><a href="https://voodoopad.com/">https://plausible.coop/voodoopad/docs-5/syncing%20and%20transferring.html</a></p><p>However you transfer the documents across, double-check to make sure that the new copy of the app has everything, and then you can go ahead and delete the old copy from your device. </p><h3>Summary</h3><p>The Plausible Labs version of VoodooPad for iOS is now on the App Store, but as a separate app. It’s free through the middle of next month so that existing users can move over at no cost. Existing users need to: </p>
+<ol>
+  <li>Download a copy of the new app from the App Store.</li>
+  <li>Transfer their existing data into the new app, either through Dropbox, WiFi sync, or iTunes.</li>
+</ol><p>It’s also a great time for new users to check out VoodooPad for iOS, since you can also grab it for no cost during this migration period.</p><p>This is the final piece we had to take care of in moving VoodooPad from Flying Meat to Plausible Labs. We’re looking forward to being able to fully concentrate on improvements to both the Mac and iOS versions of the app now that we’ve tamed the App Store beast.</p><p>Thanks for your patience with all of this, and please don’t hesitate to contact us if you have any questions or problems with the iOS migration.</p>
+                
+                    <h1>
+                        <a href="../../2013/12/16/plcrashreporter-1/index.html">PLCrashReporter 1.2 Release Candidate</a>
+                    </h1>
+                    <p class="author">December 16, 2013, by Landon Fuller</p>
+                    <p>I’m pleased to announce the first release candidate of PLCrashReporter 1.2. <a href="https://www.plcrashreporter.org/">Plausible CrashReporter</a> provides an open source in-process crash reporting framework for use on both the iPhone and Mac OS X, and is used by the preeminent crash reporting and analytics services for Mac OS X and iOS.</p><p>This release adds support for more precise stack unwinding on ARM64 using DWARF eh_frame and Apple compact unwind metadata. As far as I’m aware, PLCrashReporter is the only 3rd-party crash reporter on iOS to support eh_frame/compact unwinding, and as such, provides the most accurate backtraces available for the platform. (See below for the technical details.)</p><p>Significant changes since 1.2-beta2:</p>
+<ul>
+  <li>Production ARM64 support.</li>
+  <li>Improved ARM64 unwinding (DWARF eh_frame and Apple compact unwind support).</li>
+</ul><p><a href="https://www.plcrashreporter.org/download/changelog#v1.2-rc1">Full Changelog.</a></p><p>This release was funded by <a href="../../../index/index.html">Plausible Labs</a>, <a href="https://www.hockeyapp.net/">HockeyApp</a>, and <a href="http://www.flurry.com/">Flurry</a> via the <a href="https://www.plcrashreporter.org/support/professional">PLCrashReporter Consortium</a>. Our thanks goes out to the Consortium Members that make our work on PLCrashReporter possible.</p><h3>New ARM64 Unwinding Implementation</h3><p>On Mac OS X, Apple’s compiler toolchain includes additional metadata within each binary that can be used to perform near-perfect backtraces — whether you’ve crashed in objc_msgSend, inside of a C++ function, or even inside of a custom assembly trampoline.</p><p>Without this metadata, crash reporting implementations must apply heuristics to determine best unwind strategy, and in many cases, will do so incorrectly, resulting in incorrect or incomplete backtraces, making bugs harder to understand and more opaque.</p><p>With the introduction of ARM64, Apple has brought support for this additional metadata to iOS, where we were able to add support to PLCrashReporter. This involved reverse engineering the incorrectly documented compact unwind format (rdar://15057141 – Incorrect compact unwind documentation in compact_unwind.h), and implementing a full suite of ARM64 <a href="https://github.com/plausiblelabs/plcrashreporter/blob/master/Source/Libunwind Regression Tests/unwind_test_arm64_frameless.S">hand-written assembly regression tests</a> that we used to ensure the correctness of our unwinder and compatibility with Apple’s implementation.</p><p>We’re comfortable saying that PLCrashReporter provides the absolute best crash reporting data available from any 3rd-party on-device crash reporting library for Mac OS X or iOS.</p><h4>Technical Details</h4><p>On ARM/ARM64 (ARM), the return address — that is, the address at which execution should resume when the called function returns — is stored in the link register (lr) when a function is called. This address (generally) points to the next valid instruction directly following the branch instruction.</p><p>When the called function returns, it uses the saved value stored in the link register to branch to the original caller. If the called function itself calls a function, the link register will be overwritten — thus, the contents of the link register must be saved and restored as to allow the called function to return to its own original caller. In most functions generated by the compiler, the link register will be stored in a standard location, reachable via the frame pointer — this is what a naive crash reporter will rely on to perform walking of the stack frames and product a backtrace.</p><p>Where this approach fails is when a function behaves differently than expected — such as objc_msgSend(), where it neither sets up a stack frame nor saves its link register. Objc_msgSend works as a trampoline — it looks up and branches directly to the method implementation, and once complete, is no longer relevant in a backtrace. If a crash occurs in objc_msgSend, and a naive backtrace implementation simply consults the stack where the link register is normally saved, it’ll fetch the contents of the previous function’s link register, and thus, skip a frame. The information will still be available from the crash report — you can fetch the link register from the report and determine what the caller should be — but this is hardly ideal when generating easy-to-use backtraces.</p><p>In more complex cases, the frame pointer and link register may be entirely indecipherable by a naive frame walker — for instance, if a crash occurs inside of a custom assembly trampoline that has overwritten both, or if the crash occurs inside of a managed runtime that generates non-standard native code.</p><p>To handle these cases, Apple’s toolchain provides information on the location of non-volatile register data — including the link register — and the steps necessary to access it, generating a ‘perfect’ backtrace. These instructions are provided via both DWARF unwind data, and Apple’s compact unwind encoding. The compact unwind encoding provides a strict subset of the DWARF unwinding data, while consuming considerably less space, at the cost of only being able represent a subset of the standard well-defined methods for unwinding a single frame. The DWARF format and implementation, on the other hand, is considerably more complex — it even includes a full, turing complete opcode interpreter that may be used during the unwinding process to express the location and steps to retrieve register values. The DWARF data can be used to express even the most complex and <a href="https://github.com/plausiblelabs/plcrashreporter/blob/1.2-rc1/Source/Libunwind Regression Tests/unwind_test_arm64_frameless.S#L177">bizarre unwinding steps for a hand-written function.</a> As far as we’re aware PLCrashReporter is the only crash reporting solution to provide full support for client-side unwinding via both DWARF and Apple’s Compact unwinding data.</p>
+                
+            </div>
+
+            
+
+<div class="sidebar">
+    <h3>The Plausible Blog<a href="../../index-2.html?feed=rss2"><img src="../../../assets/images/blog/feed-icon/index.png" width="20px" height="20px" alt="" /></a></h3>
+    <p>
+        Latest news and musings from the co-op.
+    </p>
+    <p class="twitter">
+        Follow us: <a href="https://twitter.com/plausiblelabs">&#64;plausiblelabs</a>
+    </p>
+
+    <h3>Recent Articles</h3>
+    <ul>
+        
+            <li>
+                <a href="../../2019/09/12/plcrashreporter-stewardship-moving-to-microsoft/index.html">PLCrashReporter Stewardship Moving to Microsoft</a>
+                <span class="archive_date">September 12, 2019</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/12/14/a-new-home-for-voodoopad/index.html">A New Home for VoodooPad</a>
+                <span class="archive_date">December 14, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/10/03/plrelational-query-optimization/index.html">PLRelational: Query Optimization and Execution</a>
+                <span class="archive_date">October 3, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/28/build-with-plrelational-part-2/index.html">Let&#x27;s Build with PLRelational, Part 2</a>
+                <span class="archive_date">September 28, 2017</span>
+            </li>
+        
+            <li>
+                <a href="../../2017/09/18/build-with-plrelational-part-1/index.html">Let&#x27;s Build with PLRelational, Part 1</a>
+                <span class="archive_date">September 18, 2017</span>
+            </li>
+        
+    </ul>
+    <p class="archives">
+        <a href="../../archive/index.html">Browse Archive</a>
+    </p>
+
+    <h3>More from Lab Members</h3>
+    <ul class="blogRoll">
+        <li>
+            <a href="https://labonnesoupe.org/">Digital Things</a>
+            <span class="blogRoll_author">from Chris Campbell</span>
+        </li>
+    </ul>
+</div>
+        </div>
+
+        <br class="clearFloats" />
+
+        
+
+<nav class="paging-navigation" role="navigation">
+    <div class="nav-links">
+        
+        
+            <a class="prev page-numbers" href="../5/index.html">Previous</a>
+        
+        
+        
+            
+                <a class="page-numbers" href="../1/index.html">1</a>
+            
+        
+            
+                <a class="page-numbers" href="../2/index.html">2</a>
+            
+        
+            
+                <a class="page-numbers" href="../3/index.html">3</a>
+            
+        
+            
+                <a class="page-numbers" href="../4/index.html">4</a>
+            
+        
+            
+                <a class="page-numbers" href="../5/index.html">5</a>
+            
+        
+            
+                <span class="page-numbers current">6</span>
+            
+        
+            
+                <a class="page-numbers" href="../7/index.html">7</a>
+            
+        
+            
+                <a class="page-numbers" href="../8/index.html">8</a>
+            
+        
+            
+                <a class="page-numbers" href="../9/index.html">9</a>
+            
+        
+            
+                <a class="page-numbers" href="../10/index.html">10</a>
+            
+        
+            
+                <a class="page-numbers" href="../11/index.html">11</a>
+            
+        
+
+        
+            <a class="next page-numbers" href="../7/index.html">Next</a>
+        
+        
+    </div>
+</nav>
+
+        
+    </div>
+
+            </div>
+        <footer>
+            <div class="inner">
+                Plausible Labs Cooperative, Inc. &copy; 2008 - 2021
+            </div>
+        </footer>
+    </body>
+
+<!-- Mirrored from plausible.coop/blog/page/6 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 02 Nov 2021 23:09:53 GMT -->
+</html>
+
